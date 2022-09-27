@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Maven+Pro:wght@600&display=swap');
+
+.formulario{
+    width: 500px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.login_title{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 150%;
+    font-family: 'Sarabun', sans-serif;
+}
+
+.formulario p{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    font-family: 'Sarabun', sans-serif;
+}
+
+.formulario input{
+
+    height: 40px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow:  6px 6px 3px teal;
+}
+
+.envio{
+    width: 144px;
+    height: 44px;
+    background: #64b4b4;
+    border-radius: 10px;
+    border: 1px solid #000000;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 45px;
+}
+
+.envio p{
+    margin: auto;
+}
+
+.formulario .envio:hover{
+    transition: .3s;    
+    box-shadow:  4px 4px 10px rgba(0, 0, 0, 0.774);
+
+}
+
+.login_title{
+    margin-top: 100px;
+}
+
+@media (max-width: 500px){
+    .formulario{
+        width: 100vw;
+    }
+}

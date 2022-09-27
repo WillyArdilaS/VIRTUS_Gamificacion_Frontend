@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Maven+Pro:wght@600&display=swap');
+
+.pr_title{ 
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    padding-top: 1vw;
+    padding-right: 50px;
+    padding-left: 50px;
+    font-family: 'Sarabun', sans-serif;
+}
+
+.pr_title h1{
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 140%;
+}
+
+.pr_title p{
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    margin: 2px;
+    color: #6d6d6d;
+    font-family: 'Sarabun', sans-serif;
+}
+
+
+.faq{
+    width: 50vw;
+    margin: auto;
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 500px){
+    .pr_title{
+        padding-right: 0px;
+        padding-left: 20px;
+    }
+    .faq{
+        width: 80vw;
+    }
+}

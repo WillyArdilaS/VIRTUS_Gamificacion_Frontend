@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Maven+Pro:wght@600&display=swap');
+
+.saberMas_contenedor{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    justify-items: center;
+    align-items: center;
+    grid-column-gap: 10px;
+    grid-row-gap: 80px;
+    padding-top: 5em;
+    padding-right: 50px;
+    padding-left: 50px;
+    overflow: hidden;
+}
+
+.sm_text{
+    width:400px;
+    height: 300px;
+}
+
+.sm_img{
+    width:500px;
+    height: 300px;
+}
+
+img{
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
+
+.sm_title{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 200px;
+    padding-top: 50px;
+    padding-bottom: 100px;
+}
+.sm_title div{
+    width: 100%;
+    text-align: center;
+}
+.sm_title div h1{
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 100%;
+    font-family: 'Sarabun', sans-serif;
+}
+.sm_title div p{
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    color: #6d6d6d;
+    font-family: 'Sarabun', sans-serif;
+}
+
+.saberMas_contenedor p,h1 { 
+    font-family: 'Sarabun', sans-serif;
+}
+
+.saberMas_contenedor p {
+    color: #6d6d6d;
+}
+@media (max-width: 600px) {
+    .sm_img{
+        width: 100vw;
+        height: auto;
+    }
+    .saberMas_contenedor{
+        display: grid;
+        grid-template-columns: 1fr;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    .sm_text{
+        width: 100vw;
+        height: auto;
+    }
+    .sm_title{
+        height: auto;
+        padding-bottom: 0px;
+    }
+    .sm_title div h1{
+        font-weight: 400;
+        font-size: 40px;
+    }
+    .sm_title div p{
+        font-weight: 300;
+        font-size: 15px;
+    }
+}

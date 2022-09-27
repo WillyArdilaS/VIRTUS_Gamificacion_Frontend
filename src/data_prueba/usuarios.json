@@ -1,0 +1,9 @@
+[
+    {
+        "nombre":"Jordy Esteban",
+        "apellido":"Pineda Velandia",
+        "tipo":"Estudiante",
+        "clases":[1,2,3,4],
+        "personaje":"Elfo"
+    }
+]

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Maven+Pro:wght@600&display=swap');
+
+
+.link , .link:visited , .link:active{
+    text-decoration:none;
+    color: inherit;
+}
+
+.navigationBar{
+    background-color: #7db952;
+}
+

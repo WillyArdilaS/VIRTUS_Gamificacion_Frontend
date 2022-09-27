@@ -1,0 +1,46 @@
+[
+    {
+        "id":"1",
+        "nombre":"Matematicas 1",
+        "profesor":"Nombre profesor",
+        "linkImagen": "https://img.freepik.com/free-vector/pink-magic-castle-green-hill-fairy-tale-palace_107791-10395.jpg?w=900&t=st=1658165588~exp=1658166188~hmac=37bb1416f82cc454a7a5fbe08c1fd0a39b2522576c912e3693d808f2e1af2b7a",
+        "personaje":"mago",
+        "vida":"20",
+        "experiencia":"80",
+        "nivel":4,
+        "habilidades": 1
+    },
+    {
+        "id":"2",
+        "nombre":"Ingles 1",
+        "profesor":"Nombre profesor",
+        "linkImagen": "https://img.freepik.com/free-vector/cartoon-forest-background-nature-landscape-with-deciduous-trees-moss-rocks-grass-bushes-sunlight-spots-ground-scenery-summer-spring-wood-parallax-natural-scene-vector-illustration_107791-9113.jpg?w=900&t=st=1658165592~exp=1658166192~hmac=5fc6aafe5b049508949a1ed10afedf2e8e4f77df71fb2cc98f11750e1141deb6",
+        "personaje":"elfo",
+        "vida":"80",
+        "experiencia":"10",
+        "nivel":2,
+        "habilidades": 2
+    },
+    {
+        "id":"3",
+        "nombre":"Biologia 1",
+        "profesor":"Nombre profesor",
+        "linkImagen": "https://img.freepik.com/free-vector/cartoon-night-nature-landscape-full-moon-shining-sky-with-stars-field-with-pond-conifer-trees-rocks-dark-heaven-with-moonlight-romantic-fantasy-background-midnight-twilight-vector-view_107791-10119.jpg?w=900&t=st=1658165596~exp=1658166196~hmac=14c534a8cd8afdae2e7ac64724ec9ed3696e2465ceebf8c6f26d15390ed41efd",
+        "personaje":"piromante",
+        "vida":"100",
+        "experiencia":"0",
+        "nivel":1,
+        "habilidades": 3
+    },
+    {
+        "id":"4",
+        "nombre":"Fisica 1",
+        "profesor":"Nombre profesor",
+        "linkImagen": "https://img.freepik.com/free-vector/desert-africa-natural-landscape-with-tumbleweed-rolling-along-hot-dry-deserted-african-nature_107791-3984.jpg?t=st=1658184379~exp=1658184979~hmac=be75a70b54be46ef25dc5ca199195dc4705670beccf09148b780bbff83e74aa4&w=900",
+        "personaje":"caballero",
+        "vida":"10",
+        "experiencia":"90",
+        "nivel":6,
+        "habilidades": 0
+    }
+]

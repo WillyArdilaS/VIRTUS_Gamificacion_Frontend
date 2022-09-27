@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@600&display=swap');
+
+.contenedor{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    justify-items: center;
+    align-items: center;
+    grid-gap: 10px;
+    padding-top: 5em;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.contenedor h1{
+    font-family: 'Sarabun', sans-serif;
+}
+
+.text{
+    padding-top: 10px;
+    width: 300px;
+    height: 300px;
+    text-align: left;
+}
+
+
+.imagen{
+    
+    text-align: center;
+    width: 500px;
+    height: 350px;
+    border-color: black;
+    border-style: groove;
+    border-radius: 10px;
+}
+
+.bt_home{
+    background-color:rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 6px;
+    border:0ch; 
+    width: 80px;
+    height: 30px;
+    font-family: 'Sarabun', sans-serif;
+
+}
+.bt_home:hover{
+    transition-duration: 0.35s;
+    background-color:rgba(0, 0, 0, 0.751);
+}
+
+
+.imagen img{
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
+
+@media (max-width: 600px) {
+    .imagen{
+        width: 100vw;
+        height: auto;
+    }
+    .contenedor{
+        display: grid;
+        grid-template-columns: 1fr;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    .text{
+        width: 100vw;
+        height: auto;
+    }
+}

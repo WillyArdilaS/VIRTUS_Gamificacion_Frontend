@@ -1,0 +1,12 @@
+.contenedor_Est{
+    display: flex;
+}
+
+@media (max-width: 904px) {
+
+    .contenedor_Est{
+        display:grid;
+        grid-template-columns: 1fr;
+    }
+
+}

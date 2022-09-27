@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@600&family=Sarabun:wght@600&display=swap');
+
+:root{
+    --colorVerde:rgb(117, 245, 136);
+}
+
+h1{
+    font-family: 'Sarabun', 'cursive';
+}
+
+.clasesEst{
+    margin: 10px;
+    margin-top: 1px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.resumenClases{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.misClases{
+    border-radius: 15px;
+    border: 2px solid #A5BA8F;
+    /* border: 2px solid rgb(120, 189, 133); */
+    width: 45vw;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
+@media (max-width: 904px) {
+    .misClases{
+        width: 100%;
+        margin: 1px;
+        padding: 5px;
+    }
+}
