@@ -12,6 +12,8 @@ import Estudiante from "./vistas/estudiante/Estudiante";
 import PerfilEst from "./vistas/estudiante/PerfilEst";
 import ClasesEst from "./vistas/estudiante/ClasesEst";
 import Registro from "./vistas/registro/Registro";
+import Profesor from "./vistas/profesor/Profesor";
+import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
 
 //const pages = ['Saber Mas', 'Preguntas'];
 
@@ -21,24 +23,27 @@ function App() {
 
   const [sesionIniciada, setSesionIniciada] = React.useState(false);
 
-  const sesion= (persona)=> {
+  const sesion = (persona) => {
     setUsuario(persona)
     //pages.push(persona[0].tipo)
   }
 
   return (
     <BrowserRouter>
-      <NavBar sesionIniciada = {sesionIniciada} usuario = {usuario} setSesionIniciada = {setSesionIniciada} /* pages={pages} *//>
-      <div className = "mainContenido">
+      <NavBar sesionIniciada={sesionIniciada} usuario={usuario} setSesionIniciada={setSesionIniciada} /* pages={pages} */ />
+      <div className="mainContenido">
         <Routes >
           <Route path="/" element={<Home />} />
           <Route path="/Preguntas" element={<Preguntas />} />
           <Route path="/SaberMas" element={<SaberMas />} />
-          <Route path="/login"  element={<Login sesion={sesion} setSesionIniciada = {setSesionIniciada}/>} />
-          <Route path="/registro" element={<Registro setSesionIniciada = {setSesionIniciada}/>} />
-          <Route  path='/Estudiante/*' element={<Estudiante  data={usuario} />}>
+          <Route path="/login" element={<Login sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
+          <Route path="/registro" element={<Registro setSesionIniciada={setSesionIniciada} />} />
+          <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
             <Route path="Micuenta" element={<PerfilEst />} />
             <Route path="Clases" element={<ClasesEst />} />
+          </Route>
+          <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
+            <Route path="Clases" element={<ClasesProfesor />} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />
         </Routes>

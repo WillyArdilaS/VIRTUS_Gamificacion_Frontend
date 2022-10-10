@@ -1,0 +1,13 @@
+.contenedor_Profesor{
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 904px) {
+
+    .contenedor_Profesor{
+        display:grid;
+        grid-template-columns: 1fr;
+    }
+
+}

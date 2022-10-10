@@ -10,8 +10,6 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button, Link } from "@mui/material";
 
-//data de prueba, debe llegar por get a la api rest
-import data from '../../data_prueba/usuarios.json';
 
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -79,17 +77,29 @@ export default function Login(props) {
     };
 
     //Las credenciales son correctas
-    
-    // props.sesion(data);
     props.sesion(userLogeado);
     props.setSesionIniciada(true);
-    navigateToStudentView();
+
+    //Aqui va a dirigir a una pagina o otra dependiendo del rol
+    //Vista estudiante
+    if (userLogeado.usuario.rol === "estudiante") {
+      navigateToStudentView();
+    };
+
+    //Vista profesor
+    if (userLogeado.usuario.rol === "maestro") {
+      navigateToTeacherView();
+    };
 
 
   };
 
   function navigateToStudentView() {
     navigate("/Estudiante");
+  }
+
+  function navigateToTeacherView() {
+    navigate("/Profesor");
   }
 
   useEffect(() => {
