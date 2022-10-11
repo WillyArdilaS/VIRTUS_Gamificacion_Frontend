@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
-import { Button, Link } from "@mui/material";
+import { Button, cardHeaderClasses, Link } from "@mui/material";
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -18,9 +18,9 @@ const ColorButton = styled(Button)(({ theme }) => ({
     justifyContent: "center",
     fontFamily: "Sarabun, sans-serif",
     "&:hover": {
-      backgroundColor: "#218c8c",
+        backgroundColor: "#218c8c",
     },
-  }));
+}));
 
 
 
@@ -41,16 +41,43 @@ export default function ClasesProfesor(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(clase);
+        // console.log(clase);
+        // console.log(props.data);
+        // console.log(props.data.token);
+        crearClase();
     }
 
+    const sendClass = async (objectClass) => {
+        const urlBD = 'http://localhost:8080/api/clases/';
+        const response = await fetch(`${urlBD}`,
+            {
+                method: 'POST',
+                body: JSON.stringify(objectClass),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'TokenRol': props.data.token,
+                }
+            });
+        const data = await response.json();
+        // console.log(data);
+        return data;
+    }
+
+    const crearClase = async() => {
+        const objectClass = {
+            nombre: clase.nomClase,
+            descripcion: clase.descripcion,
+            usuarioProfesorFK: props.data.usuario._id
+        }
+        
+        const response = await sendClass(objectClass);
+        alert("Clase Creada");
+    }
 
     return (<div className='clasesProfesor'>
         <div className="crearClase">
             <h1>Crear una clase</h1>
             <hr></hr>
-            {/* AQUI IRA EL FORM */}
-
 
             <div data-aos="fade-down" data-aos-once="true">
                 <div className="formulario">

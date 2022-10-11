@@ -43,7 +43,7 @@ function App() {
             <Route path="Clases" element={<ClasesEst />} />
           </Route>
           <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
-            <Route path="Clases" element={<ClasesProfesor />} />
+            <Route path="Clases" element={<ClasesProfesor data={usuario}/>} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />
         </Routes>
