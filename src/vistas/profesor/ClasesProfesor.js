@@ -1,6 +1,6 @@
 import * as React from "react";
 import './clasesProfesor.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
@@ -27,10 +27,17 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function ClasesProfesor(props) {
 
+    useEffect(() => {
+        getClases(props.data.usuario._id);
+    }, [])
+
+
     const [clase, setClase] = useState({
         nomClase: "",
         descripcion: "",
     });
+
+    const [clasesProf, setclasesProf] = useState([]);
 
     const handleChange = (e) => {
         setClase({
@@ -60,16 +67,32 @@ export default function ClasesProfesor(props) {
         return data;
     }
 
-    const crearClase = async() => {
+    const crearClase = async () => {
         const objectClass = {
             nombre: clase.nomClase,
             descripcion: clase.descripcion,
             usuarioProfesorFK: props.data.usuario._id
         }
-        
+
         const response = await sendClass(objectClass);
         alert("Clase Creada");
     }
+
+    
+    const getClases = async (filtro) => {
+        const urlBD = 'http://localhost:8080/api/clases/';
+
+        const response = await fetch(`${urlBD}`);
+        const data = await response.json();
+        const { clasesBD } = data;
+        let clasesFiltradas = clasesBD.filter(clase => clase.usuarioProfesorFK==filtro);
+        console.log(clasesBD);
+        console.log(clasesFiltradas);
+        
+        setclasesProf(clasesBD);
+
+    }
+
 
     return (<div className='clasesProfesor'>
         <div className="crearClase">
