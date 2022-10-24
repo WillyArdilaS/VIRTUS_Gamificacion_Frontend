@@ -41,9 +41,6 @@ export default function ClasesProfesor(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        // console.log(clase);
-        // console.log(props.data);
-        // console.log(props.data.token);
         crearClase();
     }
 

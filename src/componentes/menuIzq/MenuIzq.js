@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./menuIzq.css";
 
 export default function MenuIzq({ opciones, usuario }) {
-  console.log(usuario);
+  // console.log(usuario);
 
   function eleccion(e) {
     const op = document.querySelectorAll(".opciones");
