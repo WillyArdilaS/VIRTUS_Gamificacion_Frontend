@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button, cardHeaderClasses, Link } from "@mui/material";
+import FichaMatricularClase from "../../componentes/fichaMatricularClase/FichaMatricularClase";
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -78,18 +79,18 @@ export default function ClasesProfesor(props) {
         alert("Clase Creada");
     }
 
-    
+
     const getClases = async (filtro) => {
         const urlBD = 'http://localhost:8080/api/clases/';
 
         const response = await fetch(`${urlBD}`);
         const data = await response.json();
         const { clasesBD } = data;
-        let clasesFiltradas = clasesBD.filter(clase => clase.usuarioProfesorFK==filtro);
+        let clasesFiltradas = clasesBD.filter(clase => clase.usuarioProfesorFK == filtro);
         console.log(clasesBD);
         console.log(clasesFiltradas);
-        
-        setclasesProf(clasesBD);
+
+        setclasesProf(clasesFiltradas);
 
     }
 
@@ -137,6 +138,9 @@ export default function ClasesProfesor(props) {
             </div>
             <ResmPersonaje resPersonaje={resPersonaje} />
         </div> */}
+        <div className="misClasesUnirse">
+            {clasesProf.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} /></div> })}
+        </div>
 
     </div>)
 
