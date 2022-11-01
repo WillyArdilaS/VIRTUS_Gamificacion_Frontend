@@ -75,32 +75,13 @@ export default function ClasesEst(props) {
           dataClases = clasesBD;
           console.log(dataClases);
           setclasesEst(dataClases);
-          
+
           // mapearClases();
           // return clasesBD;
      }
 
-     const mapearClases = async () => {
-          let clases = dataClases.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} /></div> })
-          let containerClases = document.getElementById("misClasesUnirse");
-          console.log(clases);
-          // containerClases.innerHTML = clases;
-     }
 
-     const refreshClases = async () => {
-          let contenedor = document.getElementsByClassName("misClasesUnirse");
-          console.log(contenedor);
-          await getClases();
-          let test;
-          test += dataClases.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} /></div> });
-          console.log(test);
-
-     }
-
-     const test = () => {
-          console.log(clasesEst);
-     }
-
+     
 
      return (<div className='clasesEst'>
           <h1> Mis Clases</h1>
@@ -115,13 +96,10 @@ export default function ClasesEst(props) {
                <h1>Matricularme en una clase</h1>
                <hr></hr>
                <div className="misClasesUnirse">
-                    {clasesEst.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} /></div> })}
+                    {clasesEst.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={props.data}/></div> })}
 
                </div>
 
-               {/* <ColorButton variant="contained" type="submit" onClick={test}>
-                    Actualizar clases
-               </ColorButton> */}
           </div>
      </div>)
 

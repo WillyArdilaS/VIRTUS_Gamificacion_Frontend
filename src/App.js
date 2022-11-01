@@ -41,7 +41,7 @@ function App() {
           <Route path="/registro" element={<Registro setSesionIniciada={setSesionIniciada} />} />
           <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
             <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
-            <Route path="Clases" element={<ClasesEst />} />
+            <Route path="Clases" element={<ClasesEst data={usuario}/>} />
           </Route>
           <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
             <Route path="Micuenta" element={<PerfilProf data={usuario} />} />
