@@ -89,8 +89,8 @@ export default function ClasesProfesor(props) {
         const data = await response.json();
         const { clasesBD } = data;
         let clasesFiltradas = clasesBD.filter(clase => clase.usuarioProfesorFK == filtro);
-        console.log(clasesBD);
-        console.log(clasesFiltradas);
+        // console.log(clasesBD);
+        // console.log(clasesFiltradas);
 
         setclasesProf(clasesFiltradas);
 

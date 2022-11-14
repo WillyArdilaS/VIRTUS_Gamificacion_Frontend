@@ -1,4 +1,5 @@
 import './claseIndividualProfesor.css';
+import { useEffect } from "react";
 
 
 import FichaActividad from '../../componentes/fichaActividad/FichaActividad'
@@ -24,8 +25,24 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 
+//Peticiones
+const getActivity = async (filtro) => {
+    const urlBD = "http://localhost:8080/api/actividad";
+    const response = await fetch(`${urlBD}`);
+    const { actividadesBD } = await response.json();
+    
+
+    let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
+    console.log(actividadesFiltradas);
+}
+
 
 export default function ClaseIndividualProfesor(props) {
+
+    useEffect(() => {
+        getActivity(props.clase._id);
+    }, [])
+
 
     return (
         <div className="infoClase">
@@ -34,65 +51,63 @@ export default function ClaseIndividualProfesor(props) {
             <p>Descripción {props.clase.descripcion}</p>
             <hr></hr>
 
-            <div className = "infoActividades">
+            <div className="infoActividades">
                 <h1>Actividades de clase</h1>
-                <div className = "contenidoInfoActividades">
-                <FichaActividad/>
-                <FichaActividad/>
-                <FichaActividad/>
+                <div className="contenidoInfoActividades">
+                    <FichaActividad />
 
                 </div>
             </div>
 
             {/* FORM PROVISIONAL */}
             <div className="crearClase">
-            <h1>Crear actividad</h1>
-            <hr></hr>
+                <h1>Crear actividad</h1>
+                <hr></hr>
 
-            <div data-aos="fade-down" data-aos-once="true">
-                <div className="formulario">
-                    <h1 className="login_titleProfesor">Ingrese los datos de la actividad</h1>
-                    <form>
-                        <p>Nombre de la actividad</p>
-                        <input
-                            type="text"
-                            name="nomClase"
-                            required
-                        ></input>
-                        <p>Descripción</p>
-                        <input
-                            type="text"
-                            name="descripcion"
-                            required
-                        ></input>
-                        <p>Experiencia por victoria</p>
-                        <input
-                            type="number"
-                            name="descripcion"
-                            required
-                        ></input>
-                        <p>Daño por fallar la actividad</p>
-                        <input
-                            type="number"
-                            name="descripcion"
-                            required
-                        ></input>
-                        <p>Fecha de vencimiento</p>
-                        <input
-                            type="date"
-                            name="descripcion"
-                            required
-                        ></input>
+                <div data-aos="fade-down" data-aos-once="true">
+                    <div className="formulario">
+                        <h1 className="login_titleProfesor">Ingrese los datos de la actividad</h1>
+                        <form>
+                            <p>Nombre de la actividad</p>
+                            <input
+                                type="text"
+                                name="nomClase"
+                                required
+                            ></input>
+                            <p>Descripción</p>
+                            <input
+                                type="text"
+                                name="descripcion"
+                                required
+                            ></input>
+                            <p>Experiencia por victoria</p>
+                            <input
+                                type="number"
+                                name="descripcion"
+                                required
+                            ></input>
+                            <p>Daño por fallar la actividad</p>
+                            <input
+                                type="number"
+                                name="descripcion"
+                                required
+                            ></input>
+                            <p>Fecha de vencimiento</p>
+                            <input
+                                type="date"
+                                name="descripcion"
+                                required
+                            ></input>
 
-                        <ColorButton variant="contained" type="submit">
-                            Crear Clase
-                        </ColorButton>
-                    </form>
+                            <ColorButton variant="contained" type="submit">
+                                Crear Clase
+                            </ColorButton>
+                        </form>
+                    </div>
                 </div>
+
+
             </div>
-
-
-        </div>
         </div>)
 
 }
