@@ -1,0 +1,33 @@
+.cardClase{
+    max-width: 15rem;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 24px 24px 24px 24px;
+    -moz-border-radius: 24px 24px 24px 24px;
+    -webkit-border-radius: 24px 24px 24px 24px;
+    border: 0px solid #000000;
+
+    -webkit-box-shadow: 0px 12px 38px -21px rgba(0, 0, 0, 0.58);
+    -moz-box-shadow: 0px 12px 38px -21px rgba(0, 0, 0, 0.58);
+    box-shadow: 0px 12px 38px -21px rgba(0, 0, 0, 0.58);
+}
+
+.indicadoresClase{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.imgCardClase{
+    max-width: 15rem;
+    height: auto;
+}
+
+.imgIcon{
+    width: 30px;
+    height: 30px;
+    margin: auto 0;
+}
+

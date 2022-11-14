@@ -1,6 +1,8 @@
 import './claseIndividualProfesor.css';
 
 
+import FichaActividad from '../../componentes/fichaActividad/FichaActividad'
+
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button, cardHeaderClasses, Link } from "@mui/material";
@@ -26,12 +28,21 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function ClaseIndividualProfesor(props) {
 
     return (
-        <div class="infoClase">
+        <div className="infoClase">
             <h1>Información de la clase</h1>
             <p>Nombre clase: {props.clase.nombre}</p>
             <p>Descripción {props.clase.descripcion}</p>
+            <hr></hr>
 
+            <div className = "infoActividades">
+                <h1>Actividades de clase</h1>
+                <div className = "contenidoInfoActividades">
+                <FichaActividad/>
+                <FichaActividad/>
+                <FichaActividad/>
 
+                </div>
+            </div>
 
             {/* FORM PROVISIONAL */}
             <div className="crearClase">
