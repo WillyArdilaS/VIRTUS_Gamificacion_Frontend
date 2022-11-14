@@ -14,6 +14,7 @@ import ClasesEst from "./vistas/estudiante/ClasesEst";
 import Registro from "./vistas/registro/Registro";
 import Profesor from "./vistas/profesor/Profesor";
 import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
+import ClaseIndividualProfesor from "./vistas/profesor/ClaseIndividualProfesor";
 import PerfilProf from "./vistas/profesor/PerfilProf"
 
 //const pages = ['Saber Mas', 'Preguntas'];
@@ -21,13 +22,18 @@ import PerfilProf from "./vistas/profesor/PerfilProf"
 function App() {
 
   const [usuario, setUsuario] = React.useState(null);
+  const [claseIndividual, setClaseIndividual] = React.useState(null);
 
   const [sesionIniciada, setSesionIniciada] = React.useState(false);
 
   const sesion = (persona) => {
     setUsuario(persona)
-    //pages.push(persona[0].tipo)
   }
+
+  // //Crear aqui un estado para la clase ind
+  // const ClaseIndividualInformacion = (clase) => {
+  //   setClaseIndividual(clase);
+  // }
 
   return (
     <BrowserRouter>
@@ -41,11 +47,12 @@ function App() {
           <Route path="/registro" element={<Registro setSesionIniciada={setSesionIniciada} />} />
           <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
             <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
-            <Route path="Clases" element={<ClasesEst data={usuario}/>} />
+            <Route path="Clases" element={<ClasesEst data={usuario} />} />
           </Route>
           <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
             <Route path="Micuenta" element={<PerfilProf data={usuario} />} />
-            <Route path="Clases" element={<ClasesProfesor data={usuario} />} />
+            <Route path="Clases" element={<ClasesProfesor data={usuario} funcionClaseIndividual={setClaseIndividual}/>} />
+            <Route path="ClaseIndidivual" element={<ClaseIndividualProfesor data={usuario} clase={claseIndividual} />} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />
         </Routes>

@@ -9,7 +9,8 @@
     --menuOpcion:rgb(117, 245, 136);
 }
 .contenedor_menu{
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background-color: var(--menuColor);
 }
 .menu_izt{

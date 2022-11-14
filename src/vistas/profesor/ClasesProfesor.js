@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button, cardHeaderClasses, Link } from "@mui/material";
 import FichaMatricularClase from "../../componentes/fichaMatricularClase/FichaMatricularClase";
+import FichaClase from "../../componentes/fichaClase/FichaClase";
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -37,8 +38,9 @@ export default function ClasesProfesor(props) {
         nomClase: "",
         descripcion: "",
     });
-
     const [clasesProf, setclasesProf] = useState([]);
+
+
 
     const handleChange = (e) => {
         setClase({
@@ -139,7 +141,7 @@ export default function ClasesProfesor(props) {
             <ResmPersonaje resPersonaje={resPersonaje} />
         </div> */}
         <div className="misClasesUnirse">
-            {clasesProf.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} /></div> })}
+            {clasesProf.map(item => { return <div id={item.id} ><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div> })}
         </div>
 
     </div>)
