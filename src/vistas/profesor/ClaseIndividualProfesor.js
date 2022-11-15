@@ -1,5 +1,5 @@
 import './claseIndividualProfesor.css';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 import FichaActividad from '../../componentes/fichaActividad/FichaActividad'
@@ -25,17 +25,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 
-//Peticiones
-const getActivity = async (filtro) => {
-    const urlBD = "http://localhost:8080/api/actividad";
-    const response = await fetch(`${urlBD}`);
-    const { actividadesBD } = await response.json();
-    
-
-    let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
-    console.log(actividadesFiltradas);
-}
-
 
 export default function ClaseIndividualProfesor(props) {
 
@@ -43,6 +32,19 @@ export default function ClaseIndividualProfesor(props) {
         getActivity(props.clase._id);
     }, [])
 
+    const [activity, setActivity] = useState([]);
+
+    //Peticiones
+    const getActivity = async (filtro) => {
+        const urlBD = "http://localhost:8080/api/actividad";
+        const response = await fetch(`${urlBD}`);
+        const { actividadesBD } = await response.json();
+
+
+        let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
+        setActivity(actividadesFiltradas);
+        // console.log(actividadesFiltradas);
+    }
 
     return (
         <div className="infoClase">
@@ -54,7 +56,8 @@ export default function ClaseIndividualProfesor(props) {
             <div className="infoActividades">
                 <h1>Actividades de clase</h1>
                 <div className="contenidoInfoActividades">
-                    <FichaActividad />
+                    {/* <FichaActividad actividad={activity}/> */}
+                    {activity.map(actividad => {return <div id={actividad._id}> <FichaActividad actividad={actividad}></FichaActividad> </div>})}
 
                 </div>
             </div>
