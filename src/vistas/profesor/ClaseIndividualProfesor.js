@@ -32,7 +32,29 @@ export default function ClaseIndividualProfesor(props) {
         getActivity(props.clase._id);
     }, [])
 
-    const [activity, setActivity] = useState([]);
+
+
+    const [activity, setActivity] = useState([]); //Actividades individuales
+    const [crearActivity, setCrearActivity] = useState({ //Form
+        recompensaForm: "",
+        castigoForm: "",
+        descripcionForm: "",
+        fechaVencimientoForm: ""
+    })
+
+
+
+    const handleChange = (e) => {
+        setCrearActivity({
+            ...crearActivity,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        eventPostActivity();
+    }
 
     //Peticiones
     const getActivity = async (filtro) => {
@@ -46,6 +68,35 @@ export default function ClaseIndividualProfesor(props) {
         // console.log(actividadesFiltradas);
     }
 
+    const postActivity = async (objectActivity) => {
+        const urlBD = 'http://localhost:8080/api/actividad';
+        const response = await fetch(`${urlBD}`,
+            {
+                method: 'POST',
+                body: JSON.stringify(objectActivity),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'TokenRol': props.data.token,
+                }
+            });
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }
+
+    const eventPostActivity = async () => {
+        const objectActivity = {
+            fechaVencimiento: crearActivity.fechaVencimientoForm,
+            recompensa: crearActivity.recompensaForm,
+            castigo: crearActivity.castigoForm,
+            descripcion: crearActivity.descripcionForm,
+            claseFK: props.clase._id
+        }
+
+        const response = await postActivity(objectActivity);
+        alert("Clase Creada");
+    }
+
     return (
         <div className="infoClase">
             <h1>Información de la clase</h1>
@@ -57,7 +108,7 @@ export default function ClaseIndividualProfesor(props) {
                 <h1>Actividades de clase</h1>
                 <div className="contenidoInfoActividades">
                     {/* <FichaActividad actividad={activity}/> */}
-                    {activity.map(actividad => {return <div id={actividad._id}> <FichaActividad actividad={actividad}></FichaActividad> </div>})}
+                    {activity.map(actividad => { return <div id={actividad._id}> <FichaActividad actividad={actividad}></FichaActividad> </div> })}
 
                 </div>
             </div>
@@ -70,35 +121,37 @@ export default function ClaseIndividualProfesor(props) {
                 <div data-aos="fade-down" data-aos-once="true">
                     <div className="formulario">
                         <h1 className="login_titleProfesor">Ingrese los datos de la actividad</h1>
-                        <form>
-                            <p>Nombre de la actividad</p>
-                            <input
-                                type="text"
-                                name="nomClase"
-                                required
-                            ></input>
-                            <p>Descripción</p>
-                            <input
-                                type="text"
-                                name="descripcion"
-                                required
-                            ></input>
-                            <p>Experiencia por victoria</p>
+                        <form onSubmit={handleSubmit}>
+                            <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"
-                                name="descripcion"
+                                name="recompensaForm"
+                                value={crearActivity.recompensaForm}
+                                onChange={handleChange}
                                 required
                             ></input>
-                            <p>Daño por fallar la actividad</p>
+                            <p>Daño por fallar la actividad - Castigo</p>
                             <input
                                 type="number"
-                                name="descripcion"
+                                name="castigoForm"
+                                value={crearActivity.castigoForm}
+                                onChange={handleChange}
+                                required
+                            ></input>
+                            <p>Descripcion</p>
+                            <input
+                                type="text"
+                                name="descripcionForm"
+                                value={crearActivity.descripcionForm}
+                                onChange={handleChange}
                                 required
                             ></input>
                             <p>Fecha de vencimiento</p>
                             <input
                                 type="date"
-                                name="descripcion"
+                                name="fechaVencimientoForm"
+                                value={crearActivity.fechaVencimientoForm}
+                                onChange={handleChange}
                                 required
                             ></input>
 
