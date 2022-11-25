@@ -134,14 +134,10 @@ export default function ClasesProfesor(props) {
         </div>
         <h1> Mis Clases</h1>
         <hr></hr>
-        {/* <div className='resumenClases'>
-            <div className="misClases">
-                {data.map(item => { return <div id={item.id} onMouseOver={cambioTarjeta}><FichaClase key={item.id} clase={item} /></div> })}
-            </div>
-            <ResmPersonaje resPersonaje={resPersonaje} />
-        </div> */}
         <div className="misClasesUnirse">
-            {clasesProf.map(item => { return <div id={item.id} ><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div> })}
+            {clasesProf.map(item => {
+                return <div id={item.id} ><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
+            })}
         </div>
 
     </div>)

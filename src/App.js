@@ -16,6 +16,7 @@ import Profesor from "./vistas/profesor/Profesor";
 import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
 import ClaseIndividualProfesor from "./vistas/profesor/ClaseIndividualProfesor";
 import PerfilProf from "./vistas/profesor/PerfilProf"
+import MapaActividades from './componentes/mapaActividades/MapaActividades'
 
 //const pages = ['Saber Mas', 'Preguntas'];
 
@@ -49,9 +50,10 @@ function App() {
             <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
             <Route path="Clases" element={<ClasesEst data={usuario} />} />
           </Route>
+          <Route path="/MapaActividades" element={<MapaActividades data={usuario} />} />
           <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
             <Route path="Micuenta" element={<PerfilProf data={usuario} />} />
-            <Route path="Clases" element={<ClasesProfesor data={usuario} funcionClaseIndividual={setClaseIndividual}/>} />
+            <Route path="Clases" element={<ClasesProfesor data={usuario} funcionClaseIndividual={setClaseIndividual} />} />
             <Route path="ClaseIndidivual" element={<ClaseIndividualProfesor data={usuario} clase={claseIndividual} />} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />

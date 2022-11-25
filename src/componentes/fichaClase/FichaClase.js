@@ -30,7 +30,7 @@ export default function FichaClase(props) {
       <p className="profesor_clase">
         <i className="fa-solid fa-dragon"></i> {props.clase.profesor}
       </p>
-      <button className="ir_clase" onClick={(e)=>eventClaseProfesor(props.clase, e)}>Ir a Clase</button>
+      <button className="ir_clase" onClick={(e) => eventClaseProfesor(props.clase, e)}>Ir a Clase</button>
     </div>
   );
 }

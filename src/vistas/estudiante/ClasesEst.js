@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import './clasesEst.css';
 
 import data from '../../data_prueba/clases.json'
-import FichaClase from '../../componentes/fichaClase/FichaClase'
+import FichaMisClasesEst from '../../componentes/fichaMisClasesEst/FichaMisClasesEst'
 import ResmPersonaje from '../../componentes/resmPersonaje/ResmPersonaje';
 
 import { styled } from "@mui/material/styles";
@@ -34,12 +34,15 @@ export default function ClasesEst(props) {
 
 
      useEffect(() => {
-          getClases();
+          getClasesMatricular();
+          getMisClases(props.data.usuario._id);
      }, [])
 
 
-     const [clasesEst, setclasesEst] = useState([]);
+     const [misClases, setMisClases] = useState([]);
+     const [clasesEstMatricular, setclasesEstMatricular] = useState([]);
 
+     /*
      const [resPersonaje, setResPersonaje] = React.useState({
           tipo: "base",
           vida: "100",
@@ -62,41 +65,68 @@ export default function ClasesEst(props) {
                return true;
           })
      }
+     */
 
+     //Obtener las clases a las que pertenece un estudiante
+     const getMisClases = async (idEstudiante) => {
+          const urlBD = 'http://localhost:8080/api/clasesEstudiante/claseEstudianteGET';
+          const objectID = {
+               idEstudiante: idEstudiante
+          };
 
+          const response = await fetch(`${urlBD}`, {
+               method: 'POST',
+               body: JSON.stringify(objectID),
+               headers: {
+                    'Content-Type': 'application/json'
+               },
+               redirect: 'follow'
+          });
+          const data = await response.json();
+          const { infoClasesBD } = data;
 
-     //Obtener todas las posibles clases
-     const getClases = async () => {
+          setMisClases(infoClasesBD);
+
+     }
+
+     //Obtener todas las posibles clases a las que un estudiante se puede matricular
+     const getClasesMatricular = async () => {
           const urlBD = 'http://localhost:8080/api/clases/';
 
           const response = await fetch(`${urlBD}`);
           const data = await response.json();
           const { clasesBD } = data;
           dataClases = clasesBD;
-          console.log(dataClases);
-          setclasesEst(dataClases);
+          setclasesEstMatricular(dataClases);
 
-          // mapearClases();
-          // return clasesBD;
      }
 
 
-     
+
 
      return (<div className='clasesEst'>
-          <h1> Mis Clases</h1>
-          <hr></hr>
-          <div className='resumenClases'>
+          <div>
+               <h1> Mis Clases</h1>
+               <hr></hr>
+               <div className="misClasesGrid">
+                    {misClases.map(item => {
+                         return <div id={item.id} ><FichaMisClasesEst key={item.id} clase={item}/></div>
+                    })}
+               </div>
+          </div>
+
+          {/* NO BORRAR AÚN */}
+          {/* <div className='resumenClases'>
                <div className="misClases">
                     {data.map(item => { return <div id={item.id} onMouseOver={cambioTarjeta}><FichaClase key={item.id} clase={item} /></div> })}
                </div>
                <ResmPersonaje resPersonaje={resPersonaje} />
-          </div>
+          </div> */}
           <div className="ingresarClase">
                <h1>Matricularme en una clase</h1>
                <hr></hr>
                <div className="misClasesUnirse">
-                    {clasesEst.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={props.data}/></div> })}
+                    {clasesEstMatricular.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={props.data} /></div> })}
 
                </div>
 

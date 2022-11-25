@@ -15,6 +15,11 @@ h1{
     border-radius: 5px;
 }
 
+.misClasesGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .resumenClases{
     display: flex;
     flex-flow: row wrap;
