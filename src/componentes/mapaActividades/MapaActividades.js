@@ -1,5 +1,5 @@
 import './mapaActividades.css'
-import '../../utils/dist/rpgui.min.css'
+// import '../../utils/dist/rpgui.min.css'
 
 
 export default function MapaActividades({actividades}) {
@@ -13,7 +13,8 @@ export default function MapaActividades({actividades}) {
       {
         actividades.map((actividad, index) => {
           let classButton = `rpgui-button posicion${index+1} absolute`
-          return(<button className={classButton} type="button" alt='boton'><p>{index+1}</p></button>)
+          let idButton = `button${index+1}`
+          return(<button className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
         })
       }
       </div>
