@@ -110,7 +110,7 @@ export default function ClasesEst(props) {
                <hr></hr>
                <div className="misClasesGrid">
                     {misClases.map(item => {
-                         return <div id={item.id} ><FichaMisClasesEst key={item.id} clase={item}/></div>
+                         return <div id={item.id} ><FichaMisClasesEst key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div>
                     })}
                </div>
           </div>

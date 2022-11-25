@@ -15,6 +15,7 @@ import Registro from "./vistas/registro/Registro";
 import Profesor from "./vistas/profesor/Profesor";
 import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
 import ClaseIndividualProfesor from "./vistas/profesor/ClaseIndividualProfesor";
+import ClaseIndividualEstudiante from './vistas/estudiante/ClaseIndividualEstudiante';
 import PerfilProf from "./vistas/profesor/PerfilProf"
 import MapaActividades from './componentes/mapaActividades/MapaActividades'
 
@@ -24,6 +25,7 @@ function App() {
 
   const [usuario, setUsuario] = React.useState(null);
   const [claseIndividual, setClaseIndividual] = React.useState(null);
+  const [claseIndividualEstudiante, setClaseIndividualEstudiante] = React.useState(null);
 
   const [sesionIniciada, setSesionIniciada] = React.useState(false);
 
@@ -31,10 +33,6 @@ function App() {
     setUsuario(persona)
   }
 
-  // //Crear aqui un estado para la clase ind
-  // const ClaseIndividualInformacion = (clase) => {
-  //   setClaseIndividual(clase);
-  // }
 
   return (
     <BrowserRouter>
@@ -48,7 +46,8 @@ function App() {
           <Route path="/registro" element={<Registro setSesionIniciada={setSesionIniciada} />} />
           <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
             <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
-            <Route path="Clases" element={<ClasesEst data={usuario} />} />
+            <Route path="Clases" element={<ClasesEst data={usuario} funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
+            <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante data={usuario} clase={claseIndividualEstudiante}/>}/>
           </Route>
           <Route path="/MapaActividades" element={<MapaActividades data={usuario} />} />
           <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
