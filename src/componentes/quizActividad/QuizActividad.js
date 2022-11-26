@@ -3,13 +3,14 @@ import './quizActividad.css';
 
 
 
-export default function QuizActividad({preguntas}) {
-    
+export default function QuizActividad({ preguntas, actividades }) {
 
 
-    return (
+
+    return ( actividades.length ? (
         <div>
-
+            <h1>Quiz</h1>
+            <hr></hr>
             <div class="wrapper">
                 <div class="quiz-container">
                     <div class="quiz-head">
@@ -35,6 +36,6 @@ export default function QuizActividad({preguntas}) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>) : null
     )
 }

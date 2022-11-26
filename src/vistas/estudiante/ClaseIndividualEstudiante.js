@@ -38,7 +38,7 @@ export default function ClaseIndividualEstudiante(props) {
   }
 
 
-  return (preguntasQuiz.length > 0 ?(
+  return (preguntasQuiz.length > 0 ? (
     <div class="containerActividad">
       <h1>Info de la clase</h1>
       <hr></hr>
@@ -46,12 +46,9 @@ export default function ClaseIndividualEstudiante(props) {
       <p>Descripción: {props.clase.descripcion}</p>
       <p>Número de actividades: {activity.length}</p>
 
-
       <MapaActividades actividades={activity} />
 
-      <h1>Quiz</h1>
-      <hr></hr>
-      <QuizActividad preguntas={preguntasQuiz}></QuizActividad>
+      <QuizActividad preguntas={preguntasQuiz} actividades={activity}></QuizActividad>
 
     </div>) : <p>CARGANDO...</p>
   )
