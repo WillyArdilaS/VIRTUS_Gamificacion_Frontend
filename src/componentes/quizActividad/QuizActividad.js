@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import './quizActividad.css';
 
 
 
 export default function QuizActividad({preguntas}) {
+    
+
+
     return (
         <div>
 

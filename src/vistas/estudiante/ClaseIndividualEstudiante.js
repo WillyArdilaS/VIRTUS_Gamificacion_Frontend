@@ -8,8 +8,8 @@ import QuizActividad from '../../componentes/quizActividad/QuizActividad'
 export default function ClaseIndividualEstudiante(props) {
   // Hacer el fetch para traer el número de actividades y asi poder renderizar los botones del mapa
   useEffect(() => {
-    getActivity(props.clase._id);
     getPreguntasQuiz();
+    getActivity(props.clase._id);
   }, [])
 
 
@@ -28,16 +28,17 @@ export default function ClaseIndividualEstudiante(props) {
     setActivity(actividadesFiltradas);
   }
 
-  //API preguntas actividad
+  // //API preguntas actividad
   const getPreguntasQuiz = async (numPreguntas = 10) => {
-    const url = `https://opentdb.com/api.php?amount=${numPreguntas}`;
+    const url = `https://opentdb.com/api.php?amount=${numPreguntas}&type=multiple`;
     const response = await fetch(`${url}`);
-    const {results} = await response.json();
+    const { results } = await response.json();
     setPreguntasQuiz(results);
+    console.log(results);
   }
 
 
-  return (
+  return (preguntasQuiz.length > 0 ?(
     <div class="containerActividad">
       <h1>Info de la clase</h1>
       <hr></hr>
@@ -52,6 +53,6 @@ export default function ClaseIndividualEstudiante(props) {
       <hr></hr>
       <QuizActividad preguntas={preguntasQuiz}></QuizActividad>
 
-    </div>
+    </div>) : <p>CARGANDO...</p>
   )
 }
