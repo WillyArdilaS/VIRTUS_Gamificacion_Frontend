@@ -33,7 +33,7 @@ export default function Footer1(){
                     <p>Copyright © 2022 grupo VIRTUS. Derechos reservados.</p>
                  </div>
                  <div className='about'>
-                    <a href='https://github.com/Gabelonio/ambiente-gamificacion-epico/tree/main'>
+                    <a href='https://gist.github.com/SebastianWilches/f189d7bcb6db34911c5df781b61297f2'>
                         <p>Sobre nosotros: </p>
                         <i className="fa-brands fa-github"></i>
                     </a>
