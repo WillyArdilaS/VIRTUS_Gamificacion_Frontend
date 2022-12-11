@@ -16,6 +16,7 @@ export default function ClaseIndividualEstudiante(props) {
 
 
   const [activity, setActivity] = useState([]);
+  const [indexActivity, setIndexActivity] = useState();
   //QUIZ
   const [preguntasQuiz, setPreguntasQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,6 +71,16 @@ export default function ClaseIndividualEstudiante(props) {
     setShowAnswers(false);
   }
 
+  if (currentIndex == 10) {
+    if (score > 5) {
+      resPersonaje.experiencia = resPersonaje.experiencia + activity[0].recompensa;
+
+    } else {
+      resPersonaje.vida = resPersonaje.experiencia - activity[0].castigo;
+
+    }
+  }
+
 
   return (preguntasQuiz.length > 0 ? (
     <div class="containerActividad">
@@ -84,9 +95,9 @@ export default function ClaseIndividualEstudiante(props) {
       {/* <QuizActividadTest preguntas={preguntasQuiz} actividades={activity}></QuizActividadTest> */}
 
       <div className="container">
-        
+
         {currentIndex >= preguntasQuiz.length ? (
-          <h1>El puntaje del quiz es {score}</h1>) : (<QuizActividad handleAnswer={handleAnswer}
+          <div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>) : (<QuizActividad handleAnswer={handleAnswer}
             showAnswers={showAnswers}
             handleNextQuestion={handleNextQuestion}
             data={preguntasQuiz[currentIndex]}

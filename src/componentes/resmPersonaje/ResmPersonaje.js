@@ -36,7 +36,7 @@ export default function ResmPersonaje({resPersonaje}){
                 <div className='resmPersonaje_experiencia_barra'>
                     <div style={{
                             backgroundColor:"rgb(205, 235, 96)",
-                            width:barraExperiencia,
+                            width: barraExperiencia,
                             height:"20px",
                             borderRadius: "5px",
                             display:"flex",
@@ -45,10 +45,10 @@ export default function ResmPersonaje({resPersonaje}){
                             {experiencia}/100
                     </div>
                 </div>
-                <p className='resmPersonaje_habilidades'>Habilidades 
+                {/* <p className='resmPersonaje_habilidades'>Habilidades 
                             <i className="fa-brands fa-superpowers"></i>
                 </p>
-                <div className='resmPersonaje_habilidades_barra'></div>
+                <div className='resmPersonaje_habilidades_barra'></div> */}
             </div>
     )
 
