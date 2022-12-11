@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
-import QuizActividadTest from '../../componentes/quizActividadTest/QuizActividadTest'
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 
@@ -16,7 +15,6 @@ export default function ClaseIndividualEstudiante(props) {
 
 
   const [activity, setActivity] = useState([]);
-  const [indexActivity, setIndexActivity] = useState();
   //QUIZ
   const [preguntasQuiz, setPreguntasQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -71,6 +69,7 @@ export default function ClaseIndividualEstudiante(props) {
     setShowAnswers(false);
   }
 
+  //Evalua el resultado del quiz
   if (currentIndex == 10) {
     if (score > 5) {
       resPersonaje.experiencia = resPersonaje.experiencia + activity[0].recompensa;
@@ -80,6 +79,7 @@ export default function ClaseIndividualEstudiante(props) {
 
     }
   }
+
 
 
   return (preguntasQuiz.length > 0 ? (
@@ -92,11 +92,9 @@ export default function ClaseIndividualEstudiante(props) {
 
       <MapaActividades actividades={activity} />
 
-      {/* <QuizActividadTest preguntas={preguntasQuiz} actividades={activity}></QuizActividadTest> */}
 
       <div className="container">
-
-        {currentIndex >= preguntasQuiz.length ? (
+        {currentIndex >= preguntasQuiz.length || activity.length == 0 ? (
           <div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>) : (<QuizActividad handleAnswer={handleAnswer}
             showAnswers={showAnswers}
             handleNextQuestion={handleNextQuestion}
