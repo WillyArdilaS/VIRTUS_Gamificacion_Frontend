@@ -32,13 +32,14 @@ export default function Registro(props) {
 
   const [usuario, setusuario] = useState({
     nombre: "",
-    apellido:"",
+    apellido: "",
     rol: "estudiante",
     correo: "",
     password: "",
     fechaNacimiento: "",
     estado: true,
   });
+
 
   const handleChange = (e) => {
     setusuario({
@@ -52,7 +53,7 @@ export default function Registro(props) {
     comprobar();
   }
 
-  const sendRegister = async(objectRegister)=> {
+  const sendRegister = async (objectRegister) => {
     const urlBD = 'http://localhost:8080/api/users/';
     const response = await fetch(`${urlBD}`,
       {
@@ -67,12 +68,40 @@ export default function Registro(props) {
     return data;
   }
 
-  const comprobar = async() => {
-    console.log(usuario);
+  const GETUsers = async () => {
+    const urlBD = 'http://localhost:8080/api/users';
+    const response = await fetch(urlBD);
+    const { usuariosBD } = await response.json();
+
+    const userFiltrado = (usuariosBD.filter(filtro => filtro.correo === usuario.correo));
+
+    await POSTPersonaje(userFiltrado[0]._id);
+  }
+
+  const POSTPersonaje = async (fkUsuario) => {
+    const objectPJ = {
+      clase: "CABALLERO",
+      usuarioFK: fkUsuario
+    }
+
+    const urlBD = 'http://localhost:8080/api/personajes/';
+    const response = await fetch(urlBD, {
+      method: 'POST',
+      body: JSON.stringify(objectPJ),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
+  const comprobar = async () => {
 
     const userRegister = await sendRegister(usuario);
     console.log(userRegister);
 
+    await GETUsers();
 
     // navigateToStudentView();
   };

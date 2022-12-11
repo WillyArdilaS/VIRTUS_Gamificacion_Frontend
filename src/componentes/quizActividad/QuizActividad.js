@@ -4,8 +4,6 @@ import React from 'react'
 function QuizActividad({ handleAnswer, showAnswers, handleNextQuestion, data: { question, correct_answer, answers }, currentIndex, numPreguntas }) {
     return (
         <>
-            <h1>Quiz</h1>
-            <hr></hr>
             <div className="containerQuiz">
                 <div class="quiz-container">
                     <div class="quiz-head">

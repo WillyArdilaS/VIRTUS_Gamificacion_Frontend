@@ -1,8 +1,10 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
 import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
 import QuizActividadTest from '../../componentes/quizActividadTest/QuizActividadTest'
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
+import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 
 
 export default function ClaseIndividualEstudiante(props) {
@@ -19,6 +21,13 @@ export default function ClaseIndividualEstudiante(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [showAnswers, setShowAnswers] = useState(false);
+  //Ficha PJ
+  const [resPersonaje, setResPersonaje] = React.useState({
+    tipo: "base",
+    vida: "100",
+    experiencia: "100",
+    nivel: 0
+  });
 
 
   //Peticiones
@@ -75,6 +84,7 @@ export default function ClaseIndividualEstudiante(props) {
       {/* <QuizActividadTest preguntas={preguntasQuiz} actividades={activity}></QuizActividadTest> */}
 
       <div className="container">
+        
         {currentIndex >= preguntasQuiz.length ? (
           <h1>El puntaje del quiz es {score}</h1>) : (<QuizActividad handleAnswer={handleAnswer}
             showAnswers={showAnswers}
@@ -83,6 +93,7 @@ export default function ClaseIndividualEstudiante(props) {
             currentIndex={currentIndex}
             numPreguntas={preguntasQuiz.length} />)}
 
+        <ResmPersonaje resPersonaje={resPersonaje} />
       </div>
 
     </div>) : <p>CARGANDO...</p>

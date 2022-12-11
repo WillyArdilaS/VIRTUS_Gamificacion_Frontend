@@ -39,7 +39,7 @@ body {
     background: var(--light-color);
     padding: 1.5rem 4rem 3rem 4rem;
     width: 600px;
-    height: 680px;
+    height: auto;
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
