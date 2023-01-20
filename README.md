@@ -1,5 +1,5 @@
 <p align="center" style="padding: 20px; background: #252832">
-    <img width="300" src="https://github.com/SebastianWilches/VIRTUS_Gamificacion_Frontend/blob/master/Documentacion/Banner.png" alt="Banner VirtusFront">
+    <img src="https://github.com/SebastianWilches/VIRTUS_Gamificacion_Frontend/blob/master/Documentacion/Banner.png" alt="Banner VirtusFront">
 </p>
 
 # Objetivo
