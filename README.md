@@ -21,7 +21,7 @@ npm start
 Abra [http://localhost:3000](http://localhost:3000) para ver el aplicativo en el navegador.\
 La página se recargará cuando hagas cambios.\\
 
-Nota: Para que el aplicativo web muestre la información correctamente, deberá también ejecutar el Backend del aplicativo que lo encuentra [https://github.com/SebastianWilches/VIRTUS_Gamificacion_Backend](aquí)
+Nota: Para que el aplicativo web muestre la información correctamente, deberá también ejecutar el Backend del aplicativo que lo encuentra [aquí](https://github.com/SebastianWilches/VIRTUS_Gamificacion_Backend)
 
 # Documentación
 Se usara como base los avances del front realizados en el siguiente repositorio https://github.com/Gabelonio/ambiente-gamificacion-epico. El objetivo de este proyecto sera hacer las respectivas adecuaciones al front presente para que pueda consumir los servicios de una REST API elaborada por mí para el grupo de trabajo VIRTUS.
