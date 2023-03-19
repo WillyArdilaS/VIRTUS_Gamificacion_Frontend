@@ -170,40 +170,34 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
                 </Box>
                 <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
                 <NavLink className="link" to="/">
-                <Typography
-                    variant="h5"
-                    noWrap
-                    href=""
-                    sx={{
-                    mr: 2,
-                    display: { xs: "flex", md: "none" },
-                    flexGrow: 1,
-                    fontFamily: "monospace",
-                    fontWeight: 700,
-                    letterSpacing: ".3rem",
-                    color: "inherit",
-                    textDecoration: "none",
-                    }}
-                >
-                    LOGO
-                </Typography>
+                  <Typography
+                      variant="h5"
+                      noWrap
+                      href=""
+                      sx={{
+                      mr: 2,
+                      display: { xs: "flex", md: "none" },
+                      flexGrow: 1,
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                      letterSpacing: ".3rem",
+                      color: "inherit",
+                      textDecoration: "none",
+                      }}
+                  >
+                      LOGO
+                  </Typography>
                 </NavLink>{" "}{/* Display en Vista pequeña del titulo y logo */}
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                   {pagesVistaCompleta.map((page) => {
                     return (
-                      <NavLink key={page.nombre} className="link" to={page.enlace}>
-                        <Button
-                          onClick={handleCloseNavMenu}
-                          className="navigationOptions"
-                          sx={{
-                            my: 2,
-                            color: "white",
-                            display: "block",
-                            fontFamily: ["Maven Pro", "cursive"].join(","),
-                          }}
-                        >{page.nombre}
-                        </Button>
-                      </NavLink>
+                      <div className="nav">
+                        <NavLink key={page.nombre} 
+                        to={page.enlace}
+                        className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                          {page.nombre}
+                        </NavLink>
+                      </div>
                     );
                   })}
                 </Box>{/* Barra de Navegacion en vista completa */}

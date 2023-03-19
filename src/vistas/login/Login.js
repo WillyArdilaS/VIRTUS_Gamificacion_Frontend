@@ -70,7 +70,8 @@ export default function Login(props) {
 
     //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
     const userLogeado = await sendLogin(usuario);
-    // console.log(userLogeado);
+    console.log(userLogeado);
+    console.log(usuario)
 
     if (!userLogeado.token) {
       return window.alert("Datos incorrectos");
@@ -95,11 +96,15 @@ export default function Login(props) {
   };
 
   function navigateToStudentView() {
-    navigate("/Estudiante");
+    navigate("/Estudiante/Micuenta");
+    
   }
 
   function navigateToTeacherView() {
-    navigate("/Profesor");
+    navigate("/Profesor/Micuenta");
+    /*document
+      .getElementById('Micuenta')
+      .setAttribute('style', 'background-color: rgb(117, 245, 136)')*/
   }
 
   useEffect(() => {

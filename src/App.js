@@ -32,8 +32,7 @@ function App() {
   const sesion = (persona) => {
     setUsuario(persona)
   }
-
-
+  
   return (
     <BrowserRouter>
       <NavBar sesionIniciada={sesionIniciada} usuario={usuario} setSesionIniciada={setSesionIniciada} /* pages={pages} */ />
@@ -43,7 +42,7 @@ function App() {
           <Route path="/Preguntas" element={<Preguntas />} />
           <Route path="/SaberMas" element={<SaberMas />} />
           <Route path="/login" element={<Login sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
-          <Route path="/registro" element={<Registro setSesionIniciada={setSesionIniciada} />} />
+          <Route path="/registro" element={<Registro sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
           <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
             <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
             <Route path="Clases" element={<ClasesEst data={usuario} funcionClaseIndividual={setClaseIndividualEstudiante}/>} />

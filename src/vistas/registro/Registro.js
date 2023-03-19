@@ -33,7 +33,7 @@ export default function Registro(props) {
   const [usuario, setusuario] = useState({
     nombre: "",
     apellido: "",
-    rol: "estudiante",
+    rol: "",
     correo: "",
     password: "",
     fechaNacimiento: "",
@@ -59,6 +59,21 @@ export default function Registro(props) {
       {
         method: 'POST',
         body: JSON.stringify(objectRegister),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  }
+
+  const sendLogin = async (objectLogin) => {
+    const urlBD = 'http://localhost:8080/api/auth/login';
+    const response = await fetch(`${urlBD}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(objectLogin),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -98,16 +113,40 @@ export default function Registro(props) {
 
   const comprobar = async () => {
 
-    const userRegister = await sendRegister(usuario);
-    console.log(userRegister);
+    await sendRegister(usuario);
 
-    await GETUsers();
+    //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
+    const userLogeado = await sendLogin({
+      correo: usuario.correo,
+      password: usuario.password,
+    });
+    
+    if (!userLogeado.token) {
+      return window.alert("Datos incorrectos");
+    };
 
-    // navigateToStudentView();
+    //Las credenciales son correctas
+    props.sesion(userLogeado);
+    props.setSesionIniciada(true);
+
+    //Aqui va a dirigir a una pagina o otra dependiendo del rol
+    //Vista estudiante
+    if (userLogeado.usuario.rol === "estudiante") {
+      navigateToStudentView();
+    };
+
+    //Vista profesor
+    if (userLogeado.usuario.rol === "maestro") {
+      navigateToTeacherView();
+    };
   };
 
   function navigateToStudentView() {
-    navigate("/Estudiante");
+    navigate("/Estudiante/Micuenta");
+  }
+
+  function navigateToTeacherView() {
+    navigate("/Profesor/Micuenta");
   }
 
   useEffect(() => {
@@ -151,7 +190,8 @@ export default function Registro(props) {
             name="rol"
             value="estudiante"
             onChange={handleChange}
-            checked />
+            required
+            />
           <label htmlFor="estudiante">Estudiante</label>
           <input
             className="radio_input"

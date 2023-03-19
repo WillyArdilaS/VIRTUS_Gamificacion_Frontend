@@ -16,15 +16,14 @@
 .menu_izt{
     display: grid;
     grid-template-columns: 1fr;
-
     gap: 5px;
     padding-top: 40px;
     width: 20vw;
     padding-bottom: 20px;
     background-color: var(--menuColor);
     overflow: hidden;
-    
 }
+
 .menu_izt .opciones{
     width: 240px;
     height: 40px;
@@ -32,13 +31,14 @@
 }
  
 .menu_izt .opciones .link{
-    position: relative;
-
+    display: block;
+    width: 240px;
+    height: 40px;
     font-size: 14px;
     color: rgb(51, 51, 51);
-    left: 40px;
-    top: 10px;
     text-decoration: none;
+    text-indent: 40px;
+    margin-top: 10px;
 }
 
 .menu_izt .opciones:hover, .opciones.activa{

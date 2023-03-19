@@ -32,9 +32,9 @@ export default function MenuIzq({ opciones, usuario }) {
             const dir = op.replace(/ /g, "");
             return (
               <div key={op} id={dir} className="opciones" onClick={eleccion}>
-                <Link className="link" to={dir}>
+                {<Link className="link" to={dir}>
                   {op}
-                </Link>
+                </Link>}
               </div>
             );
           })}

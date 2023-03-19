@@ -6,6 +6,28 @@
     color: inherit;
 }
 
+.nav a {
+    background: #7db952;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-right: 10px;
+    text-decoration:none;
+}
+
+.nav a:hover {
+    background: #72aa4a;
+}
+
+.nav a.active {
+    color: #7db952;
+    background: #ffffff;
+}
+
+.nav a.inactive {
+    font-style: italic;
+    color: #ffffff;
+}
+
 .navigationBar{
     background-color: #7db952;
 }

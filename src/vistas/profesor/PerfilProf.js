@@ -1,7 +1,7 @@
 import './PerfilProf.css';
 
 export default function PerfilProf(props) {
-
+    
     return (
         <div className="infoProfesor">
 
