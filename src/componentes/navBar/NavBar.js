@@ -109,7 +109,7 @@ export default function NavBar({sesionIniciada, setSesionIniciada}) {
       <AppBar position="relative" sx={{ backgroundColor: "#7db952" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {(JSON.parse(sessionStorage.getItem("sesionIniciada")) == false) && (
+            {(JSON.parse(sessionStorage.getItem("sesionIniciada")) == false || JSON.parse(sessionStorage.getItem("sesionIniciada")) == null) && (
               <>
                 <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />{/* Icono Barra de navegacion */}
                 <NavLink className="link" to="/">
