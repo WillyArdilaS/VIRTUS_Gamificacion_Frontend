@@ -30,7 +30,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function ClasesProfesor(props) {
 
     useEffect(() => {
-        getClases(props.data.usuario._id);
+        getClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
     }, [])
 
 
@@ -62,7 +62,7 @@ export default function ClasesProfesor(props) {
                 body: JSON.stringify(objectClass),
                 headers: {
                     'Content-Type': 'application/json',
-                    'TokenRol': props.data.token,
+                    'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
                 }
             });
         const data = await response.json();
@@ -74,11 +74,12 @@ export default function ClasesProfesor(props) {
         const objectClass = {
             nombre: clase.nomClase,
             descripcion: clase.descripcion,
-            usuarioProfesorFK: props.data.usuario._id
+            usuarioProfesorFK: JSON.parse(sessionStorage.getItem("usuario")).usuario._id
         }
 
         const response = await sendClass(objectClass);
         alert("Clase Creada");
+        getClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id)
     }
 
 
@@ -93,7 +94,6 @@ export default function ClasesProfesor(props) {
         // console.log(clasesFiltradas);
 
         setclasesProf(clasesFiltradas);
-
     }
 
 
@@ -139,7 +139,5 @@ export default function ClasesProfesor(props) {
                 return <div id={item.id} ><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
             })}
         </div>
-
     </div>)
-
 }

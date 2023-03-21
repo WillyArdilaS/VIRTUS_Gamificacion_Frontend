@@ -1,6 +1,6 @@
 import './PerfilProf.css';
 
-export default function PerfilProf(props) {
+export default function PerfilProf() {
     
     return (
         <div className="infoProfesor">
@@ -16,11 +16,11 @@ export default function PerfilProf(props) {
                 </div>
 
 
-                <p>Nombre: <span className="capitalizar">{props.data.usuario.nombre}</span></p>
-                <p>Apellido: <span className="capitalizar">{props.data.usuario.apellido}</span></p>
-                <p>Rol: <span className="capitalizar">{props.data.usuario.rol}</span></p>
-                <p>Correo: <span>{props.data.usuario.correo}</span></p>
-                <p>Fecha de nacimiento: <span>{props.data.usuario.fechaNacimiento}</span></p>
+                <p>Nombre: <span className="capitalizar">{JSON.parse(sessionStorage.getItem("usuario")).usuario.nombre}</span></p>
+                <p>Apellido: <span className="capitalizar">{JSON.parse(sessionStorage.getItem("usuario")).usuario.apellido}</span></p>
+                <p>Rol: <span className="capitalizar">{JSON.parse(sessionStorage.getItem("usuario")).usuario.rol}</span></p>
+                <p>Correo: <span>{JSON.parse(sessionStorage.getItem("usuario")).usuario.correo}</span></p>
+                <p>Fecha de nacimiento: <span>{JSON.parse(sessionStorage.getItem("usuario")).usuario.fechaNacimiento}</span></p>
 
             </div>
 

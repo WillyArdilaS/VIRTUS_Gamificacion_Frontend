@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import "./menuIzq.css";
 
-export default function MenuIzq({ opciones, usuario }) {
-  // console.log(usuario);
-
+export default function MenuIzq({ opciones }) {
   function eleccion(e) {
     const op = document.querySelectorAll(".opciones");
 
@@ -25,8 +23,8 @@ export default function MenuIzq({ opciones, usuario }) {
                 alt="imagen de perfil"
               />
             </div>
-            <p>{usuario.usuario.nombre}</p>
-            <p>{usuario.usuario.rol}</p>
+            <p>{JSON.parse(sessionStorage.getItem("usuario")).usuario.nombre}</p>
+            <p>{JSON.parse(sessionStorage.getItem("usuario")).usuario.rol}</p>
           </div>
           {opciones.map((op) => {
             const dir = op.replace(/ /g, "");

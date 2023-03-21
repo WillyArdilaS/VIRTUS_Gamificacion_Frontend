@@ -27,7 +27,7 @@ export default function FichaMatricularClase(props) {
     };
     const response = await postMatricular(objectMatricular);
     alert("Te uniste a la clase");
-    
+    props.getMisClases(estudianteID);
   }
 
   return (

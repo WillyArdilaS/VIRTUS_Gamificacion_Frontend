@@ -11,6 +11,7 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button } from "@mui/material";
 import FichaMatricularClase from "../../componentes/fichaMatricularClase/FichaMatricularClase";
+import { convertLength } from "@mui/material/styles/cssUtils";
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
      color: theme.palette.getContrastText(purple[500]),
@@ -31,16 +32,16 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function ClasesEst(props) {
      let dataClases;
+     const [misClases, setMisClases] = useState([]);
+     const [clasesEstMatricular, setclasesEstMatricular] = useState([]);
 
+     useEffect(() => {
+          getMisClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
+     }, [])
 
      useEffect(() => {
           getClasesMatricular();
-          getMisClases(props.data.usuario._id);
-     }, [])
-
-
-     const [misClases, setMisClases] = useState([]);
-     const [clasesEstMatricular, setclasesEstMatricular] = useState([]);
+     }, [misClases])
 
      /*
      const [resPersonaje, setResPersonaje] = React.useState({
@@ -86,7 +87,6 @@ export default function ClasesEst(props) {
           const { infoClasesBD } = data;
 
           setMisClases(infoClasesBD);
-
      }
 
      //Obtener todas las posibles clases a las que un estudiante se puede matricular
@@ -96,13 +96,18 @@ export default function ClasesEst(props) {
           const response = await fetch(`${urlBD}`);
           const data = await response.json();
           const { clasesBD } = data;
+          let arrayClases = []
           dataClases = clasesBD;
-          setclasesEstMatricular(dataClases);
 
+          dataClases.map((clase) => {
+               if(!JSON.stringify(misClases).includes(JSON.stringify(clase))) {
+                    if(!arrayClases.includes(clase)) {
+                         arrayClases.push(clase)
+                    }
+               }
+          }) 
+          setclasesEstMatricular(arrayClases);
      }
-
-
-
 
      return (<div className='clasesEst'>
           <div>
@@ -126,10 +131,9 @@ export default function ClasesEst(props) {
                <h1>Matricularme en una clase</h1>
                <hr></hr>
                <div className="misClasesUnirse">
-                    {clasesEstMatricular.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={props.data} /></div> })}
-
+                    {clasesEstMatricular.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={JSON.parse(sessionStorage.getItem("usuario"))} 
+                    getMisClases={getMisClases}/></div> })}
                </div>
-
           </div>
      </div>)
 

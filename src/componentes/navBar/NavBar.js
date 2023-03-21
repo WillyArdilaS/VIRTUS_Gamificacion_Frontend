@@ -41,13 +41,25 @@ const theme = createTheme({
   },
 });
 
-export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
-  const opciones = [
-    { nombre: "Mi cuenta", funcion:()=>{loadFunctionNavigateUsuario("Micuenta")} },
-    { nombre: "Clases", funcion: ()=>{loadFunctionNavigateUsuario("Clases")}},
-    { nombre: "Misiones Pendientes", funcion: ()=>{loadFunctionNavigateUsuario("MisionesPendientes")}},
-    { nombre: "Cerrar Sesion", funcion: logOut }
-  ];
+export default function NavBar({sesionIniciada, setSesionIniciada}) {
+  var opciones = [];
+
+  if(sessionStorage.getItem("usuario") != null) {
+    if(JSON.parse(sessionStorage.getItem("usuario")).usuario.rol == "maestro") {
+      opciones = [
+        { nombre: "Mi cuenta", funcion:()=>{loadFunctionNavigateUsuario("Micuenta")} },
+        { nombre: "Clases", funcion: ()=>{loadFunctionNavigateUsuario("Clases")}},
+        { nombre: "Cerrar Sesion", funcion: logOut }
+      ];
+    } else {
+      opciones = [
+        { nombre: "Mi cuenta", funcion:()=>{loadFunctionNavigateUsuario("Micuenta")} },
+        { nombre: "Clases", funcion: ()=>{loadFunctionNavigateUsuario("Clases")}},
+        { nombre: "Misiones Pendientes", funcion: ()=>{loadFunctionNavigateUsuario("MisionesPendientes")}},
+        { nombre: "Cerrar Sesion", funcion: logOut }
+      ];
+    }
+  }
 
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -83,11 +95,12 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
       item.classList.remove("activa");
     });
     document.getElementById(opcion).classList.add("activa")
-    navigate(usuario[0].tipo + "/" + opcion);
+    navigate(JSON.parse(sessionStorage.getItem("usuario")).usuario.rol + "/" + opcion);
   }
 
   function logOut(){
     setSesionIniciada(false);
+    sessionStorage.setItem("sesionIniciada", false)
     navigate("/");
   }
 
@@ -96,7 +109,7 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
       <AppBar position="relative" sx={{ backgroundColor: "#7db952" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {!sesionIniciada && (
+            {(JSON.parse(sessionStorage.getItem("sesionIniciada")) == false) && (
               <>
                 <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />{/* Icono Barra de navegacion */}
                 <NavLink className="link" to="/">
@@ -225,7 +238,7 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
                     </ThemeProvider>
                 </Box>{/* Botones de Inicio de sesion y de Registro */}</>
             )}{/* VISTA DE LA BARRA DE NAVEGACION SIN SESION INICIADA */}
-            {sesionIniciada && ( 
+            {(JSON.parse(sessionStorage.getItem("sesionIniciada")) == true) && ( 
               <>
               <Box sx={{ display: 'flex'}}>
                 <Typography
@@ -234,7 +247,7 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
                       fontFamily: ["Maven Pro", "cursive"].join(","),
                       letterSpacing: ".2rem"
                     }}
-                > {usuario.usuario.nombre} | {usuario.usuario.rol}
+                > {JSON.parse(sessionStorage.getItem("usuario")).usuario.nombre} | {JSON.parse(sessionStorage.getItem("usuario")).usuario.rol}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex' , justifyContent: 'flex-end', flexGrow: 1}}>
@@ -268,12 +281,10 @@ export default function NavBar({sesionIniciada, usuario, setSesionIniciada}) {
                   {opciones.map((opcion) => {
                     return (
                       <MenuItem key={opcion.nombre} onClick={handleCloseUserMenu}>
-                        <Button onClick={opcion.funcion}                         
-                            sx={{ fontFamily: ["Maven Pro", "cursive"].join(","), color: "inherit", fontSize : '12px' }}
-                            
-                            > {opcion.nombre}
+                        <Button onClick={opcion.funcion} sx={{ fontFamily: ["Maven Pro", "cursive"].join(","), color: "inherit", 
+                        fontSize : '12px', justifyContent: "flex-start" }} fullWidth={true}> 
+                          {opcion.nombre}
                         </Button>
-
                       </MenuItem>
                     );
                   })}

@@ -70,8 +70,6 @@ export default function Login(props) {
 
     //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
     const userLogeado = await sendLogin(usuario);
-    console.log(userLogeado);
-    console.log(usuario)
 
     if (!userLogeado.token) {
       return window.alert("Datos incorrectos");
@@ -80,6 +78,7 @@ export default function Login(props) {
     //Las credenciales son correctas
     props.sesion(userLogeado);
     props.setSesionIniciada(true);
+    sessionStorage.setItem("sesionIniciada", true)
 
     //Aqui va a dirigir a una pagina o otra dependiendo del rol
     //Vista estudiante
@@ -101,7 +100,7 @@ export default function Login(props) {
   }
 
   function navigateToTeacherView() {
-    navigate("/Profesor/Micuenta");
+    navigate("/Maestro/Micuenta");
     /*document
       .getElementById('Micuenta')
       .setAttribute('style', 'background-color: rgb(117, 245, 136)')*/

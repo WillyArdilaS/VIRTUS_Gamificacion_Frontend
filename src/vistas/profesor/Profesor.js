@@ -4,10 +4,10 @@ import MenuIzq from '../../componentes/menuIzq/MenuIzq';
 
 
 
-export default function Profesor(props) {
+export default function Profesor() {
     const opciones=['Mi cuenta','Clases'];
     return( <div className="contenedor_Profesor">
-                <MenuIzq opciones={opciones} usuario={props.data}/>
+                <MenuIzq opciones={opciones}/>
                 <Outlet></Outlet>
             </div>)
 }

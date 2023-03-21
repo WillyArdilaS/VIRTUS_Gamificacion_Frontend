@@ -76,7 +76,7 @@ export default function ClaseIndividualProfesor(props) {
                 body: JSON.stringify(objectActivity),
                 headers: {
                     'Content-Type': 'application/json',
-                    'TokenRol': props.data.token,
+                    'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
                 }
             });
         const data = await response.json();

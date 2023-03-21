@@ -7,7 +7,7 @@ export default function FichaClase(props) {
   const navigate = useNavigate();
 
   const navigateToIndividualClass = () => {
-    navigate("/Profesor/ClaseIndidivual");
+    navigate("/Maestro/ClaseIndidivual");
   }
 
 

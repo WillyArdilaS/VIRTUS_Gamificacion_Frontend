@@ -128,6 +128,7 @@ export default function Registro(props) {
     //Las credenciales son correctas
     props.sesion(userLogeado);
     props.setSesionIniciada(true);
+    sessionStorage.setItem("sesionIniciada", true)
 
     //Aqui va a dirigir a una pagina o otra dependiendo del rol
     //Vista estudiante

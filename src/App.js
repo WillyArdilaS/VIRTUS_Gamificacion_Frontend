@@ -29,13 +29,20 @@ function App() {
 
   const [sesionIniciada, setSesionIniciada] = React.useState(false);
 
+  React.useEffect(() => {
+    if(sessionStorage.getItem("sesionIniciada") == null) {
+      sessionStorage.setItem("sesionIniciada", false);
+    }
+  }, [])
+
   const sesion = (persona) => {
     setUsuario(persona)
+    sessionStorage.setItem("usuario", JSON.stringify(persona))
   }
   
   return (
     <BrowserRouter>
-      <NavBar sesionIniciada={sesionIniciada} usuario={usuario} setSesionIniciada={setSesionIniciada} /* pages={pages} */ />
+      <NavBar sesionIniciada={sesionIniciada} setSesionIniciada={setSesionIniciada} /* pages={pages} */ />
       <div className="mainContenido">
         <Routes >
           <Route path="/" element={<Home />} />
@@ -43,16 +50,16 @@ function App() {
           <Route path="/SaberMas" element={<SaberMas />} />
           <Route path="/login" element={<Login sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
           <Route path="/registro" element={<Registro sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
-          <Route path='/Estudiante/*' element={<Estudiante data={usuario} />}>
-            <Route path="Micuenta" element={<PerfilEst data={usuario} />} />
-            <Route path="Clases" element={<ClasesEst data={usuario} funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
-            <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante data={usuario} clase={claseIndividualEstudiante}/>}/>
+          <Route path='/Estudiante/*' element={<Estudiante />}>
+            <Route path="Micuenta" element={<PerfilEst />} />
+            <Route path="Clases" element={<ClasesEst funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
+            <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante clase={claseIndividualEstudiante}/>}/>
           </Route>
-          <Route path="/MapaActividades" element={<MapaActividades data={usuario} />} />
-          <Route path='/Profesor/*' element={<Profesor data={usuario} />}>
-            <Route path="Micuenta" element={<PerfilProf data={usuario} />} />
-            <Route path="Clases" element={<ClasesProfesor data={usuario} funcionClaseIndividual={setClaseIndividual} />} />
-            <Route path="ClaseIndidivual" element={<ClaseIndividualProfesor data={usuario} clase={claseIndividual} />} />
+          <Route path="/MapaActividades" element={<MapaActividades />} />
+          <Route path='/Maestro/*' element={<Profesor />}>
+            <Route path="Micuenta" element={<PerfilProf />} />
+            <Route path="Clases" element={<ClasesProfesor funcionClaseIndividual={setClaseIndividual} />} />
+            <Route path="ClaseIndidivual" element={<ClaseIndividualProfesor clase={claseIndividual} />} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />
         </Routes>
