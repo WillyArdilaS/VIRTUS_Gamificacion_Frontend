@@ -1,6 +1,12 @@
 import './PerfilEst.css';
+import { useEffect } from 'react';
 
 export default function PerfilEst() {
+    useEffect(() => {
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+        window.history.pushState(null, document.title, window.location.href);})
+    }, []);
 
     return (
         <div className="infoEstudiante">

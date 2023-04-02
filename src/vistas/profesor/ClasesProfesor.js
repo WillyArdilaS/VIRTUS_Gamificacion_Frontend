@@ -1,5 +1,6 @@
 import * as React from "react";
 import './clasesProfesor.css';
+import clasesTDB from '../../data_prueba/clasesTDB.json';
 import { useState, useEffect } from "react";
 
 import { styled } from "@mui/material/styles";
@@ -25,8 +26,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 
-
-
 export default function ClasesProfesor(props) {
 
     useEffect(() => {
@@ -35,18 +34,28 @@ export default function ClasesProfesor(props) {
 
 
     const [clase, setClase] = useState({
+        id: 0,
         nomClase: "",
         descripcion: "",
     });
+
     const [clasesProf, setclasesProf] = useState([]);
 
-
-
     const handleChange = (e) => {
-        setClase({
-            ...clase,
-            [e.target.name]: e.target.value,
-        });
+        if(e.target.name == "nomClase") {
+            const selectedNombre = e.target.value;
+            const selectedClase = clasesTDB.find(item => item.nombre === selectedNombre);
+            setClase({
+              ...clase,
+              id: selectedClase.id,
+              [e.target.name]: selectedNombre,
+            });  
+        } else{
+            setClase({
+                ...clase,
+                [e.target.name]: e.target.value,
+              });  
+        }
     };
 
     function handleSubmit(event) {
@@ -72,6 +81,7 @@ export default function ClasesProfesor(props) {
 
     const crearClase = async () => {
         const objectClass = {
+            id: clase.id,
             nombre: clase.nomClase,
             descripcion: clase.descripcion,
             usuarioProfesorFK: JSON.parse(sessionStorage.getItem("usuario")).usuario._id
@@ -79,6 +89,11 @@ export default function ClasesProfesor(props) {
 
         const response = await sendClass(objectClass);
         alert("Clase Creada");
+        setClase({
+            id: 0,
+            nomClase: "",
+            descripcion: "",
+        })
         getClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id)
     }
 
@@ -102,18 +117,18 @@ export default function ClasesProfesor(props) {
             <h1>Crear una clase</h1>
             <hr></hr>
 
-            <div data-aos="fade-down" data-aos-once="true">
+            <div>
                 <div className="formulario">
                     <h1 className="login_titleProfesor">Ingrese los datos de la clase</h1>
                     <form onSubmit={handleSubmit}>
                         <p>Nombre de la clase</p>
-                        <input
-                            type="text"
-                            name="nomClase"
-                            value={clase.nomClase}
-                            onChange={handleChange}
-                            required
-                        ></input>
+                        <select name="nomClase" value={clase.nomClase} onChange={handleChange} required>
+                            <option value="" disabled hidden></option>
+                            {clasesTDB.map(item => {
+                                return(<option key={item.id} value={item.nombre}> {item.nombre} </option>)
+                            })}
+                        </select>
+
                         <p>Descripción</p>
                         <input
                             type="text"
@@ -136,7 +151,7 @@ export default function ClasesProfesor(props) {
         <hr></hr>
         <div className="misClasesUnirse">
             {clasesProf.map(item => {
-                return <div id={item.id} ><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
+                return <div id={item.id}><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
             })}
         </div>
     </div>)

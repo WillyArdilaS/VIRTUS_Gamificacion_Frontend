@@ -1,0 +1,50 @@
+[
+    {
+        "id": 9,
+        "nombre": "Conocimientos Generales"
+    },
+    {
+        "id": 10,
+        "nombre": "Literatura"
+    },
+    {
+        "id": 11,
+        "nombre": "Cine"
+    },
+    {
+        "id": 12,
+        "nombre": "Musica"
+    },
+    {
+        "id": 17,
+        "nombre": "Ciencias Naturales"
+    },
+    {
+        "id": 18,
+        "nombre": "Informática"
+    },
+    {
+        "id": 19,
+        "nombre": "Matemáticas"
+    },
+    {
+        "id": 22,
+        "nombre": "Geografía"
+    },
+    {
+        "id": 23,
+        "nombre": "Historia"
+    },
+    {
+        "id": 24,
+        "nombre": "Ciencias Políticas"
+    },
+    {
+        "id": 25,
+        "nombre": "Arte"
+    },
+    {
+        "id": 26,
+        "nombre": "Biologia"
+    }
+]

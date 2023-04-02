@@ -1,5 +1,6 @@
 
 import './footer1.css';
+import logo from '../../img/logo.JPG';
 
 
 export default function Footer1(){
@@ -9,7 +10,7 @@ export default function Footer1(){
             <div className="footer1_1">
                 <div className='logo'>
                     <div className='cont_img'>
-                        <img  alt='logo' src='logo.jpg' />
+                        <img alt='logo' src={logo} />
                     </div>
                 </div>
                 <div className='info'>

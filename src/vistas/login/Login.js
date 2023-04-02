@@ -100,7 +100,7 @@ export default function Login(props) {
   }
 
   function navigateToTeacherView() {
-    navigate("/Maestro/Micuenta");
+    navigate("/Maestro/Micuenta", { replace: true });
     /*document
       .getElementById('Micuenta')
       .setAttribute('style', 'background-color: rgb(117, 245, 136)')*/

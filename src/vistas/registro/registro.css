@@ -4,6 +4,7 @@
 .formulario{
     width: 500px;
     margin: auto;
+    padding-bottom: 12%;
     display: grid;
     grid-template-columns: 1fr;
 }
@@ -21,7 +22,7 @@
     font-size: 14px;
 }
 
-.formulario input{
+.formulario input, select{
     height: 40px;
     width: 450px;
     box-sizing: border-box;

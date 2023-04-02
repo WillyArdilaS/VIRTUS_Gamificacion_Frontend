@@ -1,7 +1,14 @@
+import { useEffect } from 'react';
 import './PerfilProf.css';
 
 export default function PerfilProf() {
+    useEffect(() => {
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+        window.history.pushState(null, document.title, window.location.href);})
+    }, []);
     
+
     return (
         <div className="infoProfesor">
 
@@ -26,5 +33,6 @@ export default function PerfilProf() {
 
 
         </div>)
+    
 
 }

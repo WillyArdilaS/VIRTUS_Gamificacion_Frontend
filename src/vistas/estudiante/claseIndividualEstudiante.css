@@ -1,6 +1,7 @@
 .container{
     display: flex;
     margin-top: 50px;
+    padding-bottom: 14%;
 }
 
 .resultadoQuiz {

@@ -10,7 +10,7 @@ import { Button, cardHeaderClasses, Link } from "@mui/material";
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
-    width: "144px",
+    width: "184px",
     height: "44px",
     borderRadius: "10px",
     backgroundColor: "#008080",
@@ -94,7 +94,13 @@ export default function ClaseIndividualProfesor(props) {
         }
 
         const response = await postActivity(objectActivity);
-        alert("Clase Creada");
+        alert("Actividad Creada");
+        setCrearActivity({
+            recompensaForm: "",
+            castigoForm: "",
+            descripcionForm: "",
+            fechaVencimientoForm: ""
+        })
     }
 
     return (
@@ -118,8 +124,8 @@ export default function ClaseIndividualProfesor(props) {
                 <h1>Crear actividad</h1>
                 <hr></hr>
 
-                <div data-aos="fade-down" data-aos-once="true">
-                    <div className="formulario">
+                <div>
+                    <div className="formularioActividad">
                         <h1 className="login_titleProfesor">Ingrese los datos de la actividad</h1>
                         <form onSubmit={handleSubmit}>
                             <p>Puntos de experiencia - Recompensa</p>
@@ -156,7 +162,7 @@ export default function ClaseIndividualProfesor(props) {
                             ></input>
 
                             <ColorButton variant="contained" type="submit">
-                                Crear Clase
+                                Crear Actividad
                             </ColorButton>
                         </form>
                     </div>
