@@ -1,4 +1,5 @@
 import * as React from "react";
+import clasesTDB from '../../data_prueba/clasesTDB.json';
 import { useEffect, useState } from "react";
 import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
@@ -42,7 +43,10 @@ export default function ClaseIndividualEstudiante(props) {
 
   // //API preguntas actividad
   const getPreguntasQuiz = async (numPreguntas = 10) => {
-    const url = `https://opentdb.com/api.php?amount=${numPreguntas}&type=multiple`;
+    const difficulty = "easy"
+    const findClassTDB = clasesTDB.find(item => item.nombre === props.clase.nombre)
+    //console.log(findClassTDB)
+    const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
     const response = await fetch(`${url}`);
     const { results } = await response.json();
 
@@ -50,9 +54,9 @@ export default function ClaseIndividualEstudiante(props) {
       ...question,
       answers: [question.correct_answer, ...question.incorrect_answers].sort(() => Math.random() - 0.5) //Unifica preguntas correctas e incorrectas en un array y las desordena
     }))
+    //console.log(preguntas)
 
     setPreguntasQuiz(preguntas);
-    console.log(preguntas);
   }
 
   const handleAnswer = (answer) => {
@@ -83,7 +87,7 @@ export default function ClaseIndividualEstudiante(props) {
 
 
   return (preguntasQuiz.length > 0 ? (
-    <div class="containerActividad">
+    <div className="containerActividad">
       <h1>Info de la clase</h1>
       <hr></hr>
       <p>Nombre clase: {props.clase.nombre}</p>

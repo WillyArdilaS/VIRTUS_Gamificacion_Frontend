@@ -33,7 +33,6 @@ export default function ClaseIndividualProfesor(props) {
     }, [])
 
 
-
     const [activity, setActivity] = useState([]); //Actividades individuales
     const [crearActivity, setCrearActivity] = useState({ //Form
         recompensaForm: "",
@@ -61,11 +60,9 @@ export default function ClaseIndividualProfesor(props) {
         const urlBD = "http://localhost:8080/api/actividad";
         const response = await fetch(`${urlBD}`);
         const { actividadesBD } = await response.json();
-
-
         let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
         setActivity(actividadesFiltradas);
-        // console.log(actividadesFiltradas);
+        //console.log("get activity", actividadesFiltradas);
     }
 
     const postActivity = async (objectActivity) => {
@@ -80,7 +77,7 @@ export default function ClaseIndividualProfesor(props) {
                 }
             });
         const data = await response.json();
-        console.log(data);
+        //console.log("post activity", data);
         return data;
     }
 
@@ -101,6 +98,7 @@ export default function ClaseIndividualProfesor(props) {
             descripcionForm: "",
             fechaVencimientoForm: ""
         })
+        getActivity(props.clase._id)
     }
 
     return (

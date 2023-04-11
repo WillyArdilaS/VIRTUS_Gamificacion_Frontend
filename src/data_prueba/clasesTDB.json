@@ -28,6 +28,14 @@
         "nombre": "Matemáticas"
     },
     {
+        "id": 20,
+        "nombre": "Mitologia"
+    },
+    {
+        "id": 21,
+        "nombre": "Deportes"
+    },
+    {
         "id": 22,
         "nombre": "Geografía"
     },
@@ -44,7 +52,11 @@
         "nombre": "Arte"
     },
     {
-        "id": 26,
-        "nombre": "Biologia"
+        "id": 27,
+        "nombre": "Zoologia"
+    },
+    {
+        "id": 30,
+        "nombre": "Tecnologia"
     }
 ]
