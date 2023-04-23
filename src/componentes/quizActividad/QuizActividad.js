@@ -5,22 +5,22 @@ function QuizActividad({ handleAnswer, showAnswers, handleNextQuestion, data: { 
     return (
         <>
             <div className="containerQuiz">
-                <div class="quiz-container">
-                    <div class="quiz-head">
-                        <h1 class="quiz-title">Actividad de aula</h1>
-                        <div class="quiz-score flex">
+                <div className="quiz-container">
+                    <div className="quiz-head">
+                        <h1 className="quiz-title">Actividad de aula</h1>
+                        <div className="quiz-score flex">
                             <span id="correct-score">{currentIndex}</span>/<span id="total-question">{numPreguntas}</span>
                         </div>
                     </div>
-                    <div class="quiz-body">
-                        <h2 class="quiz-question" id="question">{question}</h2>
-                        <ul class="quiz-options">
+                    <div className="quiz-body">
+                        <h2 className="quiz-question" id="question">{question}</h2>
+                        <ul className="quiz-options">
                             {answers.map((answer, idx) => {
                                 const specialClassName = showAnswers ? (
                                     answer === correct_answer ? "green-button" : "red-button"
                                 ) : "";
                                 return (
-                                    <button className={`normal-button ${specialClassName}`}
+                                    <button /*key={}*/ className={`normal-button ${specialClassName}`}
                                         onClick={() => handleAnswer(answer)}
                                         dangerouslySetInnerHTML={{ __html: answer }} />
 
@@ -30,7 +30,7 @@ function QuizActividad({ handleAnswer, showAnswers, handleNextQuestion, data: { 
                         <div id="result">
                         </div>
                     </div>
-                    <div class="quiz-foot">
+                    <div className="quiz-foot">
                         {showAnswers && (
                             <button onClick={handleNextQuestion}>Siguiente pregunta</button>
                         )}

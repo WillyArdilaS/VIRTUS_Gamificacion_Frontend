@@ -84,8 +84,6 @@ export default function ClaseIndividualEstudiante(props) {
     }
   }
 
-
-
   return (preguntasQuiz.length > 0 ? (
     <div className="containerActividad">
       <h1>Info de la clase</h1>

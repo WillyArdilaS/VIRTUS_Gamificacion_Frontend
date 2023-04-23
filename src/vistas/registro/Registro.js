@@ -64,7 +64,8 @@ export default function Registro(props) {
         }
       });
     const data = await response.json();
-    // console.log(data);
+    await personajeForUser(data.usuario._id); //
+    //console.log(data);
     return data;
   }
 
@@ -83,21 +84,12 @@ export default function Registro(props) {
     return data;
   }
 
-  const GETUsers = async () => {
-    const urlBD = 'http://localhost:8080/api/users';
-    const response = await fetch(urlBD);
-    const { usuariosBD } = await response.json();
-
-    const userFiltrado = (usuariosBD.filter(filtro => filtro.correo === usuario.correo));
-
-    await POSTPersonaje(userFiltrado[0]._id);
-  }
-
-  const POSTPersonaje = async (fkUsuario) => {
+  const personajeForUser = async (fkUsuario) => {
     const objectPJ = {
       clase: "CABALLERO",
+      imgUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8rPmqH32BZqdGkUi5IC5IY1_HYlKl3BYB-HUeldshOuUE1p88JBUss8S10inGALHdv-M&usqp=CAU",
       usuarioFK: fkUsuario
-    }
+    } /*los valores para nivel, experiencia, vida y estado se inician por default en el back */
 
     const urlBD = 'http://localhost:8080/api/personajes/';
     const response = await fetch(urlBD, {
@@ -108,7 +100,8 @@ export default function Registro(props) {
       }
     });
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
+    return data
   }
 
   const comprobar = async () => {
