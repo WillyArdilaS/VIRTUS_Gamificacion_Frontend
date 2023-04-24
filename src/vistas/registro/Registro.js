@@ -40,6 +40,30 @@ export default function Registro(props) {
     estado: true,
   });
 
+  const [personaje, setPersonaje] = useState({
+    clase: "",
+    imgUrl:"",
+    usuarioFK: ""
+  })
+
+  const [clases, setClases] = useState([
+    { nombre: "Caballero/a", value: "caballero"},
+    { nombre: "Arquero/a", value: "arquero" },
+    { nombre: "Hechicero/a", value: "hechicero" }
+  ]);
+
+  useEffect(() => {
+    if (usuario.rol === "estudiante") {
+      setClases([
+        { nombre: "Caballero/a", value: "caballero" },
+        { nombre: "Arquero/a", value: "arquero" },
+        { nombre: "Hechicero/a", value: "hechicero" }
+      ]);
+    } else {
+      setClases([]);
+    }
+  }, [usuario.rol]);
+  
 
   const handleChange = (e) => {
     setusuario({
@@ -47,6 +71,12 @@ export default function Registro(props) {
       [e.target.name]: e.target.value,
     });
   };
+  const handlePersonaje = (e) => {
+    setPersonaje({
+      ...personaje,
+      [e.target.name]: e.target.value
+    });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -64,8 +94,11 @@ export default function Registro(props) {
         }
       });
     const data = await response.json();
-    await personajeForUser(data.usuario._id); //
-    //console.log(data);
+
+    if(data.usuario.rol == "estudiante") {
+      await personajeForUser(data.usuario._id); 
+    }
+
     return data;
   }
 
@@ -85,16 +118,13 @@ export default function Registro(props) {
   }
 
   const personajeForUser = async (fkUsuario) => {
-    const objectPJ = {
-      clase: "CABALLERO",
-      imgUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8rPmqH32BZqdGkUi5IC5IY1_HYlKl3BYB-HUeldshOuUE1p88JBUss8S10inGALHdv-M&usqp=CAU",
-      usuarioFK: fkUsuario
-    } /*los valores para nivel, experiencia, vida y estado se inician por default en el back */
+    personaje.imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8rPmqH32BZqdGkUi5IC5IY1_HYlKl3BYB-HUeldshOuUE1p88JBUss8S10inGALHdv-M&usqp=CAU";
+    personaje.usuarioFK = fkUsuario; /*los valores para nivel, experiencia, vida y estado se inician por default en el back */
 
     const urlBD = 'http://localhost:8080/api/personajes/';
     const response = await fetch(urlBD, {
       method: 'POST',
-      body: JSON.stringify(objectPJ),
+      body: JSON.stringify(personaje),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -219,6 +249,22 @@ export default function Registro(props) {
             onChange={handleChange}
             required
           ></input>
+          {clases.length > 0 && (
+            <div>
+              <p>Clase</p>
+              <select
+                name="clase"
+                value={personaje.clase}
+                onChange={handlePersonaje}
+              >
+                {clases.map((clase) => (
+                  <option key={clase.value} value={clase.value}>
+                    {clase.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <p className="crear">
             ¿Ya tienes una cuenta?
             <Link
@@ -230,7 +276,7 @@ export default function Registro(props) {
               inicia sesión
             </Link>
           </p>
-          <ColorButton variant="contained" type="submit">
+          <ColorButton variant="contained" type="submit" style={{marginBottom: "30%"}}>
             Inscríbete
           </ColorButton>
         </form>

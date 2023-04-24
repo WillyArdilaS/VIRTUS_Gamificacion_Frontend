@@ -3,10 +3,9 @@
 
 .formulario{
     width: 500px;
-    margin: auto;
-    padding-bottom: 12%;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .formulario p, label{
@@ -59,7 +58,7 @@
 }
 
 .registro_title{
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .envio{

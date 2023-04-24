@@ -12,8 +12,8 @@ export default function ClaseIndividualEstudiante(props) {
   useEffect(() => {
     getPreguntasQuiz();
     getActivity(props.clase._id);
+    getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
   }, [])
-
 
   const [activity, setActivity] = useState([]);
   //QUIZ
@@ -23,14 +23,32 @@ export default function ClaseIndividualEstudiante(props) {
   const [showAnswers, setShowAnswers] = useState(false);
   //Ficha PJ
   const [resPersonaje, setResPersonaje] = React.useState({
-    tipo: "base",
-    vida: "100",
-    experiencia: "100",
-    nivel: 0
+    id: "",
+    clase: "",
+    vida: 0,
+    experiencia: 0,
+    nivel: 0, 
+    imgUrl: ""
   });
 
 
   //Peticiones
+  const getPersonaje = async (filtro) => {
+    const urlBD = "http://localhost:8080/api/personajes/";
+    const response = await fetch(`${urlBD}`);
+    const { personajesBD } = await response.json();
+
+    let personajesFiltrados = personajesBD.filter(personaje => personaje.usuarioFK == filtro);
+    setResPersonaje(()=> ({
+      id: personajesFiltrados[0]._id,
+      clase: personajesFiltrados[0].clase,
+      vida: personajesFiltrados[0].vida,
+      experiencia: personajesFiltrados[0].experiencia,
+      nivel: personajesFiltrados[0].nivel,
+      imgUrl: personajesFiltrados[0].imgUrl
+    }));
+  }
+
   const getActivity = async (filtro) => {
     const urlBD = "http://localhost:8080/api/actividad";
     const response = await fetch(`${urlBD}`);
@@ -74,15 +92,48 @@ export default function ClaseIndividualEstudiante(props) {
   }
 
   //Evalua el resultado del quiz
-  if (currentIndex == 10) {
-    if (score > 5) {
-      resPersonaje.experiencia = resPersonaje.experiencia + activity[0].recompensa;
-
-    } else {
-      resPersonaje.vida = resPersonaje.experiencia - activity[0].castigo;
-
+  useEffect(() => {
+    if (currentIndex == 10) {
+      if (score > 6) {
+        resPersonaje.experiencia = resPersonaje.experiencia + activity[0].recompensa;
+      } else {
+        resPersonaje.vida = resPersonaje.vida - activity[0].castigo;
+      }
+      
+      levelUpPersonaje();
+      updatePersonaje();
     }
+  }, [currentIndex])
+  
+  // Subir de nivel
+  const levelUpPersonaje = () => {
+    if(resPersonaje.experiencia >= 100) {
+      resPersonaje.vida = 100;
+      resPersonaje.experiencia = 0;
+      resPersonaje.nivel += 1;
+      alert("¡Felicidades! Has subido de nivel");
+    } 
   }
+
+  // Actualizar atributos del personaje
+  const updatePersonaje = async () => {
+    const urlBD = "http://localhost:8080/api/personajes/";
+    const response = await fetch(urlBD, {
+      method: "PUT",
+      body: JSON.stringify({
+        "_id": resPersonaje.id,
+        "experiencia": resPersonaje.experiencia,
+        "vida": resPersonaje.vida,
+        "nivel": resPersonaje.nivel 
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "TokenRol": JSON.parse(sessionStorage.getItem("usuario")).token
+      }
+    });
+
+    getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
+  } 
 
   return (preguntasQuiz.length > 0 ? (
     <div className="containerActividad">

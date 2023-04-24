@@ -9,7 +9,7 @@ function QuizActividad({ handleAnswer, showAnswers, handleNextQuestion, data: { 
                     <div className="quiz-head">
                         <h1 className="quiz-title">Actividad de aula</h1>
                         <div className="quiz-score flex">
-                            <span id="correct-score">{currentIndex}</span>/<span id="total-question">{numPreguntas}</span>
+                            <span id="correct-score">{currentIndex+1}</span>/<span id="total-question">{numPreguntas}</span>
                         </div>
                     </div>
                     <div className="quiz-body">

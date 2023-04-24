@@ -8,14 +8,12 @@ export default function ResmPersonaje({resPersonaje}){
     const experiencia=resPersonaje.experiencia;
     const barraExperiencia=experiencia+"%";
     const nivel=resPersonaje.nivel;
-    const imagen='/clases/'+resPersonaje.tipo+'.JPG';
-
+    const imagen=resPersonaje.imgUrl;
     
     return(
             <div className='resmPersonaje'>
                 <div className='resmPersonaje_img'>
-                    {/* <img  src={imagen} alt='personaje' /> */}
-                    <img  src="https://w7.pngwing.com/pngs/671/112/png-transparent-samurai-warriors-3-dynasty-warriors-8-warriors-orochi-3-dynasty-warriors-3-samurai-video-game-dynasty-warriors-samurai-warriors.png" alt='personaje' />
+                    <img  src={imagen} alt='personaje'/>
                 </div>
                 <p className='resmPersonaje_vida'>Vida <i className="fa-solid fa-heart-pulse"></i></p>
                 <div className='resmPersonaje_vida_barra'>
