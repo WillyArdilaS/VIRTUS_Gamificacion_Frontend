@@ -10,6 +10,8 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Button, Link } from "@mui/material";
 
+import imgsURL from '../../data_prueba/personajes.json';
+
 /* Estilos del boton "Inscríbete" */
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -41,7 +43,7 @@ export default function Registro(props) {
   });
 
   const [personaje, setPersonaje] = useState({
-    clase: "",
+    clase: "caballero",
     imgUrl:"",
     usuarioFK: ""
   })
@@ -72,6 +74,7 @@ export default function Registro(props) {
     });
   };
   const handlePersonaje = (e) => {
+    personaje.imgUrl = imgsURL.find(item => item.clase === e.target.value).imgURL
     setPersonaje({
       ...personaje,
       [e.target.name]: e.target.value
@@ -118,7 +121,6 @@ export default function Registro(props) {
   }
 
   const personajeForUser = async (fkUsuario) => {
-    personaje.imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8rPmqH32BZqdGkUi5IC5IY1_HYlKl3BYB-HUeldshOuUE1p88JBUss8S10inGALHdv-M&usqp=CAU";
     personaje.usuarioFK = fkUsuario; /*los valores para nivel, experiencia, vida y estado se inician por default en el back */
 
     const urlBD = 'http://localhost:8080/api/personajes/';
@@ -263,6 +265,7 @@ export default function Registro(props) {
                   </option>
                 ))}
               </select>
+              <img className="img-personaje" src={imgsURL.find(item => item.clase === personaje.clase).imgURL} alt="personaje"/>
             </div>
           )}
           <p className="crear">
