@@ -13,9 +13,8 @@ export default function FichaClase(props) {
 
   const eventClaseProfesor = (clase, e) => {
     e.preventDefault();
-    // console.log(props.ClaseIndividualInformacion);
     props.funcionClaseIndividual(clase);
-    // console.log("Presiono el botón", clase);
+    sessionStorage.setItem("ProfesorClaseActual", JSON.stringify(clase));
     navigateToIndividualClass();
   }
 

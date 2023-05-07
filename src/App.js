@@ -22,38 +22,27 @@ import MapaActividades from './componentes/mapaActividades/MapaActividades'
 //const pages = ['Saber Mas', 'Preguntas'];
 
 function App() {
-
-  const [usuario, setUsuario] = React.useState(null);
   const [claseIndividual, setClaseIndividual] = React.useState(null);
   const [claseIndividualEstudiante, setClaseIndividualEstudiante] = React.useState(null);
 
-  const [sesionIniciada, setSesionIniciada] = React.useState(false);
-
-  React.useEffect(() => {
-    if(sessionStorage.getItem("sesionIniciada") == null) {
-      sessionStorage.setItem("sesionIniciada", false);
-    }
-  }, [])
-
   const sesion = (persona) => {
-    setUsuario(persona)
     sessionStorage.setItem("usuario", JSON.stringify(persona))
   }
   
   return (
     <BrowserRouter>
-      <NavBar sesionIniciada={sesionIniciada} setSesionIniciada={setSesionIniciada} /* pages={pages} */ />
+      <NavBar/>
       <div className="mainContenido">
         <Routes >
           <Route path="/" element={<Home />} />
           <Route path="/Preguntas" element={<Preguntas />} />
           <Route path="/SaberMas" element={<SaberMas />} />
-          <Route path="/login" element={<Login sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
-          <Route path="/registro" element={<Registro sesion={sesion} setSesionIniciada={setSesionIniciada} />} />
+          <Route path="/login" element={<Login sesion={sesion}/>} />
+          <Route path="/registro" element={<Registro sesion={sesion}/>} />
           <Route path='/Estudiante/*' element={<Estudiante />}>
             <Route path="Micuenta" element={<PerfilEst />} />
             <Route path="Clases" element={<ClasesEst funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
-            <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante clase={claseIndividualEstudiante}/>}/>
+            <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante />}/>
           </Route>
           <Route path="/MapaActividades" element={<MapaActividades />} />
           <Route path='/Maestro/*' element={<Profesor />}>

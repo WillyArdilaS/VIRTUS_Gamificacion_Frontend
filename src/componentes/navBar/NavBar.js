@@ -41,7 +41,7 @@ const theme = createTheme({
   },
 });
 
-export default function NavBar({sesionIniciada, setSesionIniciada}) {
+export default function NavBar() {
   var opciones = [];
 
   if(sessionStorage.getItem("usuario") != null) {
@@ -99,8 +99,8 @@ export default function NavBar({sesionIniciada, setSesionIniciada}) {
   }
 
   function logOut(){
-    setSesionIniciada(false);
-    sessionStorage.setItem("sesionIniciada", false)
+    sessionStorage.removeItem("sesionIniciada");
+    sessionStorage.removeItem("usuario");
     navigate("/");
   }
 

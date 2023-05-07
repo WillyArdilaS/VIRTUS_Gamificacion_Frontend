@@ -7,11 +7,11 @@ import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 
 
-export default function ClaseIndividualEstudiante(props) {
+export default function ClaseIndividualEstudiante() {
   // Hacer el fetch para traer el número de actividades y asi poder renderizar los botones del mapa
   useEffect(() => {
     getPreguntasQuiz();
-    getActivity(props.clase._id);
+    getActivity(JSON.parse(sessionStorage.getItem("EstudianteClaseActual"))._id);
     getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
   }, [])
 
@@ -62,7 +62,7 @@ export default function ClaseIndividualEstudiante(props) {
   // //API preguntas actividad
   const getPreguntasQuiz = async (numPreguntas = 10) => {
     const difficulty = "easy"
-    const findClassTDB = clasesTDB.find(item => item.nombre === props.clase.nombre)
+    const findClassTDB = clasesTDB.find(item => item.nombre === JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre)
     //console.log(findClassTDB)
     const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
     const response = await fetch(`${url}`);
@@ -139,8 +139,10 @@ export default function ClaseIndividualEstudiante(props) {
     <div className="containerActividad">
       <h1>Info de la clase</h1>
       <hr></hr>
-      <p>Nombre clase: {props.clase.nombre}</p>
-      <p>Descripción: {props.clase.descripcion}</p>
+      <p>Nombre clase: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre}</p>
+      <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).codigo}</p>
+      <p>Descripción: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).descripcion}</p>
+      <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
       <MapaActividades actividades={activity} />

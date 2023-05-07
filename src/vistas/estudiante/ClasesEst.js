@@ -34,39 +34,16 @@ export default function ClasesEst(props) {
      let dataClases;
      const [misClases, setMisClases] = useState([]);
      const [clasesEstMatricular, setclasesEstMatricular] = useState([]);
+     const [textoBusqueda, setTextoBusqueda] = useState("");
 
      useEffect(() => {
+          sessionStorage.removeItem("EstudianteClaseActual");
           getMisClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
      }, [])
 
      useEffect(() => {
-          getClasesMatricular();
+          getClasesMatricular("");
      }, [misClases])
-
-     /*
-     const [resPersonaje, setResPersonaje] = React.useState({
-          tipo: "base",
-          vida: "100",
-          experiencia: "100",
-          nivel: 0
-     });
-
-
-     function cambioTarjeta(e) {
-          data.map(item => {
-
-               if (e.currentTarget.id === item.id) {
-                    setResPersonaje({
-                         tipo: item.personaje,
-                         vida: item.vida,
-                         experiencia: item.experiencia,
-                         nivel: item.nivel
-                    })
-               }
-               return true;
-          })
-     }
-     */
 
      //Obtener las clases a las que pertenece un estudiante
      const getMisClases = async (idEstudiante) => {
@@ -90,14 +67,24 @@ export default function ClasesEst(props) {
      }
 
      //Obtener todas las posibles clases a las que un estudiante se puede matricular
-     const getClasesMatricular = async () => {
+     const getClasesMatricular = async (filtro) => {
           const urlBD = 'http://localhost:8080/api/clases/';
-
           const response = await fetch(`${urlBD}`);
           const data = await response.json();
           const { clasesBD } = data;
           let arrayClases = []
           dataClases = clasesBD;
+
+          if(filtro != "") {
+               dataClases = clasesBD.filter((clase) => {
+                    return(
+                         clase.nombre.toLowerCase().includes(filtro.toLowerCase()) || 
+                         // clase.codigo.toLowerCase().includes(filtro.toLowerCase()) ||
+                         // clase.dificultad.toLowerCase().includes(filtro.toLowerCase()) ||
+                         clase.descripcion.toLowerCase().includes(filtro.toLowerCase())
+                    );
+               });
+          }
 
           dataClases.map((clase) => {
                if(!JSON.stringify(misClases).includes(JSON.stringify(clase))) {
@@ -109,10 +96,16 @@ export default function ClasesEst(props) {
           setclasesEstMatricular(arrayClases);
      }
 
+     // Funcionamiento del buscador
+     const handleChange = (e) => {
+          setTextoBusqueda(e.target.value);
+
+          getClasesMatricular(e.target.value);
+     }
+     
      return (<div className='clasesEst'>
           <div>
                <h1> Mis Clases</h1>
-               <hr></hr>
                <div className="misClasesGrid">
                     {misClases.map(item => {
                          return <div id={item.id} ><FichaMisClasesEst key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div>
@@ -129,7 +122,19 @@ export default function ClasesEst(props) {
           </div> */}
           <div className="ingresarClase">
                <h1>Matricularme en una clase</h1>
-               <hr></hr>
+               <div className="buscador">
+                    <input 
+                         type="text"
+                         value={textoBusqueda}
+                         placeholder="Filtrar por nombre, código, descripción o dificultad..."
+                         onChange={handleChange}
+                    ></input>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+               </div>
+
                <div className="misClasesUnirse">
                     {clasesEstMatricular.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={JSON.parse(sessionStorage.getItem("usuario"))} 
                     getMisClases={getMisClases}/></div> })}

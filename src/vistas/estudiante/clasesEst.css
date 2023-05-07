@@ -36,6 +36,32 @@ h1{
     flex-flow: row wrap;
 }
 
+.buscador{
+    display: flex;
+    height: 35px;
+    width: 100%;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+.buscador input{
+    height: 35px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    font-family: 'Sarabun', sans-serif;
+    padding-left: 10px;
+}
+
+.buscador svg {
+    height: 35px;
+    width: 35px;
+    margin-left: 10px;
+}
+
 
 @media (max-width: 904px) {
     .misClases{

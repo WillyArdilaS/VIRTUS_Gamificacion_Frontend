@@ -3,6 +3,8 @@ import './PerfilProf.css';
 
 export default function PerfilProf() {
     useEffect(() => {
+        sessionStorage.removeItem("EstudianteClaseActual");
+        sessionStorage.removeItem("ProfesorClaseActual");
         window.history.pushState(null, document.title, window.location.href);
         window.addEventListener('popstate', function(event) {
         window.history.pushState(null, document.title, window.location.href);})

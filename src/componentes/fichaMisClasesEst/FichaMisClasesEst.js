@@ -13,6 +13,7 @@ export default function FichaMisClasesEst(props) {
     const eventClaseProfesor = (clase, e) => {
         e.preventDefault();
         props.funcionClaseIndividual(clase);
+        sessionStorage.setItem("EstudianteClaseActual", JSON.stringify(clase));
         navigateToIndividualClass();
       }
 

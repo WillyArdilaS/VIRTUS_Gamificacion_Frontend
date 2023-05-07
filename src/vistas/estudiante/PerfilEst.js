@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 
 export default function PerfilEst() {
     useEffect(() => {
+        sessionStorage.removeItem("ProfesorClaseActual");
+        sessionStorage.removeItem("EstudianteClaseActual");
         window.history.pushState(null, document.title, window.location.href);
         window.addEventListener('popstate', function(event) {
         window.history.pushState(null, document.title, window.location.href);})

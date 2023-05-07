@@ -29,6 +29,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function ClasesProfesor(props) {
 
     useEffect(() => {
+        sessionStorage.removeItem("ProfesorClaseActual");
         getClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
     }, [])
 
@@ -36,7 +37,9 @@ export default function ClasesProfesor(props) {
     const [clase, setClase] = useState({
         id: 0,
         nomClase: "",
+        codigo: "",
         descripcion: "",
+        dificultad: ""
     });
 
     const [clasesProf, setclasesProf] = useState([]);
@@ -83,7 +86,9 @@ export default function ClasesProfesor(props) {
         const objectClass = {
             id: clase.id,
             nombre: clase.nomClase,
+            codigo: clase.codigo,
             descripcion: clase.descripcion,
+            dificultad: clase.dificultad,
             usuarioProfesorFK: JSON.parse(sessionStorage.getItem("usuario")).usuario._id
         }
 
@@ -92,7 +97,9 @@ export default function ClasesProfesor(props) {
         setClase({
             id: 0,
             nomClase: "",
+            codigo: "",
             descripcion: "",
+            dificultad: ""
         })
         getClases(JSON.parse(sessionStorage.getItem("usuario")).usuario._id)
     }
@@ -129,6 +136,15 @@ export default function ClasesProfesor(props) {
                             })}
                         </select>
 
+                        <p>Código del grupo</p>
+                        <input
+                            type="text"
+                            name="codigo"
+                            value={clase.codigo}
+                            onChange={handleChange}
+                            required
+                        ></input>
+
                         <p>Descripción</p>
                         <input
                             type="text"
@@ -137,6 +153,14 @@ export default function ClasesProfesor(props) {
                             onChange={handleChange}
                             required
                         ></input>
+
+                        <p>Dificultad</p>
+                        <select name="dificultad" value={clase.dificultad} onChange={handleChange} required>
+                            <option value="" disabled hidden></option>
+                            <option value="facil"> Fácil </option>
+                            <option value="medio"> Medio </option>
+                            <option value="dificil"> Díficil </option>
+                        </select>
 
                         <ColorButton variant="contained" type="submit">
                             Crear Clase

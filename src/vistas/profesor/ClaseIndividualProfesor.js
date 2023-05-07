@@ -26,10 +26,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 
 
-export default function ClaseIndividualProfesor(props) {
+export default function ClaseIndividualProfesor() {
 
     useEffect(() => {
-        getActivity(props.clase._id);
+        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
     }, [])
 
 
@@ -87,7 +87,7 @@ export default function ClaseIndividualProfesor(props) {
             recompensa: crearActivity.recompensaForm,
             castigo: crearActivity.castigoForm,
             descripcion: crearActivity.descripcionForm,
-            claseFK: props.clase._id
+            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id
         }
 
         const response = await postActivity(objectActivity);
@@ -98,14 +98,16 @@ export default function ClaseIndividualProfesor(props) {
             descripcionForm: "",
             fechaVencimientoForm: ""
         })
-        getActivity(props.clase._id)
+        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id)
     }
 
     return (
         <div className="infoClase">
             <h1>Información de la clase</h1>
-            <p>Nombre clase: {props.clase.nombre}</p>
-            <p>Descripción {props.clase.descripcion}</p>
+            <p>Nombre clase: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).nombre}</p>
+            <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).codigo}</p>
+            <p>Descripción: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).descripcion}</p>
+            <p>Dificultad: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).dificultad}</p>
             <hr></hr>
 
             <div className="infoActividades">
