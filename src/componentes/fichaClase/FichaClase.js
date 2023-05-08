@@ -26,9 +26,19 @@ export default function FichaClase(props) {
         <i className="fa-solid fa-dice"></i>
         {props.clase.nombre}
       </p>
-      <p className="profesor_clase">
-        <i className="fa-solid fa-dragon"></i> {props.clase.profesor}
+      <p className="codigoGrupo_clase">
+        <i className="fa-solid fa-dice"></i>
+        {props.clase.codigoGrupo}
       </p>
+      <p className="dificultad_clase">
+        <i className="fa-solid fa-dice"></i>
+        {props.clase.dificultad}
+      </p>
+      <p className="descripcion_clase">
+        <i className="fa-solid fa-dragon"></i> 
+        {props.clase.descripcion}
+      </p>
+
       <button className="ir_clase" onClick={(e) => eventClaseProfesor(props.clase, e)}>Ir a Clase</button>
     </div>
   );

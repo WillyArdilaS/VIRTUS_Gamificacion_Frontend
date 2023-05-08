@@ -57,19 +57,64 @@
     margin-right: 5px;
 }
 
+.codigoGrupo_clase {
+    display: flex;
+    justify-content: center;
 
-
-.profesor_clase{
     font-family: 'Sarabun', 'cursive';
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 24px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
 }
 
-.profesor_clase i{
-    color: var(--icono2Color);
-    margin-left: 10px;
-    margin-right: 8px;
+.codigoGrupo_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.dificultad_clase {
+    display: flex;
+    justify-content: center;
+
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.dificultad_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.descripcion_clase{
+    display: flex;
+    justify-content: center;
+
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.descripcion_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
 }
 
 .fichaClase button{

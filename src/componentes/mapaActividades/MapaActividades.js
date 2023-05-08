@@ -14,7 +14,7 @@ export default function MapaActividades({actividades}) {
         actividades.map((actividad, index) => {
           let classButton = `rpgui-button posicion${index+1} absolute`
           let idButton = `button${index+1}`
-          return(<button className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
+          return(<button key={index} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
         })
       }
       </div>

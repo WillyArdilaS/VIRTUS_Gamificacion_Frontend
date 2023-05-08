@@ -204,7 +204,7 @@ export default function NavBar() {
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                   {pagesVistaCompleta.map((page) => {
                     return (
-                      <div className="nav">
+                      <div className="nav" key={page.nombre}>
                         <NavLink key={page.nombre} 
                         to={page.enlace}
                         className={({ isActive }) => (isActive ? 'active' : 'inactive')}>

@@ -105,7 +105,7 @@ export default function ClaseIndividualProfesor() {
         <div className="infoClase">
             <h1>Información de la clase</h1>
             <p>Nombre clase: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).nombre}</p>
-            <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).codigo}</p>
+            <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).codigoGrupo}</p>
             <p>Descripción: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).descripcion}</p>
             <p>Dificultad: {JSON.parse(sessionStorage.getItem("ProfesorClaseActual")).dificultad}</p>
             <hr></hr>
@@ -114,7 +114,7 @@ export default function ClaseIndividualProfesor() {
                 <h1>Actividades de clase</h1>
                 <div className="contenidoInfoActividades">
                     {/* <FichaActividad actividad={activity}/> */}
-                    {activity.map(actividad => { return <div id={actividad._id}> <FichaActividad actividad={actividad}></FichaActividad> </div> })}
+                    {activity.map(actividad => { return <div key={actividad._id} id={actividad._id}> <FichaActividad actividad={actividad}></FichaActividad> </div> })}
 
                 </div>
             </div>

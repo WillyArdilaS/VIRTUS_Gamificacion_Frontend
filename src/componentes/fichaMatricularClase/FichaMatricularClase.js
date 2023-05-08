@@ -37,8 +37,17 @@ export default function FichaMatricularClase(props) {
         <i className="fa-solid fa-dice"></i>
         {props.clase.nombre}
       </p>
-      <p className="profesor_clase">
-        <i className="fa-solid fa-dragon"></i> {props.clase.descripcion}
+      <p className="codigoGrupo_clase">
+        <i className="fa-solid fa-dice"></i>
+        {props.clase.codigoGrupo}
+      </p>
+      <p className="dificultad_clase">
+        <i className="fa-solid fa-dice"></i>
+        {props.clase.dificultad}
+      </p>
+      <p className="descripcion_clase">
+        <i className="fa-solid fa-dragon"></i> 
+        {props.clase.descripcion}
       </p>
       <button className="ir_clase" onClick={(e)=>eventMatricular(props.clase._id, props.estudiante.usuario._id,e)}>Inscribirse</button>
     </div>

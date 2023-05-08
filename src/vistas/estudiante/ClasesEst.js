@@ -108,7 +108,7 @@ export default function ClasesEst(props) {
                <h1> Mis Clases</h1>
                <div className="misClasesGrid">
                     {misClases.map(item => {
-                         return <div id={item.id} ><FichaMisClasesEst key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div>
+                         return <div key={item._id} id={item._id} ><FichaMisClasesEst clase={item} funcionClaseIndividual={props.funcionClaseIndividual}/></div>
                     })}
                </div>
           </div>
@@ -136,7 +136,7 @@ export default function ClasesEst(props) {
                </div>
 
                <div className="misClasesUnirse">
-                    {clasesEstMatricular.map(item => { return <div id={item.id} ><FichaMatricularClase key={item.id} clase={item} estudiante={JSON.parse(sessionStorage.getItem("usuario"))} 
+                    {clasesEstMatricular.map(item => { return <div key={item._id} id={item._id} ><FichaMatricularClase clase={item} estudiante={JSON.parse(sessionStorage.getItem("usuario"))} 
                     getMisClases={getMisClases}/></div> })}
                </div>
           </div>

@@ -37,7 +37,7 @@ export default function ClasesProfesor(props) {
     const [clase, setClase] = useState({
         id: 0,
         nomClase: "",
-        codigo: "",
+        codigoGrupo: "",
         descripcion: "",
         dificultad: ""
     });
@@ -86,7 +86,7 @@ export default function ClasesProfesor(props) {
         const objectClass = {
             id: clase.id,
             nombre: clase.nomClase,
-            codigo: clase.codigo,
+            codigoGrupo: clase.codigoGrupo,
             descripcion: clase.descripcion,
             dificultad: clase.dificultad,
             usuarioProfesorFK: JSON.parse(sessionStorage.getItem("usuario")).usuario._id
@@ -97,7 +97,7 @@ export default function ClasesProfesor(props) {
         setClase({
             id: 0,
             nomClase: "",
-            codigo: "",
+            codigoGrupo: "",
             descripcion: "",
             dificultad: ""
         })
@@ -139,8 +139,8 @@ export default function ClasesProfesor(props) {
                         <p>Código del grupo</p>
                         <input
                             type="text"
-                            name="codigo"
-                            value={clase.codigo}
+                            name="codigoGrupo"
+                            value={clase.codigoGrupo}
                             onChange={handleChange}
                             required
                         ></input>
@@ -175,7 +175,7 @@ export default function ClasesProfesor(props) {
         <hr></hr>
         <div className="misClasesUnirse">
             {clasesProf.map(item => {
-                return <div id={item.id}><FichaClase key={item.id} clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
+                return <div key={item._id} id={item._id}><FichaClase  clase={item} funcionClaseIndividual={props.funcionClaseIndividual} /></div>
             })}
         </div>
     </div>)

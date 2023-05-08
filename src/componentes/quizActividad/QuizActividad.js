@@ -20,10 +20,9 @@ function QuizActividad({ handleAnswer, showAnswers, handleNextQuestion, data: { 
                                     answer === correct_answer ? "green-button" : "red-button"
                                 ) : "";
                                 return (
-                                    <button /*key={}*/ className={`normal-button ${specialClassName}`}
+                                    <button key={answer} className={`normal-button ${specialClassName}`}
                                         onClick={() => handleAnswer(answer)}
                                         dangerouslySetInnerHTML={{ __html: answer }} />
-
                                 )
                             })}
                         </ul>
