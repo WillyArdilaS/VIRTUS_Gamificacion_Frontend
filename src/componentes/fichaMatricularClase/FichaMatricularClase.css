@@ -12,7 +12,7 @@
 
 .fichaClase{
     width: 250px;
-    height: 150px;
+    height: 175px;
     margin: 10px;
     background-color: rgba(255, 255, 255, 0.562); 
     box-shadow:  0px 2px  3px  rgb(176, 176, 176);
@@ -39,13 +39,11 @@
 
 
 .nombre_clase{
-    display: flex;
-    justify-content: center;
-
     font-family: 'Sarabun', 'cursive';
     font-style: normal;
     font-weight: 700;
     font-size: 22px;
+    text-align: center;
     letter-spacing: 0.2px;
     color: #2D3436;
 
@@ -59,12 +57,10 @@
 }
 
 .codigoGrupo_clase {
-    display: flex;
-    justify-content: center;
-
     font-family: 'Sarabun', 'cursive';
     font-style: normal;
     font-weight: 700;
+    text-align: center;
     font-size: 15px;
     letter-spacing: 0.2px;
     color: #2D3436;
@@ -79,12 +75,10 @@
 }
 
 .dificultad_clase {
-    display: flex;
-    justify-content: center;
-
     font-family: 'Sarabun', 'cursive';
     font-style: normal;
     font-weight: 700;
+    text-align: center;
     font-size: 15px;
     letter-spacing: 0.2px;
     color: #2D3436;
@@ -99,13 +93,11 @@
 }
 
 .descripcion_clase{
-    display: flex;
-    justify-content: center;
-
     font-family: 'Sarabun', 'cursive';
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
+    text-align: center;
     letter-spacing: 0.2px;
     color: #2D3436;
 
@@ -126,7 +118,6 @@
     height: 40px;
     margin: auto;
     border-radius: 15px;
-
     color: white;
     font-weight: 700;
     font-size: 18px;
@@ -139,6 +130,7 @@
 
 .fichaClase button:hover{
     box-shadow:  3px 3px 3px #8b1e51;
+    cursor: pointer;
     /*box-shadow:  3px 3px 3px #4d42a5;*/
 }
 

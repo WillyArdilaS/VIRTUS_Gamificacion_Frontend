@@ -71,13 +71,11 @@ export default function ClaseIndividualEstudiante() {
     return difficulty
   }
 
-  // //API preguntas actividad
+  // API preguntas actividad
   const getPreguntasQuiz = async (numPreguntas = 10) => {
     const findClassTDB = clasesTDB.find(item => item.nombre === JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre)
     const difficulty = getDifficultyForConsult()
-    console.log(difficulty)
 
-    //console.log(findClassTDB)
     const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
     const response = await fetch(`${url}`);
     const { results } = await response.json();
@@ -86,7 +84,6 @@ export default function ClaseIndividualEstudiante() {
       ...question,
       answers: [question.correct_answer, ...question.incorrect_answers].sort(() => Math.random() - 0.5) //Unifica preguntas correctas e incorrectas en un array y las desordena
     }))
-    //console.log(preguntas)
 
     setPreguntasQuiz(preguntas);
   }
@@ -154,7 +151,7 @@ export default function ClaseIndividualEstudiante() {
       <h1>Info de la clase</h1>
       <hr></hr>
       <p>Nombre clase: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre}</p>
-      <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).codigo}</p>
+      <p>Codigo del grupo: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).codigoGrupo}</p>
       <p>Descripción: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).descripcion}</p>
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>

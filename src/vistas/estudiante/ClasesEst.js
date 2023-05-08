@@ -79,8 +79,8 @@ export default function ClasesEst(props) {
                dataClases = clasesBD.filter((clase) => {
                     return(
                          clase.nombre.toLowerCase().includes(filtro.toLowerCase()) || 
-                         // clase.codigo.toLowerCase().includes(filtro.toLowerCase()) ||
-                         // clase.dificultad.toLowerCase().includes(filtro.toLowerCase()) ||
+                         clase.codigoGrupo.toLowerCase().includes(filtro.toLowerCase()) ||
+                         clase.dificultad.toLowerCase().includes(filtro.toLowerCase()) ||
                          clase.descripcion.toLowerCase().includes(filtro.toLowerCase())
                     );
                });
