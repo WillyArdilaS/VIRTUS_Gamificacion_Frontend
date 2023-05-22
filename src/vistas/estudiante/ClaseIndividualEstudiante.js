@@ -8,12 +8,7 @@ import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 
 
 export default function ClaseIndividualEstudiante() {
-  // Hacer el fetch para traer el número de actividades y asi poder renderizar los botones del mapa
-  useEffect(() => {
-    getPreguntasQuiz();
-    getActivity(JSON.parse(sessionStorage.getItem("EstudianteClaseActual"))._id);
-    getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
-  }, [])
+  
 
   const [activity, setActivity] = useState([]);
   //QUIZ
@@ -27,10 +22,18 @@ export default function ClaseIndividualEstudiante() {
     clase: "",
     vida: 0,
     experiencia: 0,
-    nivel: 0, 
+    nivel: 0,
     imgUrl: ""
   });
 
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  // Hacer el fetch para traer el número de actividades y asi poder renderizar los botones del mapa
+  useEffect(() => {
+    getPreguntasQuiz();
+    getActivity(JSON.parse(sessionStorage.getItem("EstudianteClaseActual"))._id);
+    getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
+  }, [])
 
   //Peticiones
   const getPersonaje = async (filtro) => {
@@ -39,7 +42,7 @@ export default function ClaseIndividualEstudiante() {
     const { personajesBD } = await response.json();
 
     let personajesFiltrados = personajesBD.filter(personaje => personaje.usuarioFK == filtro);
-    setResPersonaje(()=> ({
+    setResPersonaje(() => ({
       id: personajesFiltrados[0]._id,
       clase: personajesFiltrados[0].clase,
       vida: personajesFiltrados[0].vida,
@@ -61,11 +64,11 @@ export default function ClaseIndividualEstudiante() {
 
   const getDifficultyForConsult = () => {
     let difficulty = JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad
-    if (difficulty === 'facil'){
+    if (difficulty === 'facil') {
       difficulty = 'easy'
-    } else if (difficulty === 'medio'){
+    } else if (difficulty === 'medio') {
       difficulty = 'medium'
-    } else if (difficulty === 'dificil'){
+    } else if (difficulty === 'dificil') {
       difficulty = 'hard'
     }
     return difficulty
@@ -110,20 +113,20 @@ export default function ClaseIndividualEstudiante() {
       } else {
         resPersonaje.vida = resPersonaje.vida - activity[0].castigo;
       }
-      
+
       levelUpPersonaje();
       updatePersonaje();
     }
   }, [currentIndex])
-  
+
   // Subir de nivel
   const levelUpPersonaje = () => {
-    if(resPersonaje.experiencia >= 100) {
+    if (resPersonaje.experiencia >= 100) {
       resPersonaje.vida = 100;
       resPersonaje.experiencia = 0;
       resPersonaje.nivel += 1;
       alert("¡Felicidades! Has subido de nivel");
-    } 
+    }
   }
 
   // Actualizar atributos del personaje
@@ -135,7 +138,7 @@ export default function ClaseIndividualEstudiante() {
         "_id": resPersonaje.id,
         "experiencia": resPersonaje.experiencia,
         "vida": resPersonaje.vida,
-        "nivel": resPersonaje.nivel 
+        "nivel": resPersonaje.nivel
       }),
       headers: {
         "Content-Type": "application/json",
@@ -144,7 +147,12 @@ export default function ClaseIndividualEstudiante() {
     });
 
     getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
-  } 
+  }
+
+  const handleClickActividad = () => {
+    console.log('hi! i am the activities:', activity)
+    setShowQuiz(true)
+  }
 
   return (preguntasQuiz.length > 0 ? (
     <div className="containerActividad">
@@ -156,17 +164,24 @@ export default function ClaseIndividualEstudiante() {
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
-      <MapaActividades actividades={activity} />
+      <MapaActividades actividades={activity} handleClickActividad={handleClickActividad} />
 
 
       <div className="container">
-        {currentIndex >= preguntasQuiz.length || activity.length == 0 ? (
-          <div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>) : (<QuizActividad handleAnswer={handleAnswer}
-            showAnswers={showAnswers}
-            handleNextQuestion={handleNextQuestion}
-            data={preguntasQuiz[currentIndex]}
-            currentIndex={currentIndex}
-            numPreguntas={preguntasQuiz.length} />)}
+        {
+          showQuiz === true ?
+            currentIndex >= preguntasQuiz.length || activity.length == 0 ?
+              (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
+              :
+              (<QuizActividad handleAnswer={handleAnswer}
+                showAnswers={showAnswers}
+                handleNextQuestion={handleNextQuestion}
+                data={preguntasQuiz[currentIndex]}
+                currentIndex={currentIndex}
+                numPreguntas={preguntasQuiz.length} />)
+              :
+              (<></>)
+        }
 
         <ResmPersonaje resPersonaje={resPersonaje} />
       </div>

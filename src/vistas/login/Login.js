@@ -70,7 +70,7 @@ export default function Login(props) {
 
     //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
     const userLogeado = await sendLogin(usuario);
-
+    //console.log(userLogeado)
     if (!userLogeado.token) {
       return window.alert("Datos incorrectos");
     };

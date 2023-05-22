@@ -13,7 +13,7 @@ export default function FichaMatricularClase(props) {
         }
       });
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     return data;
   }
 

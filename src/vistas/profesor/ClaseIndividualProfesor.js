@@ -38,10 +38,9 @@ export default function ClaseIndividualProfesor() {
         recompensaForm: "",
         castigoForm: "",
         descripcionForm: "",
+        dificultadForm: "",
         fechaVencimientoForm: ""
     })
-
-
 
     const handleChange = (e) => {
         setCrearActivity({
@@ -87,6 +86,7 @@ export default function ClaseIndividualProfesor() {
             recompensa: crearActivity.recompensaForm,
             castigo: crearActivity.castigoForm,
             descripcion: crearActivity.descripcionForm,
+            dificultad: crearActivity.dificultadForm,
             claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id
         }
 
@@ -96,6 +96,7 @@ export default function ClaseIndividualProfesor() {
             recompensaForm: "",
             castigoForm: "",
             descripcionForm: "",
+            dificultadForm: "",
             fechaVencimientoForm: ""
         })
         getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id)
@@ -152,6 +153,20 @@ export default function ClaseIndividualProfesor() {
                                 onChange={handleChange}
                                 required
                             ></input>
+                            <p>Dificultad (facil, medio, dificil)</p>
+                            <input
+                                type="text"
+                                name="dificultadForm"
+                                value={crearActivity.dificultadForm}
+                                onChange={handleChange}
+                                required>
+                            </input>
+                            {/*<select name="dificultadForm" value={crearActivity.dificultadForm} onChange={handleChange} required>
+                                <option value="" disabled hidden></option>
+                                <option value="facil"> Fácil </option>
+                                <option value="medio"> Medio </option>
+                                <option value="dificil"> Díficil </option>
+                            </select> estan jodiendo los estilos porque los hereda desde Registro.css el input de dificultad es temporal*/}
                             <p>Fecha de vencimiento</p>
                             <input
                                 type="date"
