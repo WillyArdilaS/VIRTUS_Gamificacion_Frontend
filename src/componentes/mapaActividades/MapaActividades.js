@@ -1,9 +1,9 @@
 import './mapaActividades.css'
+import { useEffect, useState } from "react";
 // import '../../utils/dist/rpgui.min.css'
 
 
-export default function MapaActividades({actividades, handleClickActividad}) {
-
+export default function MapaActividades({actividades, setActualActivity}) {
   return (
     <div >
       <h1>MapaActividades</h1>
@@ -15,7 +15,7 @@ export default function MapaActividades({actividades, handleClickActividad}) {
         actividades.map((actividad, index) => {
           let classButton = `rpgui-button posicion${index+1} absolute`
           let idButton = `button${index+1}`
-          return(<button key={index} onClick={handleClickActividad} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
+          return(<button key={index} onClick={() => setActualActivity(actividad)} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
         })
       }
       </div>

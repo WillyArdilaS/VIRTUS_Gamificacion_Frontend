@@ -11,6 +11,7 @@ export default function ClaseIndividualEstudiante() {
   
 
   const [activity, setActivity] = useState([]);
+  const [actualActivity, setActualActivity] = useState();
   //QUIZ
   const [preguntasQuiz, setPreguntasQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,7 +31,6 @@ export default function ClaseIndividualEstudiante() {
 
   // Hacer el fetch para traer el número de actividades y asi poder renderizar los botones del mapa
   useEffect(() => {
-    getPreguntasQuiz();
     getActivity(JSON.parse(sessionStorage.getItem("EstudianteClaseActual"))._id);
     getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
   }, [])
@@ -62,33 +62,36 @@ export default function ClaseIndividualEstudiante() {
     setActivity(actividadesFiltradas);
   }
 
-  const getDifficultyForConsult = () => {
-    let difficulty = JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad
-    if (difficulty === 'facil') {
-      difficulty = 'easy'
-    } else if (difficulty === 'medio') {
-      difficulty = 'medium'
-    } else if (difficulty === 'dificil') {
-      difficulty = 'hard'
-    }
-    return difficulty
-  }
-
   // API preguntas actividad
-  const getPreguntasQuiz = async (numPreguntas = 10) => {
-    const findClassTDB = clasesTDB.find(item => item.nombre === JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre)
-    const difficulty = getDifficultyForConsult()
+  const getPreguntasQuiz = async (actividad, numPreguntas = 10) => {
+    console.log(actividad.disponible);
+    if(actividad.disponible == true) {
+      console.log("DISPONIBLE");
+      let  difficulty = actividad.dificultad;
+      if (difficulty === 'facil') {
+        difficulty = 'easy'
+      } else if (difficulty === 'medio') {
+        difficulty = 'medium'
+      } else if (difficulty === 'dificil') {
+        difficulty = 'hard'
+      }
 
-    const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
-    const response = await fetch(`${url}`);
-    const { results } = await response.json();
+      const findClassTDB = clasesTDB.find(item => item.nombre === JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre)
 
-    const preguntas = results.map((question) => ({
-      ...question,
-      answers: [question.correct_answer, ...question.incorrect_answers].sort(() => Math.random() - 0.5) //Unifica preguntas correctas e incorrectas en un array y las desordena
-    }))
+      const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
+      const response = await fetch(`${url}`);
+      const { results } = await response.json();
 
-    setPreguntasQuiz(preguntas);
+      const preguntas = results.map((question) => ({
+        ...question,
+        answers: [question.correct_answer, ...question.incorrect_answers].sort(() => Math.random() - 0.5) //Unifica preguntas correctas e incorrectas en un array y las desordena
+      }))
+
+      setPreguntasQuiz(preguntas);
+      setShowQuiz(true);
+    } else {
+      console.log("NO DISPONIBLE");
+    }
   }
 
   const handleAnswer = (answer) => {
@@ -149,12 +152,11 @@ export default function ClaseIndividualEstudiante() {
     getPersonaje(JSON.parse(sessionStorage.getItem("usuario")).usuario._id);
   }
 
-  const handleClickActividad = () => {
-    console.log('hi! i am the activities:', activity)
-    setShowQuiz(true)
-  }
+  useEffect(() => {
+    getPreguntasQuiz(actualActivity);
+  }, [actualActivity]);
 
-  return (preguntasQuiz.length > 0 ? (
+  return (activity.length > 0 ? (
     <div className="containerActividad">
       <h1>Info de la clase</h1>
       <hr></hr>
@@ -164,13 +166,13 @@ export default function ClaseIndividualEstudiante() {
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
-      <MapaActividades actividades={activity} handleClickActividad={handleClickActividad} />
+      <MapaActividades actividades={activity} setActualActivity={setActualActivity}/>
 
 
       <div className="container">
         {
-          showQuiz === true ?
-            currentIndex >= preguntasQuiz.length || activity.length == 0 ?
+          (showQuiz === true ?
+            currentIndex >= preguntasQuiz.length ?
               (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
               :
               (<QuizActividad handleAnswer={handleAnswer}
@@ -180,7 +182,7 @@ export default function ClaseIndividualEstudiante() {
                 currentIndex={currentIndex}
                 numPreguntas={preguntasQuiz.length} />)
               :
-              (<></>)
+              (<></>))
         }
 
         <ResmPersonaje resPersonaje={resPersonaje} />
