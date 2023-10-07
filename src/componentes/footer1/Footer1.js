@@ -40,6 +40,36 @@ export default function Footer1(){
                     </a>
                  </div>
             </div>
+            <div className='footer1_responsive'>
+
+                <div className='info'>
+                    <h3>Academia</h3>
+                    <p>
+                    Universidad Distrital Francisco José de Caldas<br/><br/>
+                    Grupo de Investigación <br/>
+                    Virtus
+                    </p>
+                </div>
+                
+                <div className='info'>
+                    <h3>Terminos de uso</h3>
+                    <p> Terminos y condiciones<br/>
+                        Copyright<br/><br/>
+                        Política de privacidad</p>
+                </div>
+
+                <div className='about'>
+                    <a href='http://grupovirtus.org/sitio/index.php'>
+                        <p>Sobre nosotros</p>
+                        <i className="fa-brands fa-github"></i>
+                    </a>
+                </div>
+
+                <div className='copyright'>
+                    <p>Copyright © 2022 grupo VIRTUS. Derechos reservados.</p>
+                </div>
+        
+            </div>
         </div>
     )
 }

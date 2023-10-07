@@ -1,35 +1,56 @@
-.containerMapa {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
 
-.imgMapa {
-  max-width: 70%;
-  margin: auto 0;
-}
-
-
-.absolute {
+.imagen{
   position: absolute;
+  width: 70vw;
+  height: 85vh;
+  text-align: center;
+  border-color: black;
+  border-style: groove;
+  border-radius: 10px;
 }
 
-.posicion1 {
-  top: 60%;
-  left: 50%;
+
+.imagen img{
+  height: 100%;
+  width: 100%;
+  border-radius: 7px;
 }
 
-.posicion2 {
-  top: 60%;
-  left: 70%;
+
+.containerBtn{
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(12, 1fr);;
+  grid-template-rows:  repeat(11, 1fr);;
+  width: 70vw;
+  height: 85vh;
 }
 
-.posicion3 {
-  top: 90%;
-  left: 70%;
+.btn_actividad{
+  /*falta terminar de configurar las relaciones, falla en ocaciones*/
+  height: 7.72vh !important;
+  min-width: 0px !important;
+  max-width: 5.83vw;
+
+  font-size: 2vh !important ;
+  font-family: 'Maven Pro', cursive;
+  color : #e2e2e2;
 }
 
-.posicion4 {
-  top: 110%;
-  left: 40%;
+@media (max-width: 905px) {
+  .imagen{
+      width: 95vw;
+      height: 60vh;
+  }
+  .containerBtn{
+      width: 95vw;
+      height: 60vh;
+  }
+  .btn_actividad{
+     /*falta terminar de configurar las relaciones, falla en ocaciones*/
+    height: 5.45vh !important;
+    max-width: 7.0vw !important;
+  }
 }
