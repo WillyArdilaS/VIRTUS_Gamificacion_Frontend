@@ -27,12 +27,6 @@ export default function FichaActividad(props) {
             <div className="indicadoresClase">
                 <p>{props.actividad.descripcion} - {props.actividad.dificultad}</p>
             </div>
-            <div className="indicadoresClase">
-                <img src="https://images.vexels.com/media/users/3/143553/isolated/preview/18da5bb6f3a7c09e042921571f8a0f37-signo-de-interrogacion-rojo-3d.png" className="imgIcon"></img>
-                <p>Pendiente: </p>
-                <p>{props.actividad.pendiente.toString()}</p>
-            </div>
-
         </div>
     )
 }
