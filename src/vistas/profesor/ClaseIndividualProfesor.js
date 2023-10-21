@@ -6,7 +6,8 @@ import FichaActividad from '../../componentes/fichaActividad/FichaActividad'
 
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
-import { Button, cardHeaderClasses, Link } from "@mui/material";
+import { Button } from "@mui/material";
+
 /* Estilos del boton "Entrar" */
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -24,8 +25,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-
-
 export default function ClaseIndividualProfesor() {
 
     useEffect(() => {
@@ -35,6 +34,7 @@ export default function ClaseIndividualProfesor() {
 
     const [activity, setActivity] = useState([]); //Actividades individuales
     const [crearActivity, setCrearActivity] = useState({ //Form
+        nameForm: "",
         recompensaForm: "",
         castigoForm: "",
         descripcionForm: "",
@@ -61,7 +61,6 @@ export default function ClaseIndividualProfesor() {
         const { actividadesBD } = await response.json();
         let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
         setActivity(actividadesFiltradas);
-        //console.log("get activity", actividadesFiltradas);
     }
 
     const postActivity = async (objectActivity) => {
@@ -76,12 +75,13 @@ export default function ClaseIndividualProfesor() {
                 }
             });
         const data = await response.json();
-        //console.log("post activity", data);
+  
         return data;
     }
 
     const eventPostActivity = async () => {
         const objectActivity = {
+            nombre: crearActivity.nameForm,
             fechaVencimiento: crearActivity.fechaVencimientoForm,
             recompensa: crearActivity.recompensaForm,
             castigo: crearActivity.castigoForm,
@@ -93,6 +93,7 @@ export default function ClaseIndividualProfesor() {
         const response = await postActivity(objectActivity);
         alert("Actividad Creada");
         setCrearActivity({
+            nameForm: "",
             recompensaForm: "",
             castigoForm: "",
             descripcionForm: "",
@@ -120,7 +121,6 @@ export default function ClaseIndividualProfesor() {
                 </div>
             </div>
 
-            {/* FORM PROVISIONAL */}
             <div className="crearClase">
                 <h1>Crear actividad</h1>
                 <hr></hr>
@@ -129,19 +129,11 @@ export default function ClaseIndividualProfesor() {
                     <div className="formularioActividad">
                         <h1 className="login_titleProfesor">Ingrese los datos de la actividad</h1>
                         <form onSubmit={handleSubmit}>
-                            <p>Puntos de experiencia - Recompensa</p>
+                            <p>Nombre</p>
                             <input
-                                type="number"
-                                name="recompensaForm"
-                                value={crearActivity.recompensaForm}
-                                onChange={handleChange}
-                                required
-                            ></input>
-                            <p>Daño por fallar la actividad - Castigo</p>
-                            <input
-                                type="number"
-                                name="castigoForm"
-                                value={crearActivity.castigoForm}
+                                type="text"
+                                name="nameForm"
+                                value={crearActivity.nameForm}
                                 onChange={handleChange}
                                 required
                             ></input>
@@ -161,16 +153,27 @@ export default function ClaseIndividualProfesor() {
                                 onChange={handleChange}
                                 required>
                             </input>
-                            {/*<select name="dificultadForm" value={crearActivity.dificultadForm} onChange={handleChange} required>
-                                <option value="" disabled hidden></option>
-                                <option value="facil"> Fácil </option>
-                                <option value="medio"> Medio </option>
-                                <option value="dificil"> Díficil </option>
-                            </select> estan jodiendo los estilos porque los hereda desde Registro.css el input de dificultad es temporal*/}
+                            <p>Puntos de experiencia - Recompensa</p>
+                            <input
+                                type="number"
+                                name="recompensaForm"
+                                value={crearActivity.recompensaForm}
+                                onChange={handleChange}
+                                required
+                            ></input>
+                            <p>Daño por fallar la actividad - Castigo</p>
+                            <input
+                                type="number"
+                                name="castigoForm"
+                                value={crearActivity.castigoForm}
+                                onChange={handleChange}
+                                required
+                            ></input>
                             <p>Fecha de vencimiento</p>
                             <input
                                 type="date"
                                 name="fechaVencimientoForm"
+                                min={new Date().toISOString().split('T')[0]}
                                 value={crearActivity.fechaVencimientoForm}
                                 onChange={handleChange}
                                 required

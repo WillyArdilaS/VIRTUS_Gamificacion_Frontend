@@ -94,15 +94,12 @@ export default function Login(props) {
   };
 
   function navigateToStudentView() {
-    navigate("/Estudiante/Micuenta");
+    navigate("/Estudiante/Micuenta", { replace: true });
     
   }
 
   function navigateToTeacherView() {
     navigate("/Maestro/Micuenta", { replace: true });
-    /*document
-      .getElementById('Micuenta')
-      .setAttribute('style', 'background-color: rgb(117, 245, 136)')*/
   }
 
   useEffect(() => {

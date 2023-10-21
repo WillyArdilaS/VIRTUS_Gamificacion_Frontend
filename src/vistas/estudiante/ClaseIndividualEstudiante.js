@@ -64,9 +64,7 @@ export default function ClaseIndividualEstudiante() {
 
   // API preguntas actividad
   const getPreguntasQuiz = async (actividad, numPreguntas = 10) => {
-    console.log(actividad.disponible);
     if(actividad.disponible == true) {
-      console.log("DISPONIBLE");
       let  difficulty = actividad.dificultad;
       if (difficulty === 'facil') {
         difficulty = 'easy'
@@ -77,7 +75,6 @@ export default function ClaseIndividualEstudiante() {
       }
 
       const findClassTDB = clasesTDB.find(item => item.nombre === JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).nombre)
-
       const url = `https://opentdb.com/api.php?amount=${numPreguntas}&category=${findClassTDB.id}&difficulty=${difficulty}`;
       const response = await fetch(`${url}`);
       const { results } = await response.json();

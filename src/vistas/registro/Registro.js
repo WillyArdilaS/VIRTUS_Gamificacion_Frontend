@@ -137,33 +137,36 @@ export default function Registro(props) {
   }
 
   const comprobar = async () => {
-
-    await sendRegister(usuario);
-
-    //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
-    const userLogeado = await sendLogin({
-      correo: usuario.correo,
-      password: usuario.password,
-    });
-    
-    if (!userLogeado.token) {
-      return window.alert("Datos incorrectos");
-    };
-
-    //Las credenciales son correctas
-    props.sesion(userLogeado);
-    sessionStorage.setItem("sesionIniciada", true)
-
-    //Aqui va a dirigir a una pagina o otra dependiendo del rol
-    //Vista estudiante
-    if (userLogeado.usuario.rol === "estudiante") {
-      navigateToStudentView();
-    };
-
-    //Vista profesor
-    if (userLogeado.usuario.rol === "maestro") {
-      navigateToTeacherView();
-    };
+    if(usuario.password.length >= 6) {
+      await sendRegister(usuario);
+  
+      //Antes de entrar deberia comprobar el usuario y determinar a donde debe navegar
+      const userLogeado = await sendLogin({
+        correo: usuario.correo,
+        password: usuario.password,
+      });
+      
+      if (!userLogeado.token) {
+        return window.alert("Datos incorrectos");
+      };
+  
+      //Las credenciales son correctas
+      props.sesion(userLogeado);
+      sessionStorage.setItem("sesionIniciada", true)
+  
+      //Aqui va a dirigir a una pagina o otra dependiendo del rol
+      //Vista estudiante
+      if (userLogeado.usuario.rol === "estudiante") {
+        navigateToStudentView();
+      };
+  
+      //Vista profesor
+      if (userLogeado.usuario.rol === "maestro") {
+        navigateToTeacherView();
+      };
+    } else {
+      alert("La contraseña debe tener al menos 6 caracteres")
+    }
   };
 
   function navigateToStudentView() {
