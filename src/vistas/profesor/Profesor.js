@@ -6,7 +6,7 @@ import MenuIzq from '../../componentes/menuIzq/MenuIzq';
 
 export default function Profesor() {
     const opciones=['Mi cuenta','Clases'];
-    return( <div className="contenedor_Profesor">
+    return( <div className="contenedor_Profesor altoMinimo">
                 <MenuIzq opciones={opciones}/>
                 <Outlet></Outlet>
             </div>)

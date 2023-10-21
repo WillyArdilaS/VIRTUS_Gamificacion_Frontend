@@ -43,3 +43,8 @@ html, body {
 .mainContenido {
   margin-bottom: 3em;
 }
+
+/*si una ventana no tiene un alto minimo, el footer se vera extraño*/
+.altoMinimo{
+  min-height: 71vh !important;
+}

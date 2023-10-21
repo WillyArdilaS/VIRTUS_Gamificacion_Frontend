@@ -107,7 +107,7 @@ export default function Login(props) {
   }, []);
 
   return (
-    <div data-aos="fade-down" data-aos-once="true">
+    <div data-aos="fade-down" data-aos-once="true" className="altoMinimo" >
       <div className="formulario">
         <h1 className="login_title">Inicia sesión</h1>
         <form onSubmit={handleSubmit}>

@@ -191,4 +191,16 @@ body {
     .quiz-foot button {
         font-size: 1rem;
     }
+
+
+}
+
+
+
+@media(max-width: 750px) {
+  
+.containerQuiz {
+    width: 70vw;
+}
+
 }

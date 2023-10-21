@@ -16,7 +16,7 @@ export default function Home(){
     }
 
     return(
-        <div className="contenedor" data-aos = "fade-right" data-aos-once="true">
+        <div className="contenedor altoMinimo" data-aos = "fade-right" data-aos-once="true">
             <div className="text" >
                 <h1>Una nueva manera de conectar con alumnos</h1>
                 <button className='bt_home' onClick={navigateToSignup}>Unete</button>

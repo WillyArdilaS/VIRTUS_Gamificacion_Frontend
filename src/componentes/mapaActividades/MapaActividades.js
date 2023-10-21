@@ -21,7 +21,7 @@ export default function MapaActividades({actividades, setActualActivity}) {
               let idButton = `button${index+1}`
               //antes no se tenian posiciones, se agregan unas de ejemplo.
               let posicion = {
-                "grid-column-start": "5",
+                "grid-column-start": index,
                 "grid-row-start": "4"
               }
               return(<button key={index} onClick={() => setActualActivity(actividad)} style={posicion} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)

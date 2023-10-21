@@ -29,7 +29,7 @@
 }
 
 .btn_actividad{
-  /*falta terminar de configurar las relaciones, falla en ocaciones*/
+ 
   height: 7.72vh !important;
   min-width: 0px !important;
   max-width: 5.83vw;
@@ -40,7 +40,7 @@
 }
 
 @media (max-width: 905px) {
-  .imagen{
+  .imagenMapa{
       width: 95vw;
       height: 60vh;
   }
@@ -49,7 +49,7 @@
       height: 60vh;
   }
   .btn_actividad{
-     /*falta terminar de configurar las relaciones, falla en ocaciones*/
+   
     height: 5.45vh !important;
     max-width: 7.0vw !important;
   }
