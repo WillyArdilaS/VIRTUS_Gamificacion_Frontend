@@ -11,6 +11,7 @@ import Footer1 from "./componentes/footer1/Footer1";
 import Estudiante from "./vistas/estudiante/Estudiante";
 import PerfilEst from "./vistas/estudiante/PerfilEst";
 import ClasesEst from "./vistas/estudiante/ClasesEst";
+import ActividadIndividual from "./vistas/profesor/ActividadInndividual";
 import Registro from "./vistas/registro/Registro";
 import Profesor from "./vistas/profesor/Profesor";
 import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
@@ -49,6 +50,7 @@ function App() {
             <Route path="Micuenta" element={<PerfilProf />} />
             <Route path="Clases" element={<ClasesProfesor funcionClaseIndividual={setClaseIndividual} />} />
             <Route path="ClaseIndidivual" element={<ClaseIndividualProfesor clase={claseIndividual} />} />
+            <Route path="Actividad" element={<ActividadIndividual />} />
           </Route>
           <Route path="*" element={<h1> pagina no encontrada</h1>} />
         </Routes>

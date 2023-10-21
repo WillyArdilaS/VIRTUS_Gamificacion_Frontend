@@ -3,7 +3,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import './clasesEst.css';
 
-import data from '../../data_prueba/clases.json'
+
 import FichaMisClasesEst from '../../componentes/fichaMisClasesEst/FichaMisClasesEst'
 import ResmPersonaje from '../../componentes/resmPersonaje/ResmPersonaje';
 

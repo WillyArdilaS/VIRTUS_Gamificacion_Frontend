@@ -25,8 +25,10 @@ export default function FichaActividad(props) {
     const navigate = useNavigate();
 
     function navigateToActivityView() {
+
+        //por el momento el la localstorage , toca pasarlo a la sessionstorage
+        localStorage.setItem('actividad', JSON.stringify(props.actividad))
         navigate(`/Maestro/Actividad`);
-        
       }
 
     return (
