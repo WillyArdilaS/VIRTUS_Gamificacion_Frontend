@@ -19,7 +19,7 @@ export default function FichaNota(props) {
 
 
 
-  //peticiones, obtener nombre y correo del estudiante
+  //peticiones, obtener nombre y correo del estudiante  ***toca optimizar
   const getNombre = async (filtro) => {
     const urlBD = "http://localhost:8080/api/users";
     const response = await fetch(`${urlBD}`);

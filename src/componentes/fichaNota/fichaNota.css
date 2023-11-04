@@ -157,7 +157,6 @@
 .fichaClase button:hover{
     box-shadow:  3px 3px 3px #8b1e51;
     cursor: pointer;
-    /*box-shadow:  3px 3px 3px #4d42a5;*/
 }
 
 @media (max-width: 900px) {

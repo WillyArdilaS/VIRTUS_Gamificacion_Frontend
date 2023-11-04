@@ -2,3 +2,36 @@
     display: block;
     background-color: blue;
 }
+
+.fichasNotas{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2rem;
+}
+
+
+.formularioEdid{
+    max-height: 0px;
+    opacity: 0;
+    transition: .3s ease all;
+    font-family: 'Sarabun', sans-serif;
+    padding-left: 2em;
+    padding-right: 2em;
+    text-align: justify;
+}
+.editSelec{
+background-color: #9C2D61;
+color:white;
+font-size: 25px;
+justify-content: center;
+text-align: center;
+border-radius: 5%;
+width: 210px;
+margin-left: 30px;
+border:none;
+transition: .3s ease all;
+}
+
+.editSelec:hover{
+    box-shadow:  6px 6px 3px teal;
+}
