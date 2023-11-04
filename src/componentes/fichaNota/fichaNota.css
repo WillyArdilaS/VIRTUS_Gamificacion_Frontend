@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@600&family=Sarabun:wght@600&display=swap');
+
+:root{
+    --icono1Color: rgb(60, 132, 205) ;
+    --icono2Color: rgb(18, 35, 54) ;
+}
+
+.misClases{
+    display: flex;
+}
+
+.fichaClase{
+    width: 250px;
+    height: 175px;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.562); 
+    box-shadow:  0px 2px  3px  rgb(176, 176, 176);
+    border-radius: 15px;
+    display: grid;
+    overflow: hidden;
+    position: relative;
+    grid-template-columns: 1fr;
+}
+
+.fichaClase img{
+    pointer-events: none;
+    position: absolute;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.fichaClase:hover{
+    transition: .4s ease all;
+    box-shadow:  6px 6px  3px  rgb(176, 176, 176);
+}
+
+
+.estudiante{
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.nota{
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.nombre_clase{
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.nombre_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.codigoGrupo_clase {
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.codigoGrupo_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.dificultad_clase {
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.dificultad_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.descripcion_clase{
+    font-family: 'Sarabun', 'cursive';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: #2D3436;
+
+    margin: 0;
+    margin-top: 4px;
+}
+
+.descripcion_clase i{
+    color:var(--icono1Color) ;
+    margin-right: 5px;
+}
+
+.fichaClase button{
+    border:none;
+    width: 90%;
+    background-color: #9C2D61;
+    /* background-color: #6C5CE7; */
+    height: 40px;
+    margin: auto;
+    border-radius: 15px;
+
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 32px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.2px;
+    transition: .3s ease all;
+}
+
+.fichaClase button:hover{
+    box-shadow:  3px 3px 3px #8b1e51;
+    cursor: pointer;
+    /*box-shadow:  3px 3px 3px #4d42a5;*/
+}
+
+@media (max-width: 900px) {
+    .fichaClase{
+        width: 90vw;
+        height: 150px;
+        margin:3px;
+    }
+
+    .nombre_clase{
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+}
+
+@media (min-width:900px) and (max-width: 1200px) {
+    .fichaClase{
+        width: 43vw;
+        margin: 8px;
+    }
+
+    .nombre_clase{
+        font-size: 17px;
+    }
+
+}

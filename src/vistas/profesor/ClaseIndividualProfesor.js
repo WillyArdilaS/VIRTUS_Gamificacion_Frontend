@@ -29,6 +29,7 @@ export default function ClaseIndividualProfesor() {
 
     useEffect(() => {
         getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
+        localStorage.clear()
     }, [])
 
 
