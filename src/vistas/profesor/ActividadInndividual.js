@@ -75,7 +75,7 @@ export default function PerfilProf(props) {
                 aux.descripcion= crearActivity.dificultadForm;
                 count++;
             }else{
-                alert("Valor no valido de dificultad")
+                alert("Valor no aceptado de dificultad")
             }
             
         }
