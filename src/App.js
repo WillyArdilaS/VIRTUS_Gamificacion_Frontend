@@ -12,6 +12,7 @@ import Estudiante from "./vistas/estudiante/Estudiante";
 import PerfilEst from "./vistas/estudiante/PerfilEst";
 import ClasesEst from "./vistas/estudiante/ClasesEst";
 import ActividadIndividual from "./vistas/profesor/ActividadInndividual";
+import MisionesPendientes from "./vistas/estudiante/MisionesPendientes";
 import Registro from "./vistas/registro/Registro";
 import Profesor from "./vistas/profesor/Profesor";
 import ClasesProfesor from "./vistas/profesor/ClasesProfesor";
@@ -44,6 +45,7 @@ function App() {
             <Route path="Micuenta" element={<PerfilEst />} />
             <Route path="Clases" element={<ClasesEst funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
             <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante />}/>
+            <Route path="MisionesPendientes" element={<MisionesPendientes />} />
           </Route>
           <Route path="/MapaActividades" element={<MapaActividades />} />
           <Route path='/Maestro/*' element={<Profesor />}>

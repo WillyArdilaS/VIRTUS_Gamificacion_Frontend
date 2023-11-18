@@ -1,0 +1,29 @@
+.container-clases{
+    display: flex;
+    flex-direction: column;
+}
+.clases{
+    width: 80%;
+    margin-bottom: 40px;
+    padding: 30px;
+    border-radius: 30px;
+    border: solid 1px rgb(214, 211, 211);
+}
+
+.container-actividades {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.actividad{
+    width: 50%;
+}
+
+.actividad >div{
+    width: 80%;
+}
+
+.main-view{
+    width: 100%;
+}
