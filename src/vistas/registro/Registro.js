@@ -174,7 +174,7 @@ export default function Registro(props) {
   }
 
   function navigateToTeacherView() {
-    navigate("/Profesor/Micuenta");
+    navigate("/Maestro/Micuenta");
   }
 
   useEffect(() => {
