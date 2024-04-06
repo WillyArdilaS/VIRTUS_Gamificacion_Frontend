@@ -45,6 +45,7 @@ function App() {
             <Route path="Micuenta" element={<PerfilEst />} />
             <Route path="Clases" element={<ClasesEst funcionClaseIndividual={setClaseIndividualEstudiante}/>} />
             <Route path="ClaseIndividualEstudiante" element={<ClaseIndividualEstudiante />}/>
+            <Route path="ClaseIndividualEstudiante/:tipo" element={<ClaseIndividualEstudiante />}/>
             <Route path="MisionesPendientes" element={<MisionesPendientes />} />
           </Route>
           <Route path="/MapaActividades" element={<MapaActividades />} />

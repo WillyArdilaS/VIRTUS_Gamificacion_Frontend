@@ -1,15 +1,17 @@
 import * as React from "react";
 import clasesTDB from '../../data_prueba/clasesTDB.json';
 import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
+import SopaLetras from "../../componentes/sopaLetras/SopaLetras";
 
 
 export default function ClaseIndividualEstudiante() {
-  
 
+  const { tipo } = useParams();
   const [activity, setActivity] = useState([]);
   const [actualActivity, setActualActivity] = useState();
   //QUIZ
@@ -64,8 +66,8 @@ export default function ClaseIndividualEstudiante() {
 
   // API preguntas actividad
   const getPreguntasQuiz = async (actividad, numPreguntas = 10) => {
-    if(actividad.disponible == true) {
-      let  difficulty = actividad.dificultad;
+    if (actividad.disponible == true) {
+      let difficulty = actividad.dificultad;
       if (difficulty === 'facil') {
         difficulty = 'easy'
       } else if (difficulty === 'medio') {
@@ -163,21 +165,23 @@ export default function ClaseIndividualEstudiante() {
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
-      <MapaActividades actividades={activity} setActualActivity={setActualActivity}/>
+      <MapaActividades actividades={activity} setActualActivity={setActualActivity} />
 
 
       <div className="container">
         {
-          (showQuiz === true ?
-            currentIndex >= preguntasQuiz.length ?
-              (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
-              :
-              (<QuizActividad handleAnswer={handleAnswer}
-                showAnswers={showAnswers}
-                handleNextQuestion={handleNextQuestion}
-                data={preguntasQuiz[currentIndex]}
-                currentIndex={currentIndex}
-                numPreguntas={preguntasQuiz.length} />)
+          tipo === "sopa-letras"
+            ? <SopaLetras id={"66036aa4f5536ec56fb05ec0"} />
+            : (showQuiz === true ?
+              currentIndex >= preguntasQuiz.length ?
+                (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
+                :
+                (<QuizActividad handleAnswer={handleAnswer}
+                  showAnswers={showAnswers}
+                  handleNextQuestion={handleNextQuestion}
+                  data={preguntasQuiz[currentIndex]}
+                  currentIndex={currentIndex}
+                  numPreguntas={preguntasQuiz.length} />)
               :
               (<></>))
         }
