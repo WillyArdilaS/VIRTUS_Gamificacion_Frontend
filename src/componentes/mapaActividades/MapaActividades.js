@@ -1,9 +1,12 @@
 import './mapaActividades.css'
+import { useNavigate } from 'react-router-dom'
 //import { useEffect, useState } from "react";
 // import '../../utils/dist/rpgui.min.css'
 
 
 export default function MapaActividades({actividades, setActualActivity}) {
+  const navigate = useNavigate(),
+  showActivity = (i) => i === 0 && navigate("/Estudiante/ClaseIndividualEstudiante/sopa-letras");
   return (
     <div >
       <h1>MapaActividades</h1>
@@ -24,7 +27,7 @@ export default function MapaActividades({actividades, setActualActivity}) {
                 "grid-column-start": index,
                 "grid-row-start": "4"
               }
-              return(<button key={index} onClick={() => setActualActivity(actividad)} style={posicion} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
+              return(<button key={index} onClick={() => showActivity(index) } style={posicion} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
             })
           }
 
