@@ -146,18 +146,22 @@ export default function ClaseIndividualProfesor() {
                                 onChange={handleChange}
                                 required
                             ></input>
-                            <p>Dificultad (facil, medio, dificil)</p>
-                            <input
-                                type="text"
+                            <p>Dificultad</p>
+                            <select
                                 name="dificultadForm"
                                 value={crearActivity.dificultadForm}
                                 onChange={handleChange}
                                 required>
-                            </input>
+                                <option value="">Seleccionar dificultad</option>
+                                <option value="facil">Fácil</option>
+                                <option value="medio">Medio</option>
+                                <option value="dificil">Dificil</option>
+                            </select>
                             <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"
                                 name="recompensaForm"
+                                min="0"
                                 value={crearActivity.recompensaForm}
                                 onChange={handleChange}
                                 required
@@ -166,6 +170,7 @@ export default function ClaseIndividualProfesor() {
                             <input
                                 type="number"
                                 name="castigoForm"
+                                min="0"
                                 value={crearActivity.castigoForm}
                                 onChange={handleChange}
                                 required
