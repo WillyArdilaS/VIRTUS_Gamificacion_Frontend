@@ -40,6 +40,10 @@ export default function ClaseIndividualProfesor() {
         castigoForm: "",
         descripcionForm: "",
         dificultadForm: "",
+        tipoJuegoForm: "",
+        filasSopaLetras: "",
+        columnasSopaLetras: "",
+        palabrasSopaLetras: Array(10).fill(""),
         fechaVencimientoForm: ""
     })
 
@@ -60,10 +64,25 @@ export default function ClaseIndividualProfesor() {
         const urlBD = "http://localhost:8080/api/actividad";
         const response = await fetch(`${urlBD}`);
         const { actividadesBD } = await response.json();
-        let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK == filtro);
+        let actividadesFiltradas = actividadesBD.filter(actividad => actividad.claseFK === filtro);
         setActivity(actividadesFiltradas);
     }
 
+    const postJuego = async (juegoData) => {
+        const urlJuego = 'http://localhost:8080/api/juego';
+        const response = await fetch(`${urlJuego}`, 
+        {
+            method: 'POST',
+            body: JSON.stringify(juegoData),
+            headers: {
+                'Content-Type': 'application/json',
+                'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
+          },
+        });
+        const data = await response.json();
+        return data.juego._id; 
+    };
+      
     const postActivity = async (objectActivity) => {
         const urlBD = 'http://localhost:8080/api/actividad';
         const response = await fetch(`${urlBD}`,
@@ -76,11 +95,29 @@ export default function ClaseIndividualProfesor() {
                 }
             });
         const data = await response.json();
-  
         return data;
     }
 
     const eventPostActivity = async () => {
+        let juegoId;
+        try {
+
+        if (crearActivity.tipoJuegoForm === "sopa-letras"){
+            const palabrasTransformadas = crearActivity.palabrasSopaLetras
+            .filter(palabra => palabra)
+            .map(palabra => ({ palabra: palabra }));
+
+            const juegoData = {
+            titulo: crearActivity.nameForm,
+            tipo: crearActivity.tipoJuegoForm,
+            filas: crearActivity.filasSopaLetras,
+            columnas: crearActivity.columnasSopaLetras,
+            palabras: palabrasTransformadas,
+            }
+
+            juegoId = await postJuego(juegoData);
+        }
+
         const objectActivity = {
             nombre: crearActivity.nameForm,
             fechaVencimiento: crearActivity.fechaVencimientoForm,
@@ -88,20 +125,30 @@ export default function ClaseIndividualProfesor() {
             castigo: crearActivity.castigoForm,
             descripcion: crearActivity.descripcionForm,
             dificultad: crearActivity.dificultadForm,
-            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id
+            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id,
+            juegoFK: juegoId
         }
 
         const response = await postActivity(objectActivity);
         alert("Actividad Creada");
+
         setCrearActivity({
             nameForm: "",
             recompensaForm: "",
             castigoForm: "",
             descripcionForm: "",
             dificultadForm: "",
+            tipoJuegoForm: "",
+            filasSopaLetras: "",
+            columnasSopaLetras: "",
+            palabrasSopaLetras: Array(10).fill(""),
             fechaVencimientoForm: ""
-        })
-        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id)
+        });
+
+        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
+        } catch (error){
+            console.error("Error al crear actividad")
+        }
     }
 
     return (
@@ -157,6 +204,61 @@ export default function ClaseIndividualProfesor() {
                                 <option value="medio">Medio</option>
                                 <option value="dificil">Dificil</option>
                             </select>
+                            <p>Tipo de Juego</p>
+                            <select
+                                name="tipoJuegoForm"
+                                value={crearActivity.tipoJuegoForm}
+                                onChange={handleChange}
+                                required>
+                                <option value="">Seleccionar tipo de juego</option>
+                                <option value="sopa-letras">Sopa de Letras</option>
+                                <option value="crucigrama">Crucigrama</option>
+                                <option value="preguntas">Preguntas</option>
+                            </select>
+                            {crearActivity.tipoJuegoForm === 'sopa-letras' && (
+                                <>
+                                    <p>Filas</p>
+                                    <input
+                                        type="number"
+                                        name="filasSopaLetras"
+                                        value={crearActivity.filasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="10"
+                                        required
+                                    />
+                                    <p>Columnas</p>
+                                    <input
+                                        type="number"
+                                        name="columnasSopaLetras"
+                                        value={crearActivity.columnasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="10"
+                                        required
+                                    />
+                                    <p>Palabras (máximo 10)</p>
+                                    {Array.from({ length: 10 }).map((_, index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            name={`palabra${index}`}
+                                            value={crearActivity.palabrasSopaLetras[index]}
+                                            onChange={(e) => {
+                                                const nuevasPalabras = [...crearActivity.palabrasSopaLetras];
+                                                nuevasPalabras[index] = e.target.value;
+                                                handleChange({
+                                                    target: {
+                                                        name: "palabrasSopaLetras",
+                                                        value: nuevasPalabras,
+                                                    },
+                                                });
+                                            }}
+                                            required={index < 5} 
+                                        />
+                                    ))}
+                                </>
+                            )}
                             <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"
