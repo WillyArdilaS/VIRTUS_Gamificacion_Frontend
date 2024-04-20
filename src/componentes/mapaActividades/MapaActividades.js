@@ -4,9 +4,13 @@ import { useNavigate } from 'react-router-dom'
 // import '../../utils/dist/rpgui.min.css'
 
 
-export default function MapaActividades({actividades, setActualActivity}) {
+export default function MapaActividades({actividades, setActualActivity, setUrl}) {
   const navigate = useNavigate(),
-  showActivity = (i) => i === 0 && navigate("/Estudiante/ClaseIndividualEstudiante/sopa-letras");
+  showActivity = (i) => {
+    let url = "http://localhost:8001/Estudiante/ClaseIndividualEstudiante/sopa-letras?id=" + i;
+    setUrl(url);
+    navigate("/Estudiante/ClaseIndividualEstudiante/sopa-letras?id=" + i);
+  }
   return (
     <div >
       <h1>MapaActividades</h1>

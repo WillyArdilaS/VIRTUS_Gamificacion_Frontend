@@ -8,8 +8,8 @@ async function fetchData(id) {
     return data;
 };
 
-function SopaLetras({ id }) {
-    console.log(id);
+function SopaLetras({ activity, url }) {
+    console.log(activity);
     let x1, x2, y1, y2, r1, r2, c1, c2;
     const [sopaLetras, setSopaLetras] = useState([]),
         [palabras, setPalabras] = useState([]),
@@ -23,14 +23,17 @@ function SopaLetras({ id }) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        fetchData(id).then(data => {
+        const params = new URL(url).searchParams;
+        let id = params.get('id');
+        console.log("id",id);
+        fetchData(activity[id].juegoFK).then(data => {
             setSopaLetras(data.tab);
             setPalabras(data.words);
             setDim(data.dim);
             setFind(Object.keys(data.words).length);
             console.log(data.words);
         });
-    }, [id]);
+    }, [activity, url]);
 
     let panelMouseDown = (e) => {
         let panel = e.target;

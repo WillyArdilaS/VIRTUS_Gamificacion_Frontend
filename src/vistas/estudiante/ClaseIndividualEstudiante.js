@@ -19,7 +19,8 @@ export default function ClaseIndividualEstudiante() {
   const [preguntasQuiz, setPreguntasQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [showAnswers, setShowAnswers] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false),
+  [url, setUrl] = useState(window.location.href);
   //Ficha PJ
   const [resPersonaje, setResPersonaje] = React.useState({
     id: "",
@@ -166,7 +167,7 @@ export default function ClaseIndividualEstudiante() {
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
-      <MapaActividades actividades={activity} setActualActivity={setActualActivity} />
+      <MapaActividades actividades={activity} setActualActivity={setActualActivity} setUrl={setUrl} />
 
 
       <div className="container">
@@ -174,8 +175,8 @@ export default function ClaseIndividualEstudiante() {
         {console.log("activity", activity)}
         {
           tipo === "sopa-letras" && activity.length > 0
-            ? <SopaLetras id={activity[0].juegoFK} />
-            : tipo === "crucigrama" ? <Crucigrama id={activity[0].juegoFK} />
+            ? <SopaLetras activity={activity} url={url} />
+            : tipo === "crucigrama" ? <Crucigrama id={activity} />
             : (showQuiz === true ?
               currentIndex >= preguntasQuiz.length ?
                 (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
