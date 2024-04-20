@@ -1,4 +1,4 @@
-import "./sopaLetras.css"
+import "./crucigrama.css"
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 
@@ -8,8 +8,7 @@ async function fetchData(id) {
     return data;
 };
 
-function SopaLetras({ id }) {
-    console.log(id);
+function Crucigrama({ id }) {
     let x1, x2, y1, y2, r1, r2, c1, c2;
     const [sopaLetras, setSopaLetras] = useState([]),
         [palabras, setPalabras] = useState([]),
@@ -72,6 +71,7 @@ function SopaLetras({ id }) {
             ctx.lineWidth = 15;
             ctx.lineCap = "round";
             ctx.stroke();
+            console.log(ctx);
         },
         panelMouseUp = (e) => {
             let panel = e.target;
@@ -147,4 +147,4 @@ function SopaLetras({ id }) {
     )
 }
 
-export default SopaLetras
+export default Crucigrama

@@ -7,6 +7,7 @@ import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 import SopaLetras from "../../componentes/sopaLetras/SopaLetras";
+import Crucigrama from "../../componentes/crucigrama/Crucigrama";
 
 
 export default function ClaseIndividualEstudiante() {
@@ -169,9 +170,12 @@ export default function ClaseIndividualEstudiante() {
 
 
       <div className="container">
+        {console.log("tipo", tipo)}
+        {console.log("activity", activity)}
         {
-          tipo === "sopa-letras"
-            ? <SopaLetras id={"66036aa4f5536ec56fb05ec0"} />
+          tipo === "sopa-letras" && activity.length > 0
+            ? <SopaLetras id={activity[0].juegoFK} />
+            : tipo === "crucigrama" ? <Crucigrama id={activity[0].juegoFK} />
             : (showQuiz === true ?
               currentIndex >= preguntasQuiz.length ?
                 (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
