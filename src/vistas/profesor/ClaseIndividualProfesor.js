@@ -32,6 +32,37 @@ export default function ClaseIndividualProfesor() {
         localStorage.clear()
     }, [])
 
+    const [localPreguntas, setLocalPreguntas] = useState([]);
+    const [nuevaPregunta, setNuevaPregunta] = useState({
+        pregunta: "",
+        opciones: [],
+        tiempo: "",
+        respuesta: ""
+    });
+
+    const handleAddQuestion = () => {
+        setLocalPreguntas(prevPreguntas => [...prevPreguntas, nuevaPregunta]);
+        setNuevaPregunta({
+            pregunta: "",
+            opciones: [],
+            tiempo: "",
+            respuesta: ""
+        });
+    };
+
+    const handleQuestionChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, pregunta: event.target.value });
+    };
+
+    const handleAnswerChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, respuesta: event.target.value });
+    };
+
+    const handleTimeChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, tiempo: event.target.value });
+    };
+
+
     const [preguntas, setPreguntas] = useState([]);
     const [activity, setActivity] = useState([]); //Actividades individuales
     const [crearActivity, setCrearActivity] = useState({ //Form
@@ -51,7 +82,8 @@ export default function ClaseIndividualProfesor() {
         textoOpcionC: "",
         textoOpcionD: "",
         tiempoPregunta: "",
-        fechaVencimientoForm: ""
+        fechaVencimientoForm: "",
+        preguntas: []
     })
 
     const handleChange = (e) => {
@@ -105,6 +137,54 @@ export default function ClaseIndividualProfesor() {
         return data;
     }
 
+    function VerdaderoFalso({ preguntas, setPreguntas }) {
+    const [localPreguntas, setLocalPreguntas] = useState(preguntas);
+    const [nuevaPregunta, setNuevaPregunta] = useState({
+        pregunta: "",
+        opciones: [],
+        tiempo: "",
+        respuesta: ""
+    });
+
+    useEffect(() => {
+        setLocalPreguntas(preguntas);
+    }, [preguntas]);
+
+
+    return (
+        <div>
+            {localPreguntas.map((pregunta, index) => (
+                <div key={index}>
+                    <p>Pregunta: {pregunta.pregunta}</p>
+                    <p>Respuesta: {pregunta.respuesta}</p>
+                    <p>Tiempo: {pregunta.tiempo}</p>
+                </div>
+            ))}
+            <input
+                type="text"
+                placeholder="Pregunta"
+                value={nuevaPregunta.pregunta}
+                onChange={handleQuestionChange}
+            />
+            <select
+                value={nuevaPregunta.respuesta}
+                onChange={handleAnswerChange}
+            >
+                <option value="">Seleccionar respuesta</option>
+                <option value="verdadero">Verdadero</option>
+                <option value="falso">Falso</option>
+            </select>
+            <input
+                type="number"
+                placeholder="Tiempo"
+                value={nuevaPregunta.tiempo}
+                onChange={handleTimeChange}
+            />
+            <button onClick={handleAddQuestion}>Agregar pregunta</button>
+        </div>
+    );
+}
+
     const eventPostActivity = async () => {
         let juegoId;
         try {
@@ -124,7 +204,16 @@ export default function ClaseIndividualProfesor() {
 
                 juegoId = await postJuego(juegoData);
             } else if(crearActivity.tipoJuegoForm === "preguntas"){
-                // METER LO DEL POST PREGUNTAS
+                const juegoData = {
+                    titulo: crearActivity.nameForm,
+                    tipo: crearActivity.tipoJuegoForm,
+                    preguntas: localPreguntas.map(pregunta => ({
+                        ...pregunta,
+                        opciones: crearActivity.tipoPreguntaForm === 'verdadero-falso' ? ['verdadero', 'falso'] : pregunta.opciones
+                    }))
+                }
+
+                juegoId = await postJuego(juegoData);
             }
 
             const objectActivity = {
@@ -418,54 +507,37 @@ export default function ClaseIndividualProfesor() {
                                     )}
                                     {crearActivity.tipoPreguntaForm === 'verdadero-falso' && (
                                         <>
-                                        <p>Pregunta</p>
-                                        <input
-                                            type="text"
-                                            name="enunciadoPreguntas"
-                                            value={crearActivity.enunciadoPreguntas}
-                                            onChange={handleChange}
-                                            required />
-                                        <p>Opciones</p>
-                                        <label>
-                                            <input type="radio" name="opcionA" value='Verdadero' />
-                                            Verdadero
-                                        </label>
-                                        <br />
-                                        <label>
-                                            <input type="radio" name="opcionB" value='Falso' />
-                                            Falso
-                                        </label>
-                                        <p>Tiempo</p>
-                                        <input type="number" name="tiempoPregunta" value={crearActivity.tiempoPregunta} onChange={handleChange} required />
-                                        <br />
-                                        <br />
-                                        <button onClick={() => {
-                                            const radios = document.querySelectorAll('input[type="radio"]:checked');
-                                            if (radios.length === 1) {
-                                                const opcionSeleccionada = radios[0].value;
-                                                const nuevaPregunta = {
-                                                    enunciado: crearActivity.enunciadoPreguntas,
-                                                    opciones:
-                                                        ['Verdadero',
-                                                        'Falso']
-                                                    ,
-                                                    respuesta: opcionSeleccionada,
-                                                    tiempo: crearActivity.tiempoPregunta
-                                                };
-                                                setPreguntas(prevPreguntas => [...prevPreguntas, nuevaPregunta]);
-                                                console.log(preguntas);
-                                                setCrearActivity(prevState => ({
-                                                    ...prevState,
-                                                    enunciadoPreguntas: "",
-                                                    tiempoPregunta: ""
-                                                }));
-                                                const radioInputs = document.querySelectorAll('input[type="radio"]');
-                                                radioInputs.forEach(input => input.checked = false);
-                                            } else {
-                                                console.error("Debe seleccionar exactamente una opción.");
-                                            }
-                                        }}>Agregar Pregunta</button>
-                                    </>
+                                            <div>
+                                                {localPreguntas.map((pregunta, index) => (
+                                                    <div key={index}>
+                                                        <p>Pregunta: {pregunta.pregunta}</p>
+                                                        <p>Respuesta: {pregunta.respuesta}</p>
+                                                        <p>Tiempo: {pregunta.tiempo}</p>
+                                                    </div>
+                                                ))}
+                                                <input
+                                                    type="text"
+                                                    placeholder="Pregunta"
+                                                    value={nuevaPregunta.pregunta}
+                                                    onChange={handleQuestionChange}
+                                                />
+                                                <select
+                                                    value={nuevaPregunta.respuesta}
+                                                    onChange={handleAnswerChange}
+                                                >
+                                                    <option value="">Seleccionar respuesta</option>
+                                                    <option value="verdadero">Verdadero</option>
+                                                    <option value="falso">Falso</option>
+                                                </select>
+                                                <input
+                                                    type="number"
+                                                    placeholder="Tiempo"
+                                                    value={nuevaPregunta.tiempo}
+                                                    onChange={handleTimeChange}
+                                                />
+                                                <button onClick={handleAddQuestion}>Agregar pregunta</button>
+                                            </div>
+                                        </>
                                     )}
                                 </>
                             )}
@@ -503,8 +575,6 @@ export default function ClaseIndividualProfesor() {
                         </form>
                     </div>
                 </div>
-
-
             </div>
         </div>)
 
