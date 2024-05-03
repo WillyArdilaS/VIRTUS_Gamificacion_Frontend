@@ -27,6 +27,36 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function ClaseIndividualProfesor() {
 
+
+    const [nuevaPreguntaUnica, setNuevaPreguntaUnica] = useState({
+        pregunta: "",
+        tiempo: "",
+        respuesta: ""
+    });
+
+// 2. Crear funciones para manejar los cambios en los campos de la nueva pregunta.
+    const handleQuestionChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, pregunta: event.target.value });
+    };
+
+    const handleAnswerChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, respuesta: event.target.value });
+    };
+
+    const handleTimeChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, tiempo: event.target.value });
+    };
+
+// 3. Crear una función para agregar la nueva pregunta al estado de las preguntas existentes.
+    const handleAddQuestionUnica = () => {
+        setLocalPreguntas(prevPreguntas => [...prevPreguntas, nuevaPreguntaUnica]);
+        setNuevaPreguntaUnica({
+            pregunta: "",
+            tiempo: "",
+            respuesta: ""
+        });
+    };
+
     useEffect(() => {
         getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
         localStorage.clear()
@@ -136,54 +166,6 @@ export default function ClaseIndividualProfesor() {
         const data = await response.json();
         return data;
     }
-
-    function VerdaderoFalso({ preguntas, setPreguntas }) {
-    const [localPreguntas, setLocalPreguntas] = useState(preguntas);
-    const [nuevaPregunta, setNuevaPregunta] = useState({
-        pregunta: "",
-        opciones: [],
-        tiempo: "",
-        respuesta: ""
-    });
-
-    useEffect(() => {
-        setLocalPreguntas(preguntas);
-    }, [preguntas]);
-
-
-    return (
-        <div>
-            {localPreguntas.map((pregunta, index) => (
-                <div key={index}>
-                    <p>Pregunta: {pregunta.pregunta}</p>
-                    <p>Respuesta: {pregunta.respuesta}</p>
-                    <p>Tiempo: {pregunta.tiempo}</p>
-                </div>
-            ))}
-            <input
-                type="text"
-                placeholder="Pregunta"
-                value={nuevaPregunta.pregunta}
-                onChange={handleQuestionChange}
-            />
-            <select
-                value={nuevaPregunta.respuesta}
-                onChange={handleAnswerChange}
-            >
-                <option value="">Seleccionar respuesta</option>
-                <option value="verdadero">Verdadero</option>
-                <option value="falso">Falso</option>
-            </select>
-            <input
-                type="number"
-                placeholder="Tiempo"
-                value={nuevaPregunta.tiempo}
-                onChange={handleTimeChange}
-            />
-            <button onClick={handleAddQuestion}>Agregar pregunta</button>
-        </div>
-    );
-}
 
     const eventPostActivity = async () => {
         let juegoId;
@@ -370,72 +352,32 @@ export default function ClaseIndividualProfesor() {
                                     </select>
                                     {crearActivity.tipoPreguntaForm === 'unica-respuesta' && (
                                         <>
-                                            <p>Pregunta</p>
                                             <input
                                                 type="text"
-                                                name="enunciadoPreguntas"
-                                                value={crearActivity.enunciadoPreguntas}
-                                                onChange={handleChange}
-                                                required />
-                                            <p>Opciones</p>
-                                            <label>
-                                                <input type="radio" name="opcionA" value={crearActivity.textoOpcionA} />
-                                                <input type="text" name="textoOpcionA" value={crearActivity.textoOpcionA} onChange={handleChange} placeholder="Opcion A" />
-                                            </label>
-                                            <br />
-                                            <label>
-                                                <input type="radio" name="opcionB" value={crearActivity.textoOpcionB} />
-                                                <input type="text" name="textoOpcionB" value={crearActivity.textoOpcionB} onChange={handleChange} placeholder="Opcion B" />
-                                            </label>
-                                            <br />
-                                            <label>
-                                                <input type="radio" name="opcionC" value={crearActivity.textoOpcionC} />
-                                                <input type="text" name="textoOpcionC" value={crearActivity.textoOpcionC} onChange={handleChange} placeholder="Opcion C" />
-                                            </label>
-                                            <br />
-                                            <label>
-                                                <input type="radio" name="opcionD" value={crearActivity.textoOpcionD} />
-                                                <input type="text" name="textoOpcionD" value={crearActivity.textoOpcionD} onChange={handleChange} placeholder="Opcion D" />
-
-                                            </label>
-                                            <p>Tiempo</p>
-                                            <input type="number" name="tiempoPregunta" value={crearActivity.tiempoPregunta} onChange={handleChange} required />
-                                            <br />
-                                            <br />
-                                            <button onClick={() => {
-                                                const radios = document.querySelectorAll('input[type="radio"]:checked');
-                                                if (radios.length === 1) {
-                                                    const opcionSeleccionada = radios[0].value;
-
-                                                    const nuevaPregunta = {
-                                                        enunciado: crearActivity.enunciadoPreguntas,
-                                                        opciones:
-                                                            [crearActivity.textoOpcionA,
-                                                            crearActivity.textoOpcionB,
-                                                            crearActivity.textoOpcionC,
-                                                            crearActivity.textoOpcionD]
-                                                        ,
-                                                        respuesta: opcionSeleccionada,
-                                                        tiempo: crearActivity.tiempoPregunta
-                                                    };
-                                                    console.log("Nueva Pregunta:", nuevaPregunta);
-                                                    setPreguntas(prevPreguntas => [...prevPreguntas, nuevaPregunta]);
-                                                    console.log(preguntas);
-                                                    setCrearActivity(prevState => ({
-                                                        ...prevState,
-                                                        enunciadoPreguntas: "",
-                                                        textoOpcionA: "",
-                                                        textoOpcionB: "",
-                                                        textoOpcionC: "",
-                                                        textoOpcionD: "",
-                                                        tiempoPregunta: ""
-                                                    }));
-                                                    const radioInputs = document.querySelectorAll('input[type="radio"]');
-                                                    radioInputs.forEach(input => input.checked = false);
-                                                } else {
-                                                    console.error("Debe seleccionar exactamente una opción.");
-                                                }
-                                            }}>Agregar Pregunta</button>
+                                                placeholder="Pregunta"
+                                                value={nuevaPreguntaUnica.pregunta}
+                                                onChange={handleQuestionChangeUnica}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Respuesta"
+                                                value={nuevaPreguntaUnica.respuesta}
+                                                onChange={handleAnswerChangeUnica}
+                                            />
+                                            <input
+                                                type="number"
+                                                placeholder="Tiempo"
+                                                value={nuevaPreguntaUnica.tiempo}
+                                                onChange={handleTimeChangeUnica}
+                                            />
+                                            <button onClick={handleAddQuestionUnica}>Agregar pregunta</button>
+                                            {localPreguntas.map((pregunta, index) => (
+                                                <div key={index}>
+                                                    <p>Pregunta: {pregunta.pregunta}</p>
+                                                    <p>Respuesta: {pregunta.respuesta}</p>
+                                                    <p>Tiempo: {pregunta.tiempo}</p>
+                                                </div>
+                                            ))}
                                         </>
                                     )}
                                     {crearActivity.tipoPreguntaForm === 'multiple-respuesta' && (
