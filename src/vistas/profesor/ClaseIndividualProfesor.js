@@ -259,6 +259,50 @@ export default function ClaseIndividualProfesor() {
                                     ))}
                                 </>
                             )}
+                            {crearActivity.tipoJuegoForm === 'crucigrama' && (
+                                <>
+                                    <p>Filas</p>
+                                    <input
+                                        type="number"
+                                        name="filasSopaLetras"
+                                        value={crearActivity.filasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="10"
+                                        required
+                                    />
+                                    <p>Columnas</p>
+                                    <input
+                                        type="number"
+                                        name="columnasSopaLetras"
+                                        value={crearActivity.columnasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="10"
+                                        required
+                                    />
+                                    <p>Palabras (máximo 10)</p>
+                                    {Array.from({ length: 10 }).map((_, index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            name={`palabra${index}`}
+                                            value={crearActivity.palabrasSopaLetras[index]}
+                                            onChange={(e) => {
+                                                const nuevasPalabras = [...crearActivity.palabrasSopaLetras];
+                                                nuevasPalabras[index] = e.target.value;
+                                                handleChange({
+                                                    target: {
+                                                        name: "palabrasSopaLetras",
+                                                        value: nuevasPalabras,
+                                                    },
+                                                });
+                                            }}
+                                            required={index < 5} 
+                                        />
+                                    ))}
+                                </>
+                            )}
                             <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"

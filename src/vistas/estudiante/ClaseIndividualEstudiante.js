@@ -176,7 +176,7 @@ export default function ClaseIndividualEstudiante() {
         {
           tipo === "sopa-letras" && activity.length > 0
             ? <SopaLetras activity={activity} url={url} />
-            : tipo === "crucigrama" ? <Crucigrama id={activity} />
+            : tipo === "crucigrama" ? <Crucigrama activity={activity} url={url} />
             : (showQuiz === true ?
               currentIndex >= preguntasQuiz.length ?
                 (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
