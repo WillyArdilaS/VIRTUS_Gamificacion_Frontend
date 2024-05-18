@@ -1,17 +1,17 @@
 import * as React from "react";
 import clasesTDB from '../../data_prueba/clasesTDB.json';
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
 import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
 import SopaLetras from "../../componentes/sopaLetras/SopaLetras";
 import Crucigrama from "../../componentes/crucigrama/Crucigrama";
+import JuegoPreguntas from "../../componentes/pregunta/Preguntas";
+import {useParams} from "react-router-dom";
 
 
 export default function ClaseIndividualEstudiante() {
-
   const { tipo } = useParams();
   const [activity, setActivity] = useState([]);
   const [actualActivity, setActualActivity] = useState();
@@ -171,24 +171,27 @@ export default function ClaseIndividualEstudiante() {
 
 
       <div className="container">
-        {console.log("tipo", tipo)}
+
         {console.log("activity", activity)}
         {
-          tipo === "sopa-letras" && activity.length > 0
-            ? <SopaLetras activity={activity} url={url} />
-            : tipo === "crucigrama" ? <Crucigrama id={activity} />
-            : (showQuiz === true ?
-              currentIndex >= preguntasQuiz.length ?
-                (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
-                :
-                (<QuizActividad handleAnswer={handleAnswer}
-                  showAnswers={showAnswers}
-                  handleNextQuestion={handleNextQuestion}
-                  data={preguntasQuiz[currentIndex]}
-                  currentIndex={currentIndex}
-                  numPreguntas={preguntasQuiz.length} />)
-              :
-              (<></>))
+            activity.length > 0 && (
+                tipo === "sopa-letras"
+                    ? <SopaLetras activity={activity} url={url} />
+                    : tipo === "crucigrama"
+                        ? <Crucigrama id={activity} />
+                        : tipo === "preguntas"
+                            ? <JuegoPreguntas activity={activity} url={url}/>
+                            : (showQuiz === true
+                                ? currentIndex >= preguntasQuiz.length
+                                    ? (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
+                                    : (<QuizActividad handleAnswer={handleAnswer}
+                                                      showAnswers={showAnswers}
+                                                      handleNextQuestion={handleNextQuestion}
+                                                      data={preguntasQuiz[currentIndex]}
+                                                      currentIndex={currentIndex}
+                                                      numPreguntas={preguntasQuiz.length} />)
+                                : (<></>))
+            )
         }
 
         <ResmPersonaje resPersonaje={resPersonaje} />

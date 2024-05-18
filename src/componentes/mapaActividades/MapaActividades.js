@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 export default function MapaActividades({actividades, setActualActivity, setUrl}) {
   const navigate = useNavigate(),
-  showActivity = (i) => {
-    let url = "http://localhost:8001/Estudiante/ClaseIndividualEstudiante/sopa-letras?id=" + i;
-    setUrl(url);
-    navigate("/Estudiante/ClaseIndividualEstudiante/sopa-letras?id=" + i);
-  }
+      showActivity = (i) => {
+          let tipo = "preguntas";
+          let url = `http://localhost:8001/Estudiante/ClaseIndividualEstudiante/${tipo}?id=${i}`;
+          setUrl(url);
+          navigate(`/Estudiante/ClaseIndividualEstudiante/${tipo}?id=${i}`);
+      }
   return (
     <div >
       <h1>MapaActividades</h1>
