@@ -54,9 +54,68 @@ export default function ClaseIndividualProfesor() {
         });
     };
 
+    const postCrucigrama = async (e) => {
+        e.preventDefault();
+        let $form = e.target, values = Object.fromEntries(new FormData($form)),
+            filas = parseInt(values.filasSopaLetras),
+            columnas = parseInt(values.columnasSopaLetras),
+            matriz = Array(filas).fill([]);
+        matriz = matriz.map(() => Array(columnas).fill(""));
+        console.log(values);
+        for (let i = 0; i < filas; i++)
+            for (let j = 0; j < columnas; j++)
+                matriz[i][j] = values[`${i},${j}`];
+        console.log(matriz);
+
+        let res = await fetch('http://localhost:8080/api/juego', {
+            method: 'POST',
+            body: JSON.stringify({
+                titulo: crearActivity.nameForm,
+                tipo: crearActivity.tipoJuegoForm,
+                matriz: matriz,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
+            }
+        })
+        let data = await res.json();
+
+        const objectActivity = {
+            nombre: crearActivity.nameForm,
+            fechaVencimiento: crearActivity.fechaVencimientoForm,
+            recompensa: crearActivity.recompensaForm,
+            castigo: crearActivity.castigoForm,
+            descripcion: crearActivity.descripcionForm,
+            dificultad: crearActivity.dificultadForm,
+            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id,
+            juegoFK: data.juego._id
+        }
+
+        let $matriz = document.getElementById("matrix");
+        $matriz.innerHTML = "";
+        const response = await postActivity(objectActivity);
+
+        alert("Actividad Creada");
+        setCrearActivity({
+            nameForm: "",
+            recompensaForm: "",
+            castigoForm: "",
+            descripcionForm: "",
+            dificultadForm: "",
+            tipoJuegoForm: "",
+            filasSopaLetras: "",
+            columnasSopaLetras: "",
+            palabrasSopaLetras: Array(10).fill(""),
+            fechaVencimientoForm: ""
+        });
+        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
-        eventPostActivity();
+        crearActivity.tipoJuegoForm === "crucigrama" ? postCrucigrama(event) :
+            eventPostActivity();
     }
 
     //Peticiones
@@ -70,19 +129,19 @@ export default function ClaseIndividualProfesor() {
 
     const postJuego = async (juegoData) => {
         const urlJuego = 'http://localhost:8080/api/juego';
-        const response = await fetch(`${urlJuego}`, 
-        {
-            method: 'POST',
-            body: JSON.stringify(juegoData),
-            headers: {
-                'Content-Type': 'application/json',
-                'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
-          },
-        });
+        const response = await fetch(`${urlJuego}`,
+            {
+                method: 'POST',
+                body: JSON.stringify(juegoData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
+                },
+            });
         const data = await response.json();
-        return data.juego._id; 
+        return data.juego._id;
     };
-      
+
     const postActivity = async (objectActivity) => {
         const urlBD = 'http://localhost:8080/api/actividad';
         const response = await fetch(`${urlBD}`,
@@ -102,54 +161,79 @@ export default function ClaseIndividualProfesor() {
         let juegoId;
         try {
 
-        if (crearActivity.tipoJuegoForm === "sopa-letras"){
-            const palabrasTransformadas = crearActivity.palabrasSopaLetras
-            .filter(palabra => palabra)
-            .map(palabra => ({ palabra: palabra }));
+            if (crearActivity.tipoJuegoForm === "sopa-letras") {
+                const palabrasTransformadas = crearActivity.palabrasSopaLetras
+                    .filter(palabra => palabra)
+                    .map(palabra => ({ palabra: palabra }));
 
-            const juegoData = {
-            titulo: crearActivity.nameForm,
-            tipo: crearActivity.tipoJuegoForm,
-            filas: crearActivity.filasSopaLetras,
-            columnas: crearActivity.columnasSopaLetras,
-            palabras: palabrasTransformadas,
+                const juegoData = {
+                    titulo: crearActivity.nameForm,
+                    tipo: crearActivity.tipoJuegoForm,
+                    filas: crearActivity.filasSopaLetras,
+                    columnas: crearActivity.columnasSopaLetras,
+                    palabras: palabrasTransformadas,
+                }
+
+                juegoId = await postJuego(juegoData);
             }
 
-            juegoId = await postJuego(juegoData);
-        }
+            const objectActivity = {
+                nombre: crearActivity.nameForm,
+                fechaVencimiento: crearActivity.fechaVencimientoForm,
+                recompensa: crearActivity.recompensaForm,
+                castigo: crearActivity.castigoForm,
+                descripcion: crearActivity.descripcionForm,
+                dificultad: crearActivity.dificultadForm,
+                claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id,
+                juegoFK: juegoId
+            }
 
-        const objectActivity = {
-            nombre: crearActivity.nameForm,
-            fechaVencimiento: crearActivity.fechaVencimientoForm,
-            recompensa: crearActivity.recompensaForm,
-            castigo: crearActivity.castigoForm,
-            descripcion: crearActivity.descripcionForm,
-            dificultad: crearActivity.dificultadForm,
-            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id,
-            juegoFK: juegoId
-        }
+            const response = await postActivity(objectActivity);
+            alert("Actividad Creada");
 
-        const response = await postActivity(objectActivity);
-        alert("Actividad Creada");
+            setCrearActivity({
+                nameForm: "",
+                recompensaForm: "",
+                castigoForm: "",
+                descripcionForm: "",
+                dificultadForm: "",
+                tipoJuegoForm: "",
+                filasSopaLetras: "",
+                columnasSopaLetras: "",
+                palabrasSopaLetras: Array(10).fill(""),
+                fechaVencimientoForm: ""
+            });
 
-        setCrearActivity({
-            nameForm: "",
-            recompensaForm: "",
-            castigoForm: "",
-            descripcionForm: "",
-            dificultadForm: "",
-            tipoJuegoForm: "",
-            filasSopaLetras: "",
-            columnasSopaLetras: "",
-            palabrasSopaLetras: Array(10).fill(""),
-            fechaVencimientoForm: ""
-        });
-
-        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
-        } catch (error){
+            getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
+        } catch (error) {
             console.error("Error al crear actividad")
         }
     }
+
+    const drawMatrix = (e) => {
+        e.preventDefault();
+        let $form = e.target.closest("form"),
+            filas = $form.filasSopaLetras.value,
+            columnas = $form.columnasSopaLetras.value;
+        if (filas && columnas) {
+            let matriz = document.getElementById("matrix");
+            matriz.innerHTML = "";
+            for (let i = 0; i < filas; i++) {
+                let row = document.createElement("div");
+                row.className = "row";
+                for (let j = 0; j < columnas; j++) {
+                    let input = document.createElement("input");
+                    input.type = "text";
+                    input.maxLength = "1";
+                    input.name = `${i},${j}`;
+                    input.style.width = "30px";
+                    row.appendChild(input);
+                }
+                matriz.appendChild(row);
+            }
+        }
+    }
+
 
     return (
         <div className="infoClase">
@@ -254,7 +338,7 @@ export default function ClaseIndividualProfesor() {
                                                     },
                                                 });
                                             }}
-                                            required={index < 5} 
+                                            required={index < 5}
                                         />
                                     ))}
                                 </>
@@ -268,7 +352,7 @@ export default function ClaseIndividualProfesor() {
                                         value={crearActivity.filasSopaLetras}
                                         onChange={handleChange}
                                         min="1"
-                                        max="10"
+                                        max="15"
                                         required
                                     />
                                     <p>Columnas</p>
@@ -278,31 +362,13 @@ export default function ClaseIndividualProfesor() {
                                         value={crearActivity.columnasSopaLetras}
                                         onChange={handleChange}
                                         min="1"
-                                        max="10"
+                                        max="15"
                                         required
                                     />
-                                    <p>Palabras (máximo 10)</p>
-                                    {Array.from({ length: 10 }).map((_, index) => (
-                                        <input
-                                            key={index}
-                                            type="text"
-                                            name={`palabra${index}`}
-                                            value={crearActivity.palabrasSopaLetras[index]}
-                                            onChange={(e) => {
-                                                const nuevasPalabras = [...crearActivity.palabrasSopaLetras];
-                                                nuevasPalabras[index] = e.target.value;
-                                                handleChange({
-                                                    target: {
-                                                        name: "palabrasSopaLetras",
-                                                        value: nuevasPalabras,
-                                                    },
-                                                });
-                                            }}
-                                            required={index < 5} 
-                                        />
-                                    ))}
+                                    <button style={{ display: "block", marginTop: "1rem" }} onClick={(e) => drawMatrix(e)}>Dibujar</button>
                                 </>
                             )}
+                            <div id="matrix"></div>
                             <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"
