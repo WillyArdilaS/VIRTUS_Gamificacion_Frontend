@@ -171,14 +171,14 @@ export default function ClaseIndividualEstudiante() {
 
 
       <div className="container">
-
+        {console.log("tipo", tipo)}
         {console.log("activity", activity)}
         {
             activity.length > 0 && (
                 tipo === "sopa-letras"
                     ? <SopaLetras activity={activity} url={url} />
                     : tipo === "crucigrama"
-                        ? <Crucigrama id={activity} />
+                        ? <Crucigrama activity={activity} url={url} />
                         : tipo === "preguntas"
                             ? <JuegoPreguntas activity={activity} url={url}/>
                             : (showQuiz === true

@@ -163,9 +163,68 @@ export default function ClaseIndividualProfesor() {
         });
     };
 
+    const postCrucigrama = async (e) => {
+        e.preventDefault();
+        let $form = e.target, values = Object.fromEntries(new FormData($form)),
+            filas = parseInt(values.filasSopaLetras),
+            columnas = parseInt(values.columnasSopaLetras),
+            matriz = Array(filas).fill([]);
+        matriz = matriz.map(() => Array(columnas).fill(""));
+        console.log(values);
+        for (let i = 0; i < filas; i++)
+            for (let j = 0; j < columnas; j++)
+                matriz[i][j] = values[`${i},${j}`];
+        console.log(matriz);
+
+        let res = await fetch('http://localhost:8080/api/juego', {
+            method: 'POST',
+            body: JSON.stringify({
+                titulo: crearActivity.nameForm,
+                tipo: crearActivity.tipoJuegoForm,
+                matriz: matriz,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'TokenRol': JSON.parse(sessionStorage.getItem("usuario")).token,
+            }
+        })
+        let data = await res.json();
+
+        const objectActivity = {
+            nombre: crearActivity.nameForm,
+            fechaVencimiento: crearActivity.fechaVencimientoForm,
+            recompensa: crearActivity.recompensaForm,
+            castigo: crearActivity.castigoForm,
+            descripcion: crearActivity.descripcionForm,
+            dificultad: crearActivity.dificultadForm,
+            claseFK: JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id,
+            juegoFK: data.juego._id
+        }
+
+        let $matriz = document.getElementById("matrix");
+        $matriz.innerHTML = "";
+        const response = await postActivity(objectActivity);
+
+        alert("Actividad Creada");
+        setCrearActivity({
+            nameForm: "",
+            recompensaForm: "",
+            castigoForm: "",
+            descripcionForm: "",
+            dificultadForm: "",
+            tipoJuegoForm: "",
+            filasSopaLetras: "",
+            columnasSopaLetras: "",
+            palabrasSopaLetras: Array(10).fill(""),
+            fechaVencimientoForm: ""
+        });
+        getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
-        eventPostActivity();
+        crearActivity.tipoJuegoForm === "crucigrama" ? postCrucigrama(event) :
+            eventPostActivity();
     }
 
     //Peticiones
@@ -270,6 +329,31 @@ export default function ClaseIndividualProfesor() {
             console.error("Error al crear actividad")
         }
     }
+
+    const drawMatrix = (e) => {
+        e.preventDefault();
+        let $form = e.target.closest("form"),
+            filas = $form.filasSopaLetras.value,
+            columnas = $form.columnasSopaLetras.value;
+        if (filas && columnas) {
+            let matriz = document.getElementById("matrix");
+            matriz.innerHTML = "";
+            for (let i = 0; i < filas; i++) {
+                let row = document.createElement("div");
+                row.className = "row";
+                for (let j = 0; j < columnas; j++) {
+                    let input = document.createElement("input");
+                    input.type = "text";
+                    input.maxLength = "1";
+                    input.name = `${i},${j}`;
+                    input.style.width = "30px";
+                    row.appendChild(input);
+                }
+                matriz.appendChild(row);
+            }
+        }
+    }
+
 
     return (
         <div className="infoClase">
@@ -496,6 +580,32 @@ export default function ClaseIndividualProfesor() {
                                     )}
                                 </>
                             )}
+                            {crearActivity.tipoJuegoForm === 'crucigrama' && (
+                                <>
+                                    <p>Filas</p>
+                                    <input
+                                        type="number"
+                                        name="filasSopaLetras"
+                                        value={crearActivity.filasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="15"
+                                        required
+                                    />
+                                    <p>Columnas</p>
+                                    <input
+                                        type="number"
+                                        name="columnasSopaLetras"
+                                        value={crearActivity.columnasSopaLetras}
+                                        onChange={handleChange}
+                                        min="1"
+                                        max="15"
+                                        required
+                                    />
+                                    <button style={{ display: "block", marginTop: "1rem" }} onClick={(e) => drawMatrix(e)}>Dibujar</button>
+                                </>
+                            )}
+                            <div id="matrix"></div>
                             <p>Puntos de experiencia - Recompensa</p>
                             <input
                                 type="number"
@@ -530,6 +640,8 @@ export default function ClaseIndividualProfesor() {
                         </form>
                     </div>
                 </div>
+
+
             </div>
         </div>)
 
