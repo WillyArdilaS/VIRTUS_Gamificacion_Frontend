@@ -5,18 +5,22 @@ import './claseIndividualEstudiante.css';
 import MapaActividades from '../../componentes/mapaActividades/MapaActividades';
 import QuizActividad from '../../componentes/quizActividad/QuizActividad';
 import ResmPersonaje from "../../componentes/resmPersonaje/ResmPersonaje";
+import SopaLetras from "../../componentes/sopaLetras/SopaLetras";
+import Crucigrama from "../../componentes/crucigrama/Crucigrama";
+import JuegoPreguntas from "../../componentes/pregunta/Preguntas";
+import {useParams} from "react-router-dom";
 
 
 export default function ClaseIndividualEstudiante() {
-  
-
+  const { tipo } = useParams();
   const [activity, setActivity] = useState([]);
   const [actualActivity, setActualActivity] = useState();
   //QUIZ
   const [preguntasQuiz, setPreguntasQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [showAnswers, setShowAnswers] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false),
+  [url, setUrl] = useState(window.location.href);
   //Ficha PJ
   const [resPersonaje, setResPersonaje] = React.useState({
     id: "",
@@ -64,8 +68,8 @@ export default function ClaseIndividualEstudiante() {
 
   // API preguntas actividad
   const getPreguntasQuiz = async (actividad, numPreguntas = 10) => {
-    if(actividad.disponible == true) {
-      let  difficulty = actividad.dificultad;
+    if (actividad.disponible == true) {
+      let difficulty = actividad.dificultad;
       if (difficulty === 'facil') {
         difficulty = 'easy'
       } else if (difficulty === 'medio') {
@@ -163,23 +167,31 @@ export default function ClaseIndividualEstudiante() {
       <p>Dificultad: {JSON.parse(sessionStorage.getItem("EstudianteClaseActual")).dificultad}</p>
       <p>Número de actividades: {activity.length}</p>
 
-      <MapaActividades actividades={activity} setActualActivity={setActualActivity}/>
+      <MapaActividades actividades={activity} setActualActivity={setActualActivity} setUrl={setUrl} />
 
 
       <div className="container">
+        {console.log("tipo", tipo)}
+        {console.log("activity", activity)}
         {
-          (showQuiz === true ?
-            currentIndex >= preguntasQuiz.length ?
-              (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
-              :
-              (<QuizActividad handleAnswer={handleAnswer}
-                showAnswers={showAnswers}
-                handleNextQuestion={handleNextQuestion}
-                data={preguntasQuiz[currentIndex]}
-                currentIndex={currentIndex}
-                numPreguntas={preguntasQuiz.length} />)
-              :
-              (<></>))
+            activity.length > 0 && (
+                tipo === "sopa-letras"
+                    ? <SopaLetras activity={activity} url={url} />
+                    : tipo === "crucigrama"
+                        ? <Crucigrama activity={activity} url={url} />
+                        : tipo === "preguntas"
+                            ? <JuegoPreguntas activity={activity} url={url}/>
+                            : (showQuiz === true
+                                ? currentIndex >= preguntasQuiz.length
+                                    ? (<div className="resultadoQuiz"><h1>El puntaje del quiz es {score}</h1></div>)
+                                    : (<QuizActividad handleAnswer={handleAnswer}
+                                                      showAnswers={showAnswers}
+                                                      handleNextQuestion={handleNextQuestion}
+                                                      data={preguntasQuiz[currentIndex]}
+                                                      currentIndex={currentIndex}
+                                                      numPreguntas={preguntasQuiz.length} />)
+                                : (<></>))
+            )
         }
 
         <ResmPersonaje resPersonaje={resPersonaje} />

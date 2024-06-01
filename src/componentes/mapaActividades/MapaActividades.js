@@ -1,9 +1,20 @@
 import './mapaActividades.css'
+import { useNavigate } from 'react-router-dom'
 //import { useEffect, useState } from "react";
 // import '../../utils/dist/rpgui.min.css'
 
 
-export default function MapaActividades({actividades, setActualActivity}) {
+export default function MapaActividades({ actividades, setActualActivity, setUrl }) {
+  const navigate = useNavigate(),
+    showActivity = async (i) => {
+      let res = await fetch(`http://localhost:8080/api/juego/${actividades[i].juegoFK}`);
+      let juego = await res.json();
+      let tipo = juego.juego.tipo;
+      let url = `http://localhost:8001/Estudiante/ClaseIndividualEstudiante/${tipo}?id=` + i;
+      console.log("url" + i + ": ", url);
+      setUrl(url);
+      navigate(`/Estudiante/ClaseIndividualEstudiante/${tipo}?id=` + i);
+    }
   return (
     <div >
       <h1>MapaActividades</h1>
@@ -17,14 +28,14 @@ export default function MapaActividades({actividades, setActualActivity}) {
         <div className="containerBtn">
           {
             actividades.map((actividad, index) => {
-              let classButton = `rpgui-button posicion${index+1} btn_actividad`
-              let idButton = `button${index+1}`
+              let classButton = `rpgui-button posicion${index + 1} btn_actividad`
+              let idButton = `button${index + 1}`
               //antes no se tenian posiciones, se agregan unas de ejemplo.
               let posicion = {
                 "grid-column-start": index,
                 "grid-row-start": "4"
               }
-              return(<button key={index} onClick={() => setActualActivity(actividad)} style={posicion} className={classButton} type="button" alt='boton' id={idButton}><p>{index+1}</p></button>)
+              return (<button key={index} onClick={() => showActivity(index)} style={posicion} className={classButton} type="button" alt='boton' id={idButton}><p>{index + 1}</p></button>)
             })
           }
 
