@@ -27,12 +27,113 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function ClaseIndividualProfesor() {
 
+
+    const [nuevaPreguntaUnica, setNuevaPreguntaUnica] = useState({
+        pregunta: "",
+        tiempo: "",
+        respuesta: ""
+    });
+
+// 2. Crear funciones para manejar los cambios en los campos de la nueva pregunta.
+    const handleQuestionChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, pregunta: event.target.value });
+    };
+
+    const handleAnswerChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, respuesta: event.target.value });
+    };
+
+    const handleTimeChangeUnica = (event) => {
+        setNuevaPreguntaUnica({ ...nuevaPreguntaUnica, tiempo: event.target.value });
+    };
+
+// 3. Crear una función para agregar la nueva pregunta al estado de las preguntas existentes.
+    const handleAddQuestionUnica = () => {
+        setLocalPreguntas(prevPreguntas => [...prevPreguntas, nuevaPreguntaUnica]);
+        setNuevaPreguntaUnica({
+            pregunta: "",
+            tiempo: "",
+            respuesta: ""
+        });
+    };
+
     useEffect(() => {
         getActivity(JSON.parse(sessionStorage.getItem("ProfesorClaseActual"))._id);
         localStorage.clear()
     }, [])
 
+    const [localPreguntas, setLocalPreguntas] = useState([]);
+    const [nuevaPregunta, setNuevaPregunta] = useState({
+        pregunta: "",
+        opciones: [],
+        tiempo: "",
+        respuesta: ""
+    });
 
+    const handleAddQuestion = () => {
+        setLocalPreguntas(prevPreguntas => [...prevPreguntas, nuevaPregunta]);
+        setNuevaPregunta({
+            pregunta: "",
+            opciones: [],
+            tiempo: "",
+            respuesta: ""
+        });
+    };
+
+    const handleQuestionChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, pregunta: event.target.value });
+    };
+
+    const handleAnswerChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, respuesta: event.target.value });
+    };
+
+    const handleTimeChange = (event) => {
+        setNuevaPregunta({ ...nuevaPregunta, tiempo: event.target.value });
+    };
+
+    const [nuevaPreguntaMultiple, setNuevaPreguntaMultiple] = useState({
+        pregunta: "",
+        tiempo: "",
+        opciones: [],
+        respuesta: []
+    });
+
+    const handleQuestionChangeMultiple = (event) => {
+        setNuevaPreguntaMultiple({ ...nuevaPreguntaMultiple, pregunta: event.target.value });
+    };
+
+    const handleOptionChangeMultiple = (index) => (event) => {
+        const newOptions = [...nuevaPreguntaMultiple.opciones];
+        newOptions[index] = event.target.value;
+        setNuevaPreguntaMultiple({ ...nuevaPreguntaMultiple, opciones: newOptions });
+    };
+
+    const handleAnswerChangeMultiple = (index) => (event) => {
+        let newAnswers;
+        if (event.target.checked) {
+            newAnswers = [...nuevaPreguntaMultiple.respuesta, index];
+        } else {
+            newAnswers = nuevaPreguntaMultiple.respuesta.filter(answerIndex => answerIndex !== index);
+        }
+        setNuevaPreguntaMultiple({ ...nuevaPreguntaMultiple, respuesta: newAnswers });
+    };
+
+    const handleTimeChangeMultiple = (event) => {
+        setNuevaPreguntaMultiple({ ...nuevaPreguntaMultiple, tiempo: event.target.value });
+    };
+
+    const handleAddQuestionMultiple = () => {
+        setLocalPreguntas(prevPreguntas => [...prevPreguntas, nuevaPreguntaMultiple]);
+        setNuevaPreguntaMultiple({
+            pregunta: "",
+            tiempo: "",
+            opciones: [],
+            respuesta: []
+        });
+    };
+
+    const [preguntas, setPreguntas] = useState([]);
     const [activity, setActivity] = useState([]); //Actividades individuales
     const [crearActivity, setCrearActivity] = useState({ //Form
         nameForm: "",
@@ -41,10 +142,18 @@ export default function ClaseIndividualProfesor() {
         descripcionForm: "",
         dificultadForm: "",
         tipoJuegoForm: "",
+        tipoPreguntaForm: "",
         filasSopaLetras: "",
         columnasSopaLetras: "",
         palabrasSopaLetras: Array(10).fill(""),
-        fechaVencimientoForm: ""
+        enunciadoPreguntas: "",
+        textoOpcionA: "",
+        textoOpcionB: "",
+        textoOpcionC: "",
+        textoOpcionD: "",
+        tiempoPregunta: "",
+        fechaVencimientoForm: "",
+        preguntas: []
     })
 
     const handleChange = (e) => {
@@ -172,6 +281,17 @@ export default function ClaseIndividualProfesor() {
                     filas: crearActivity.filasSopaLetras,
                     columnas: crearActivity.columnasSopaLetras,
                     palabras: palabrasTransformadas,
+                }
+
+                juegoId = await postJuego(juegoData);
+            } else if(crearActivity.tipoJuegoForm === "preguntas"){
+                const juegoData = {
+                    titulo: crearActivity.nameForm,
+                    tipo: crearActivity.tipoJuegoForm,
+                    preguntas: localPreguntas.map(pregunta => ({
+                        ...pregunta,
+                        opciones: crearActivity.tipoPreguntaForm === 'verdadero-falso' ? ['verdadero', 'falso'] : pregunta.opciones
+                    }))
                 }
 
                 juegoId = await postJuego(juegoData);
@@ -341,6 +461,123 @@ export default function ClaseIndividualProfesor() {
                                             required={index < 5}
                                         />
                                     ))}
+                                </>
+                            )}
+                            {crearActivity.tipoJuegoForm === 'preguntas' && (
+                                <>
+                                    <p>TipoPregunta</p>
+                                    <select name='tipoPreguntaForm'
+                                        value={crearActivity.tipoPreguntaForm}
+                                        onChange={handleChange}>
+                                        <option value="">Seleccionar tipo de pregunta</option>
+                                        <option value="unica-respuesta">Única respuesta</option>
+                                        <option value="multiple-respuesta">Multiple respuesta</option>
+                                        <option value="verdadero-falso">Verdadero - Falso</option>
+                                    </select>
+                                    {crearActivity.tipoPreguntaForm === 'unica-respuesta' && (
+                                        <>
+                                            <input
+                                                type="text"
+                                                placeholder="Pregunta"
+                                                value={nuevaPreguntaUnica.pregunta}
+                                                onChange={handleQuestionChangeUnica}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Respuesta"
+                                                value={nuevaPreguntaUnica.respuesta}
+                                                onChange={handleAnswerChangeUnica}
+                                            />
+                                            <input
+                                                type="number"
+                                                placeholder="Tiempo"
+                                                value={nuevaPreguntaUnica.tiempo}
+                                                onChange={handleTimeChangeUnica}
+                                            />
+                                            <button onClick={handleAddQuestionUnica}>Agregar pregunta</button>
+                                            {localPreguntas.map((pregunta, index) => (
+                                                <div key={index}>
+                                                    <p>Pregunta: {pregunta.pregunta}</p>
+                                                    <p>Respuesta: {pregunta.respuesta}</p>
+                                                    <p>Tiempo: {pregunta.tiempo}</p>
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    {crearActivity.tipoPreguntaForm === 'multiple-respuesta' && (
+                                        <>
+                                            <input
+                                                type="text"
+                                                placeholder="Pregunta"
+                                                value={nuevaPreguntaMultiple.pregunta}
+                                                onChange={handleQuestionChangeMultiple}
+                                            />
+                                            {Array.from({ length: 4 }).map((_, index) => (
+                                                <div key={index}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder={`Opción ${index + 1}`}
+                                                        value={nuevaPreguntaMultiple.opciones[index] || ''}
+                                                        onChange={handleOptionChangeMultiple(index)}
+                                                    />
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={nuevaPreguntaMultiple.respuesta.includes(index)}
+                                                        onChange={handleAnswerChangeMultiple(index)}
+                                                    />
+                                                </div>
+                                            ))}
+                                            <input
+                                                type="number"
+                                                placeholder="Tiempo"
+                                                value={nuevaPreguntaMultiple.tiempo}
+                                                onChange={handleTimeChangeMultiple}
+                                            />
+                                            <button onClick={handleAddQuestionMultiple}>Agregar pregunta</button>
+                                            {localPreguntas.map((pregunta, index) => (
+                                                <div key={index}>
+                                                    <p>Pregunta: {pregunta.pregunta}</p>
+                                                    <p>Opciones: {pregunta.opciones.join(', ')}</p>
+                                                    <p>Respuestas: {pregunta.respuesta.map(answerIndex => pregunta.opciones[answerIndex]).join(', ')}</p>
+                                                    <p>Tiempo: {pregunta.tiempo}</p>
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    {crearActivity.tipoPreguntaForm === 'verdadero-falso' && (
+                                        <>
+                                            <div>
+                                                {localPreguntas.map((pregunta, index) => (
+                                                    <div key={index}>
+                                                        <p>Pregunta: {pregunta.pregunta}</p>
+                                                        <p>Respuesta: {pregunta.respuesta}</p>
+                                                        <p>Tiempo: {pregunta.tiempo}</p>
+                                                    </div>
+                                                ))}
+                                                <input
+                                                    type="text"
+                                                    placeholder="Pregunta"
+                                                    value={nuevaPregunta.pregunta}
+                                                    onChange={handleQuestionChange}
+                                                />
+                                                <select
+                                                    value={nuevaPregunta.respuesta}
+                                                    onChange={handleAnswerChange}
+                                                >
+                                                    <option value="">Seleccionar respuesta</option>
+                                                    <option value="verdadero">Verdadero</option>
+                                                    <option value="falso">Falso</option>
+                                                </select>
+                                                <input
+                                                    type="number"
+                                                    placeholder="Tiempo"
+                                                    value={nuevaPregunta.tiempo}
+                                                    onChange={handleTimeChange}
+                                                />
+                                                <button onClick={handleAddQuestion}>Agregar pregunta</button>
+                                            </div>
+                                        </>
+                                    )}
                                 </>
                             )}
                             {crearActivity.tipoJuegoForm === 'crucigrama' && (
